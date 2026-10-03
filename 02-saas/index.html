@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fluxo — La plataforma todo-en-uno para gestionar proyectos, equipos y clientes desde un solo lugar. Prueba gratis 14 días.">
+  <meta name="theme-color" content="#5b7cfa">
+  <title>Fluxo — Gestión de proyectos y equipos en un solo lugar</title>
+
+  <!-- Tipografía: Sora para titulares, Inter para texto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Script anti-parpadeo: aplica el tema antes de pintar la página -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('fluxo-tema');
+        var oscuroPrefiere = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var tema = guardado || (oscuroPrefiere ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', tema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ BARRA DE NAVEGACIÓN ============ -->
+  <header class="navbar" id="navbar">
+    <div class="contenedor nav-contenido">
+      <a href="#" class="logo" aria-label="Fluxo — Ir al inicio">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>
+          </svg>
+        </span>
+        <span class="logo-texto">Fluxo</span>
+      </a>
+
+      <nav class="nav-enlaces" id="navEnlaces" aria-label="Menú principal">
+        <a href="#funciones">Funciones</a>
+        <a href="#precios">Precios</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#faq">FAQ</a>
+        <a href="#registro" class="nav-login">Iniciar sesión</a>
+        <a href="#cta" class="btn btn-primario btn-sm nav-cta">Prueba gratis</a>
+      </nav>
+
+      <div class="nav-acciones">
+        <!-- Botón claro/oscuro -->
+        <button class="btn-icono" id="btnTema" type="button" aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="icono-sol" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+          <svg class="icono-luna" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+
+        <!-- Menú hamburguesa (solo móvil) -->
+        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navEnlaces">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="registro">
+      <div class="hero-fondo" aria-hidden="true"></div>
+      <div class="contenedor hero-rejilla">
+        <div class="hero-texto animar">
+          <span class="badge">
+            <span class="badge-punto" aria-hidden="true"></span>
+            Novedad · Fluxo 3.0 con IA integrada
+          </span>
+
+          <h1>
+            Gestiona tu equipo y tus proyectos
+            <span class="degradado-texto">sin fricción</span>
+          </h1>
+
+          <p class="subtitulo">
+            Fluxo reúne tableros, tareas, tiempo y clientes en una sola herramienta.
+            Menos pestañas, más trabajo hecho. Únete a más de 12.000 equipos que ya
+            trabajan con Fluxo.
+          </p>
+
+          <!-- Formulario de registro -->
+          <form class="registro" id="formRegistro" novalidate>
+            <label class="visually-hidden" for="emailHero">Tu correo de trabajo</label>
+            <input type="email" id="emailHero" name="email" placeholder="tu@empresa.com" required autocomplete="email">
+            <button type="submit" class="btn btn-primario">Empezar gratis</button>
+          </form>
+          <p class="registro-nota" id="registroNota">Sin tarjeta de crédito · Cancela cuando quieras</p>
+
+          <div class="hero-datos">
+            <div class="dato"><strong>12.000+</strong><span>equipos activos</span></div>
+            <div class="dato-separador" aria-hidden="true"></div>
+            <div class="dato"><strong>4,9/5</strong><span>valoración media</span></div>
+            <div class="dato-separador" aria-hidden="true"></div>
+            <div class="dato"><strong>99,9%</strong><span>disponibilidad</span></div>
+          </div>
+        </div>
+
+        <!-- Maqueta del producto dibujada con CSS (sin imágenes externas) -->
+        <div class="hero-maqueta animar" aria-hidden="true">
+          <div class="maqueta">
+            <div class="maqueta-barra">
+              <span class="punto rojo"></span><span class="punto amarillo"></span><span class="punto verde"></span>
+              <span class="maqueta-url">app.fluxo.io/panel</span>
+            </div>
+            <div class="maqueta-cuerpo">
+              <aside class="maqueta-lateral">
+                <span class="linea ancha"></span>
+                <span class="linea"></span>
+                <span class="linea"></span>
+                <span class="linea corta"></span>
+                <span class="linea"></span>
+                <span class="linea corta"></span>
+              </aside>
+              <div class="maqueta-principal">
+                <div class="maqueta-titulos">
+                  <span class="linea ancha"></span>
+                  <span class="pill-mini"></span>
+                </div>
+                <div class="maqueta-tarjetas">
+                  <div class="mini-tarjeta t1"><span class="linea"></span><span class="linea corta"></span><span class="barra"></span></div>
+                  <div class="mini-tarjeta t2"><span class="linea"></span><span class="linea corta"></span><span class="barra"></span></div>
+                  <div class="mini-tarjeta t3"><span class="linea"></span><span class="linea corta"></span><span class="barra"></span></div>
+                </div>
+                <div class="maqueta-grafico">
+                  <span class="barra b1"></span><span class="barra b2"></span><span class="barra b3"></span>
+                  <span class="barra b4"></span><span class="barra b5"></span><span class="barra b6"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="maqueta-flotante f1">
+            <span class="check" aria-hidden="true">✓</span>
+            <span><strong>Tarea completada</strong><small>Rediseño de onboarding</small></span>
+          </div>
+          <div class="maqueta-flotante f2">
+            <span class="avatar-mini">MR</span>
+            <span><strong>Marta se unió</strong><small>al proyecto Q4</small></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LOGOS DE EMPRESAS ============ -->
+    <section class="logos" aria-label="Empresas que confían en Fluxo">
+      <div class="contenedor">
+        <p class="logos-titulo">Empresas que confían en Fluxo</p>
+        <ul class="logos-lista">
+          <li>Northwind</li>
+          <li>Lumina</li>
+          <li>Kairos Labs</li>
+          <li>Verdana</li>
+          <li>Orbital</li>
+          <li>Sable&amp;Co</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FUNCIONES ============ -->
+    <section class="seccion" id="funciones">
+      <div class="contenedor">
+        <header class="seccion-cabecera animar">
+          <span class="eyebrow">Funciones</span>
+          <h2>Todo lo que tu equipo necesita, <span class="degradado-texto">nada que sobre</span></h2>
+          <p>Herramientas pensadas para reducir el ruido y acelerar el trabajo diario.</p>
+        </header>
+
+        <div class="rejilla-funciones">
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>
+              </svg>
+            </div>
+            <h3>Tableros Kanban</h3>
+            <p>Arrastra tareas entre columnas, personaliza etapas y visualiza el progreso del proyecto en tiempo real.</p>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="8" r="3.2"/><path d="M2.5 19a6.5 6.5 0 0 1 13 0"/>
+                <path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 19a6.6 6.6 0 0 0-2.2-4.9"/>
+              </svg>
+            </div>
+            <h3>Colaboración en equipo</h3>
+            <p>Comentarios hilados, menciones @, permisos por rol y asignación de tareas sin salir de la tarjeta.</p>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/>
+              </svg>
+            </div>
+            <h3>Registro de tiempo</h3>
+            <p>Mide horas por tarea y por cliente, genera informes automáticos y factura sin hojas de cálculo.</p>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 17l5-6 4 3 5-7 4 4"/><path d="M3 21h18"/>
+              </svg>
+            </div>
+            <h3>Informes en vivo</h3>
+            <p>Gráficos de carga, velocidad del equipo y previsión de entregas. Exporta a PDF o CSV en un clic.</p>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>
+              </svg>
+            </div>
+            <h3>Automatizaciones</h3>
+            <p>Crea reglas sencillas: al pasar a «Hecho», notifica al cliente y mueve la factura a «Por cobrar».</p>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-icono">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+              </svg>
+            </div>
+            <h3>Seguridad empresarial</h3>
+            <p>SSO, doble factor, cifrado en tránsito y en reposo, registros de auditoría y residencia de datos en la UE.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRECIOS ============ -->
+    <section class="seccion seccion-alterna" id="precios">
+      <div class="contenedor">
+        <header class="seccion-cabecera animar">
+          <span class="eyebrow">Precios</span>
+          <h2>Precios simples y <span class="degradado-texto">sin sorpresas</span></h2>
+          <p>Empieza gratis y crece cuando lo necesites. Sin permanencia.</p>
+
+          <div class="toggle-precios" role="group" aria-label="Frecuencia de pago">
+            <span id="etiquetaMensual" class="activo">Mensual</span>
+            <button class="switch" id="btnPeriodo" type="button" role="switch" aria-checked="false" aria-label="Activar facturación anual">
+              <span class="switch-perilla"></span>
+            </button>
+            <span id="etiquetaAnual">Anual <em class="ahorro">−20%</em></span>
+          </div>
+        </header>
+
+        <div class="rejilla-precios">
+          <!-- Plan Básico -->
+          <article class="plan animar">
+            <h3 class="plan-nombre">Básico</h3>
+            <p class="plan-desc">Para freelancers y equipos pequeños que empiezan.</p>
+            <p class="plan-precio">
+              <span class="importe" data-mensual="9" data-anual="7">9</span>
+              <span class="moneda">€</span>
+              <span class="ciclo">/usuario/mes</span>
+            </p>
+            <p class="plan-nota" data-nota-mensual="Facturado mes a mes" data-nota-anual="Facturado anualmente (84 €)">Facturado mes a mes</p>
+            <a href="#cta" class="btn btn-secundario btn-block">Probar 14 días</a>
+            <ul class="plan-lista">
+              <li>Hasta 3 proyectos</li>
+              <li>5 GB de almacenamiento</li>
+              <li>Tableros Kanban y listas</li>
+              <li>Soporte por correo (48 h)</li>
+            </ul>
+          </article>
+
+          <!-- Plan Pro (destacado) -->
+          <article class="plan destacado animar">
+            <span class="plan-badge">Más popular</span>
+            <h3 class="plan-nombre">Pro</h3>
+            <p class="plan-desc">Para equipos en crecimiento que necesitan control total.</p>
+            <p class="plan-precio">
+              <span class="importe" data-mensual="19" data-anual="15">19</span>
+              <span class="moneda">€</span>
+              <span class="ciclo">/usuario/mes</span>
+            </p>
+            <p class="plan-nota" data-nota-mensual="Facturado mes a mes" data-nota-anual="Facturado anualmente (180 €)">Facturado mes a mes</p>
+            <a href="#cta" class="btn btn-primario btn-block">Empezar gratis</a>
+            <a href="#registro" class="plan-pagar" data-comprar="pro">Contratar ahora con tarjeta →</a>
+            <ul class="plan-lista">
+              <li>Proyectos ilimitados</li>
+              <li>200 GB de almacenamiento</li>
+              <li>Informes y registro de tiempo</li>
+              <li>Automatizaciones y plantillas</li>
+              <li>Integraciones (Slack, Drive, GitHub)</li>
+              <li>Soporte prioritario (4 h)</li>
+            </ul>
+          </article>
+
+          <!-- Plan Empresa -->
+          <article class="plan animar">
+            <h3 class="plan-nombre">Empresa</h3>
+            <p class="plan-desc">Para organizaciones con requisitos avanzados.</p>
+            <p class="plan-precio">
+              <span class="importe" data-mensual="39" data-anual="31">39</span>
+              <span class="moneda">€</span>
+              <span class="ciclo">/usuario/mes</span>
+            </p>
+            <p class="plan-nota" data-nota-mensual="Facturado mes a mes" data-nota-anual="Facturado anualmente (372 €)">Facturado mes a mes</p>
+            <a href="#cta" class="btn btn-secundario btn-block">Hablar con ventas</a>
+            <ul class="plan-lista">
+              <li>Todo lo del plan Pro</li>
+              <li>SSO / SAML y SCIM</li>
+              <li>Residencia de datos en la UE</li>
+              <li>Registro de auditoría</li>
+              <li>Gestor de cuenta dedicado</li>
+              <li>SLA de disponibilidad 99,9%</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIOS ============ -->
+    <section class="seccion" id="testimonios">
+      <div class="contenedor">
+        <header class="seccion-cabecera animar">
+          <span class="eyebrow">Testimonios</span>
+          <h2>Lo que dicen <span class="degradado-texto">nuestros clientes</span></h2>
+          <p>Más de 12.000 equipos trabajan cada día con Fluxo.</p>
+        </header>
+
+        <div class="rejilla-testimonios">
+          <figure class="testimonio animar">
+            <div class="estrellas" aria-label="Valoración: 5 de 5 estrellas">
+              <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span>
+            </div>
+            <blockquote>
+              «Migramos tres herramientas a Fluxo en una tarde. El tiempo de reuniones
+              bajó un 40&nbsp;% porque todo el mundo ve el mismo tablero.»
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">LR</span>
+              <span class="quien"><strong>Lucía Ramírez</strong><small>Directora de Operaciones, Northwind</small></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonio animar">
+            <div class="estrellas" aria-label="Valoración: 5 de 5 estrellas">
+              <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span>
+            </div>
+            <blockquote>
+              «Los informes de tiempo nos permiten saber qué proyectos son rentables.
+              La factura del mes sale calculada en dos minutos.»
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">DM</span>
+              <span class="quien"><strong>Diego Morales</strong><small>Fundador, Estudio Kairos</small></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonio animar">
+            <div class="estrellas" aria-label="Valoración: 5 de 5 estrellas">
+              <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span>
+            </div>
+            <blockquote>
+              «Soportamos 40 proyectos simultáneos con un equipo de 12 personas.
+              La automatización nos ahorra horas cada semana.»
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">AS</span>
+              <span class="quien"><strong>Ana Soto</strong><small>Head of Delivery, Lumina</small></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="seccion seccion-alterna" id="faq">
+      <div class="contenedor contenedor-estrecho">
+        <header class="seccion-cabecera animar">
+          <span class="eyebrow">Preguntas frecuentes</span>
+          <h2>Resolvemos tus <span class="degradado-texto">dudas</span></h2>
+        </header>
+
+        <div class="faq-lista animar">
+          <details>
+            <summary>¿Puedo probar Fluxo sin tarjeta de crédito?</summary>
+            <p>Sí. La prueba de 14 días incluye todas las funciones del plan Pro y no requiere tarjeta. Al terminar puedes elegir un plan o quedarte en la versión gratuita.</p>
+          </details>
+          <details>
+            <summary>¿Qué pasa con mis datos si dejo de pagar?</summary>
+            <p>Tu información se conserva durante 90 días en modo solo lectura. Puedes exportarla a CSV o JSON en cualquier momento, también mientras dure la prueba.</p>
+          </details>
+          <details>
+            <summary>¿Puedo cambiar de plan o cancelar cuando quiera?</summary>
+            <p>Claro. Los cambios se aplican de forma prorrateada y la cancelación es inmediata, sin llamadas ni permanencia. Conservas el acceso hasta el final del periodo pagado.</p>
+          </details>
+          <details>
+            <summary>¿Ofrecen descuento para startups o educación?</summary>
+            <p>Sí: 50&nbsp;% el primer año para startups con menos de 2 años y planes gratuitos para docentes y estudiantes verificados. Escríbenos a hola@fluxo.io.</p>
+          </details>
+          <details>
+            <summary>¿Se integra con las herramientas que ya usamos?</summary>
+            <p>Fluxo conecta con Slack, Google Drive, GitHub, Figma, HubSpot y Zapier. También disponemos de API REST y webhooks para integraciones propias.</p>
+          </details>
+          <details>
+            <summary>¿Dónde se almacenan los datos?</summary>
+            <p>En centros de datos de la Unión Europea, con cifrado en tránsito y en reposo, copias de seguridad diarias y cumplimiento del RGPD. Los planes Empresa permiten elegir región.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA FINAL ============ -->
+    <section class="cta-final" id="cta">
+      <div class="contenedor">
+        <div class="cta-caja animar">
+          <h2>Empieza a trabajar mejor <span class="degradado-texto">hoy mismo</span></h2>
+          <p>Prueba Fluxo gratis durante 14 días. Sin tarjeta, sin compromisos, sin instalación.</p>
+          <div class="cta-botones">
+            <a href="#registro" class="btn btn-blanco">Crear cuenta gratis</a>
+            <a href="#registro" class="btn btn-fantasma">Ver demo (2 min)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ PIE DE PÁGINA ============ -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-rejilla">
+        <div class="pie-marca">
+          <a href="#" class="logo" aria-label="Fluxo — Ir al inicio">
+            <span class="logo-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>
+              </svg>
+            </span>
+            <span class="logo-texto">Fluxo</span>
+          </a>
+          <p>La plataforma todo-en-uno para gestionar proyectos, equipos y clientes desde un solo lugar.</p>
+          <div class="redes">
+            <a href="#" aria-label="Fluxo en X (Twitter)"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.6L21.7 21h-5.9l-4.3-5.7L6.4 21H3.3l7-8.1L2.6 3h6l3.9 5.2L17.5 3zm-1 16h1.6L7.6 4.7H5.9L16.5 19z"/></svg></a>
+            <a href="#" aria-label="Fluxo en LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.76-1.95C21.4 8.75 22 11.1 22 14.2V21h-4v-6c0-1.4-.03-3.2-2-3.2s-2.3 1.5-2.3 3.1V21h-4z"/></svg></a>
+            <a href="#" aria-label="Fluxo en GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
+          </div>
+        </div>
+
+        <nav class="pie-col" aria-label="Producto">
+          <h4>Producto</h4>
+          <a href="#funciones">Funciones</a>
+          <a href="#precios">Precios</a>
+          <a href="#">Integraciones</a>
+          <a href="#">Novedades</a>
+          <a href="#">Hoja de ruta</a>
+        </nav>
+
+        <nav class="pie-col" aria-label="Empresa">
+          <h4>Empresa</h4>
+          <a href="#">Sobre nosotros</a>
+          <a href="#">Empleo</a>
+          <a href="#">Blog</a>
+          <a href="#">Prensa</a>
+          <a href="#">Contacto</a>
+        </nav>
+
+        <nav class="pie-col" aria-label="Recursos">
+          <h4>Recursos</h4>
+          <a href="#">Centro de ayuda</a>
+          <a href="#">Documentación</a>
+          <a href="#">API para desarrolladores</a>
+          <a href="#">Estado del servicio</a>
+          <a href="#">Comunidad</a>
+        </nav>
+
+        <nav class="pie-col" aria-label="Legal">
+          <h4>Legal</h4>
+          <a href="#">Aviso legal</a>
+          <a href="#">Política de privacidad</a>
+          <a href="#">Términos y condiciones</a>
+          <a href="#">Cookies</a>
+          <a href="#">Seguridad</a>
+        </nav>
+      </div>
+
+      <div class="pie-inferior">
+        <p>© <span id="anio">2026</span> Fluxo Technologies, S.L. Todos los derechos reservados.</p>
+        <p class="pie-hecho">Hecho con HTML, CSS y JavaScript vanilla.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

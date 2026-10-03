@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    name: Pruebas (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+        # Sin cache npm: el repo no tiene package-lock.json y setup-node
+        # fallaría con "Dependencies lock file is not found".
+
+      - name: npm test
+        run: npm test
+
+      - name: Sin secretos en git
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$'; then
+            echo "ERROR: hay un .env versionado en el repositorio"
+            exit 1
+          fi
+          echo "OK: ningún .env está versionado"
+
+  verificar:
+    name: Verificar las 7 plantillas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Configurar y verificar
+        run: bash configurar.sh && bash verificar.sh

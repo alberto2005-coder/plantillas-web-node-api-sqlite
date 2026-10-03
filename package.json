@@ -1,0 +1,17 @@
+{
+  "name": "plantillas-web",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Siete plantillas web (portafolio, SaaS, blog, tienda, agencia, dashboard y restaurante) con servidor Node sin dependencias, pruebas y scripts de verificación.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "test": "node --test \"pruebas/*.test.mjs\"",
+    "verificar": "powershell -ExecutionPolicy Bypass -File verificar.ps1",
+    "verificar:unix": "bash verificar.sh",
+    "configurar": "powershell -ExecutionPolicy Bypass -File configurar.ps1",
+    "configurar:unix": "bash configurar.sh"
+  }
+}

@@ -47,7 +47,7 @@ const HOST = process.env.HOST || '127.0.0.1';
 
 const servidor = http.createServer(async (req, res) => {
   try {
-    if (req.url.startsWith('/api/')) {
+    if (req.url.startsWith('/api/') || req.url.startsWith('/feed.xml')) {
       const atendido = await api.manejar(req, res);
       if (!atendido && !res.writableEnded) {
         error(res, 404, `No existe la ruta ${req.method} ${req.url.split('?')[0]}`);

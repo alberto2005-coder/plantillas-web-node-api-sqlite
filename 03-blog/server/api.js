@@ -220,6 +220,56 @@ module.exports = function registrar(api, { bd }) {
     })
   );
 
+  /* ------------------------------------------------------------- Feed RSS */
+  // Se publica en /feed.xml (fuera de /api/): el enlace <link rel="alternate">
+  // de la cabecera lo apunta aquí y cualquier lector de RSS lo detecta.
+  api.get('/feed.xml', (ctx) => {
+    const filas = bd.todos(
+      'SELECT slug, titulo, extracto, categoria, autor, fecha FROM articulos WHERE publicado = 1 ORDER BY fecha DESC, id DESC LIMIT 20'
+    );
+    const base = String(process.env.SITE_URL || '').replace(/\/+$/, '');
+    const escapar = (t) => String(t)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    const items = filas.map((a) => {
+      const enlace = `${base}/articulo.html?slug=${encodeURIComponent(a.slug)}`;
+      return [
+        '    <item>',
+        `      <title>${escapar(a.titulo)}</title>`,
+        `      <link>${enlace}</link>`,
+        `      <guid isPermaLink="false">${enlace}</guid>`,
+        `      <description>${escapar(a.extracto || '')}</description>`,
+        `      <category>${escapar(a.categoria)}</category>`,
+        `      <dc:creator>${escapar(a.autor)}</dc:creator>`,
+        `      <pubDate>${new Date(`${a.fecha}T08:00:00Z`).toUTCString()}</pubDate>`,
+        '    </item>'
+      ].join('\n');
+    }).join('\n');
+
+    const xml = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+      '  <channel>',
+      '    <title>Bitácora Digital</title>',
+      `    <link>${base || '/'}</link>`,
+      '    <description>Blog de tecnología: desarrollo web, inteligencia artificial, seguridad y novedades del sector.</description>',
+      '    <language>es</language>',
+      `    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,
+      `    <atom:link href="${base}/feed.xml" rel="self" type="application/rss+xml"/>`,
+      items,
+      '  </channel>',
+      '</rss>',
+      ''
+    ].join('\n');
+
+    ctx.res.writeHead(200, {
+      'Content-Type': 'application/rss+xml; charset=utf-8',
+      'Cache-Control': 'public, max-age=300'
+    });
+    ctx.res.end(xml);
+  });
+
   /* ----------------------------------------------------------- Artículos */
   api.get('/api/articulos', (ctx) => {
     // El destacado no se duplica en el listado: se sirve con /api/destacado

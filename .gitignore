@@ -1,0 +1,48 @@
+# ==========================================================================
+# .gitignore DE LA RAÍZ — un único repositorio con las 7 plantillas
+# --------------------------------------------------------------------------
+# Este fichero cubre todo el árbol del repositorio para que no se suban
+# secretos ni datos generados de ninguna plantilla.
+# Verifica que nada sensible se cuela con:   git status
+# ==========================================================================
+
+# --- Nunca se sube: configuración local (lleva claves) ----------------------
+# .env.example SÍ se sube: es la plantilla documentada y va sin claves reales.
+.env
+.env.local
+.env.*
+!.env.example
+
+# --- Dependencias (ninguna plantilla las necesita) --------------------------
+node_modules/
+
+# --- Bases de datos generadas (se recrean con `npm start`/`npm run reiniciar`)
+**/server/data/
+*.db
+*.db-wal
+*.db-shm
+
+# --- Registros y temporales -------------------------------------------------
+*.log
+npm-debug.log*
+yarn-error.log*
+*.tmp
+*.bak
+~$*
+
+# --- Sistema ----------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# --- Editores / IDE ---------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Salidas de pruebas / build (por si añades herramientas) ----------------
+coverage/
+dist/
+build/

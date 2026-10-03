@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Estudio Creativo Vértice — Agencia de diseño de branding, web y motion. Creamos identidades con carácter para marcas que quieren destacar.">
+  <meta name="author" content="Estudio Creativo Vértice">
+  <title>Estudio Creativo Vértice — Agencia de diseño y branding</title>
+
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Script anti-parpadeo: aplica el tema guardado antes de pintar la página -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Sin JavaScript: mostramos todo el contenido oculto por las animaciones -->
+  <noscript>
+    <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+  </noscript>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="contenedor navbar__interior">
+      <a href="#inicio" class="logo" aria-label="Vértice, volver al inicio">
+        <span class="logo__marca" aria-hidden="true">◆</span>
+        <span class="logo__texto">Vértice<em>.</em></span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navegación principal">
+        <a href="#trabajo" class="nav__enlace">Trabajo</a>
+        <a href="#servicios" class="nav__enlace">Servicios</a>
+        <a href="#estudio" class="nav__enlace">Estudio</a>
+        <a href="#contacto" class="nav__enlace">Contacto</a>
+        <a href="#contacto" class="btn btn--primario btn--pequeño nav__cta">Hablemos</a>
+      </nav>
+
+      <div class="navbar__acciones">
+        <!-- Botón cambio de tema (sol / luna) -->
+        <button class="toggler" id="toggler-tema" type="button" aria-label="Cambiar a tema oscuro" aria-pressed="false">
+          <svg class="icono icono--sol" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="icono icono--luna" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+          </svg>
+        </button>
+
+        <!-- Menú hamburguesa (solo móvil) -->
+        <button class="hamburguesa" id="hamburguesa" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ===================== HERO EDITORIAL ===================== -->
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div class="hero__decoracion hero__decoracion--1" aria-hidden="true"></div>
+      <div class="hero__decoracion hero__decoracion--2" aria-hidden="true"></div>
+      <div class="hero__decoracion hero__decoracion--3" aria-hidden="true"></div>
+
+      <div class="contenedor hero__interior">
+        <p class="pill reveal">Estudio creativo · Madrid · Desde 2014</p>
+
+        <h1 class="hero__titulo reveal" id="titulo-hero">
+          Diseñamos marcas<br>
+          que <em>no pasan</em><br>
+          <span class="degradado">desapercibidas.</span>
+        </h1>
+
+        <p class="hero__subtitulo reveal">
+          Somos un estudio independiente de branding, producto digital y motion.
+          Trabajamos con pocas marcas al año para poder implicarnos de verdad en cada proyecto.
+        </p>
+
+        <div class="hero__botones reveal">
+          <a href="#trabajo" class="btn btn--primario">Ver nuestro trabajo</a>
+          <a href="#servicios" class="btn btn--fantasma">Qué hacemos ↓</a>
+        </div>
+      </div>
+
+      <a href="#servicios" class="scroll-indicador" aria-label="Bajar a la sección de servicios">
+        <span class="scroll-indicador__linea"></span>
+        <span class="scroll-indicador__texto">Desliza</span>
+      </a>
+    </section>
+
+    <!-- ===================== MARQUESINA DE SERVICIOS ===================== -->
+    <div class="marquesina" aria-hidden="true">
+      <div class="marquesina__pista">
+        <span>Branding</span><i>•</i><span>Web</span><i>•</i><span>Motion</span><i>•</i><span>SEO</span><i>•</i>
+        <span>Branding</span><i>•</i><span>Web</span><i>•</i><span>Motion</span><i>•</i><span>SEO</span><i>•</i>
+        <span>Branding</span><i>•</i><span>Web</span><i>•</i><span>Motion</span><i>•</i><span>SEO</span><i>•</i>
+        <span>Branding</span><i>•</i><span>Web</span><i>•</i><span>Motion</span><i>•</i><span>SEO</span><i>•</i>
+      </div>
+    </div>
+
+    <!-- ===================== SERVICIOS ===================== -->
+    <section class="seccion" id="servicios" aria-labelledby="titulo-servicios">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="etiqueta">01 — Servicios</p>
+          <h2 class="seccion__titulo" id="titulo-servicios">
+            Cuatro formas de <em>dar forma</em> a tu marca
+          </h2>
+        </header>
+
+        <ul class="servicios">
+          <li class="servicio reveal">
+            <span class="servicio__numero">01</span>
+            <div class="servicio__cuerpo">
+              <h3 class="servicio__titulo">Identidad de marca</h3>
+              <p class="servicio__texto">
+                Naming, logotipo, sistema visual y manual de uso. Construimos identidades
+                flexibles que aguantan el paso del tiempo y crecen con la empresa.
+              </p>
+            </div>
+            <span class="servicio__flecha" aria-hidden="true">→</span>
+          </li>
+
+          <li class="servicio reveal">
+            <span class="servicio__numero">02</span>
+            <div class="servicio__cuerpo">
+              <h3 class="servicio__titulo">Diseño y desarrollo web</h3>
+              <p class="servicio__texto">
+                Sitios y productos digitales rápidos, accesibles y fáciles de editar.
+                Diseño en Figma, maquetación en HTML/CSS y JS moderno.
+              </p>
+            </div>
+            <span class="servicio__flecha" aria-hidden="true">→</span>
+          </li>
+
+          <li class="servicio reveal">
+            <span class="servicio__numero">03</span>
+            <div class="servicio__cuerpo">
+              <h3 class="servicio__titulo">Motion y dirección de arte</h3>
+              <p class="servicio__texto">
+                Animación de marca, piezas para redes y vídeo explicativo. El movimiento
+                como extensión de la identidad, no como adorno.
+              </p>
+            </div>
+            <span class="servicio__flecha" aria-hidden="true">→</span>
+          </li>
+
+          <li class="servicio reveal">
+            <span class="servicio__numero">04</span>
+            <div class="servicio__cuerpo">
+              <h3 class="servicio__titulo">Estrategia y SEO</h3>
+              <p class="servicio__texto">
+                Posicionamiento, arquitectura de contenidos y SEO técnico. Que te encuentren
+                las personas adecuadas, con el mensaje adecuado.
+              </p>
+            </div>
+            <span class="servicio__flecha" aria-hidden="true">→</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== TRABAJO / PORTFOLIO ===================== -->
+    <section class="seccion seccion--alterna" id="trabajo" aria-labelledby="titulo-trabajo">
+      <div class="contenedor">
+        <header class="seccion__cabecera seccion__cabecera--fila reveal">
+          <div>
+            <p class="etiqueta">02 — Trabajo seleccionado</p>
+            <h2 class="seccion__titulo" id="titulo-trabajo">Proyectos que <em>nos gustan</em> enseñar</h2>
+          </div>
+          <p class="seccion__nota">Toca cualquier proyecto para ver los detalles.</p>
+        </header>
+
+        <!-- Grid editorial asimétrico: 6 proyectos -->
+        <div class="portfolio">
+          <article class="proyecto proyecto--ancho reveal" role="button" tabindex="0"
+                   data-proyecto="lumen" aria-label="Abrir proyecto Lumen Café">
+            <div class="proyecto__visual gradiente-1"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Branding · Packaging</span>
+              <h3 class="proyecto__titulo">Lumen Café</h3>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" role="button" tabindex="0"
+                   data-proyecto="norte" aria-label="Abrir proyecto Hotel Norte">
+            <div class="proyecto__visual gradiente-2"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Web · UI</span>
+              <h3 class="proyecto__titulo">Hotel Norte</h3>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" role="button" tabindex="0"
+                   data-proyecto="fibra" aria-label="Abrir proyecto Fibra Studio">
+            <div class="proyecto__visual gradiente-3"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Motion</span>
+              <h3 class="proyecto__titulo">Fibra Studio</h3>
+            </div>
+          </article>
+
+          <article class="proyecto proyecto--alto reveal" role="button" tabindex="0"
+                   data-proyecto="mercado" aria-label="Abrir proyecto Mercado 22">
+            <div class="proyecto__visual gradiente-4"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Identidad · Señalética</span>
+              <h3 class="proyecto__titulo">Mercado 22</h3>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" role="button" tabindex="0"
+                   data-proyecto="aurea" aria-label="Abrir proyecto Aurea Cosmética">
+            <div class="proyecto__visual gradiente-5"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Branding · Ecommerce</span>
+              <h3 class="proyecto__titulo">Aurea Cosmética</h3>
+            </div>
+          </article>
+
+          <article class="proyecto proyecto--ancho reveal" role="button" tabindex="0"
+                   data-proyecto="orbita" aria-label="Abrir proyecto Órbita Tech">
+            <div class="proyecto__visual gradiente-6"></div>
+            <div class="proyecto__info">
+              <span class="proyecto__categoria">Marca · Producto digital</span>
+              <h3 class="proyecto__titulo">Órbita Tech</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ESTUDIO / MANIFIESTO + CONTADORES ===================== -->
+    <section class="seccion" id="estudio" aria-labelledby="titulo-estudio">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="etiqueta">03 — El estudio</p>
+          <h2 class="seccion__titulo seccion__titulo--manifiesto" id="titulo-estudio">
+            Creemos que una marca no es un logo: es la <em>promesa</em> que alguien
+            recuerda de ti cuando ya has cerrado la tienda.
+          </h2>
+        </header>
+
+        <div class="contadores reveal" id="contadores">
+          <div class="contador">
+            <span class="contador__valor" data-objetivo="248">0</span>
+            <span class="contador__etiqueta">Proyectos entregados</span>
+          </div>
+          <div class="contador">
+            <span class="contador__valor" data-objetivo="17">0</span>
+            <span class="contador__etiqueta">Premios obtenidos</span>
+          </div>
+          <div class="contador">
+            <span class="contador__valor" data-objetivo="11">0</span>
+            <span class="contador__etiqueta">Años de oficio</span>
+          </div>
+          <div class="contador">
+            <span class="contador__valor" data-objetivo="96">0</span>
+            <span class="contador__etiqueta">Clientes felices</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EQUIPO ===================== -->
+    <section class="seccion seccion--alterna" aria-labelledby="titulo-equipo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="etiqueta">04 — Equipo</p>
+          <h2 class="seccion__titulo" id="titulo-equipo">Las personas detrás <em>del ruido</em></h2>
+        </header>
+
+        <div class="equipo">
+          <article class="miembro reveal">
+            <div class="miembro__avatar" aria-hidden="true">IM</div>
+            <h3 class="miembro__nombre">Irene Márquez</h3>
+            <p class="miembro__rol">Directora creativa</p>
+          </article>
+          <article class="miembro reveal">
+            <div class="miembro__avatar" aria-hidden="true">DS</div>
+            <h3 class="miembro__nombre">Diego Sanz</h3>
+            <p class="miembro__rol">Director de arte</p>
+          </article>
+          <article class="miembro reveal">
+            <div class="miembro__avatar" aria-hidden="true">PC</div>
+            <h3 class="miembro__nombre">Paula Cano</h3>
+            <p class="miembro__rol">Diseñadora de producto</p>
+          </article>
+          <article class="miembro reveal">
+            <div class="miembro__avatar" aria-hidden="true">RV</div>
+            <h3 class="miembro__nombre">Rubén Vidal</h3>
+            <p class="miembro__rol">Desarrollador front-end</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RECONOCIMIENTOS ===================== -->
+    <section class="seccion" aria-labelledby="titulo-premios">
+      <div class="contenedor contenedor--estrecho">
+        <header class="seccion__cabecera reveal">
+          <p class="etiqueta">05 — Reconocimientos</p>
+          <h2 class="seccion__titulo" id="titulo-premios">Algo de <em>cerámica</em> en la estantería</h2>
+        </header>
+
+        <ul class="premios">
+          <li class="premio reveal">
+            <span class="premio__anio">2025</span>
+            <span class="premio__nombre">Laus de Plata — Identidad Lumen Café</span>
+            <span class="premio__org">ADG-FAD</span>
+          </li>
+          <li class="premio reveal">
+            <span class="premio__anio">2024</span>
+            <span class="premio__nombre">Awwwards Site of the Day — Hotel Norte</span>
+            <span class="premio__org">Awwwards</span>
+          </li>
+          <li class="premio reveal">
+            <span class="premio__anio">2024</span>
+            <span class="premio__nombre">Premio Nacional de Diseño Editorial</span>
+            <span class="premio__org">BEDA</span>
+          </li>
+          <li class="premio reveal">
+            <span class="premio__anio">2023</span>
+            <span class="premio__nombre">Mejor dirección de arte en motion</span>
+            <span class="premio__org">Berlin Motion Awards</span>
+          </li>
+          <li class="premio reveal">
+            <span class="premio__anio">2022</span>
+            <span class="premio__nombre">CSS Design Awards — Website of the Month</span>
+            <span class="premio__org">CSSDA</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CTA DE CONTACTO ===================== -->
+    <section class="cta" id="contacto" aria-labelledby="titulo-cta">
+      <div class="cta__decoracion" aria-hidden="true"></div>
+      <div class="contenedor cta__interior">
+        <p class="etiqueta reveal">06 — Contacto</p>
+        <h2 class="cta__titulo reveal" id="titulo-cta">
+          ¿Tienes una idea<br><span class="degradado">entre las manos?</span>
+        </h2>
+        <p class="cta__texto reveal">
+          Cuéntanos qué estás construyendo. Respondemos en menos de 24 horas laborables,
+          siempre con una persona de verdad al otro lado.
+        </p>
+
+        <!-- Alternativa rápida por correo (además del formulario de abajo) -->
+        <div class="cta__acciones reveal">
+          <a class="btn btn--primario btn--grande" href="mailto:hola@vertice.studio">hola@vertice.studio</a>
+          <a class="btn btn--fantasma btn--grande" href="#form-presupuesto">Pedir presupuesto ↓</a>
+        </div>
+
+        <!-- ===================== FORMULARIO DE PRESUPUESTO ===================== -->
+        <!-- Se envía con js/main.js a POST /api/presupuesto (modo demo sin servidor) -->
+        <form class="formulario-presupuesto reveal" id="form-presupuesto" novalidate>
+          <div class="formulario-presupuesto__cabecera">
+            <h3 class="formulario-presupuesto__titulo">Cuéntanos tu proyecto</h3>
+            <p class="formulario-presupuesto__nota">
+              Los campos marcados con <span aria-hidden="true">*</span><span class="visually-oculto">asterisco</span> son obligatorios.
+            </p>
+          </div>
+
+          <div class="formulario-presupuesto__rejilla">
+            <div class="campo">
+              <label for="nombre">Nombre <span class="campo__obligatorio" aria-hidden="true">*</span></label>
+              <input class="campo__control" type="text" id="nombre" name="nombre"
+                     autocomplete="name" placeholder="Ej. Irene Márquez" required
+                     aria-describedby="error-nombre">
+              <p class="campo__error" id="error-nombre" hidden>Escribe tu nombre (mínimo 2 caracteres).</p>
+            </div>
+
+            <div class="campo">
+              <label for="email">Correo electrónico <span class="campo__obligatorio" aria-hidden="true">*</span></label>
+              <input class="campo__control" type="email" id="email" name="email"
+                     autocomplete="email" placeholder="tucorreo@ejemplo.com" required
+                     aria-describedby="error-email">
+              <p class="campo__error" id="error-email" hidden>Introduce un correo válido, por ejemplo nombre@dominio.com.</p>
+            </div>
+
+            <div class="campo">
+              <label for="empresa">Empresa <span class="campo__opcional">(opcional)</span></label>
+              <input class="campo__control" type="text" id="empresa" name="empresa"
+                     autocomplete="organization" placeholder="Nombre de tu empresa o proyecto">
+            </div>
+
+            <div class="campo">
+              <label for="tipo">¿Qué necesitas? <span class="campo__obligatorio" aria-hidden="true">*</span></label>
+              <select class="campo__control" id="tipo" name="tipo" required aria-describedby="error-tipo">
+                <option value="">Elige una opción…</option>
+                <option value="web">Web</option>
+                <option value="landing">Landing</option>
+                <option value="branding">Branding</option>
+                <option value="app">App</option>
+                <option value="seo">SEO</option>
+                <option value="otro">Otro</option>
+              </select>
+              <p class="campo__error" id="error-tipo" hidden>Elige el tipo de proyecto.</p>
+            </div>
+
+            <div class="campo">
+              <label for="presupuesto">Presupuesto <span class="campo__opcional">(opcional)</span></label>
+              <select class="campo__control" id="presupuesto" name="presupuesto">
+                <option value="">Prefiero comentarlo</option>
+                <option value="menos-3000">Menos de 3.000 €</option>
+                <option value="3000-8000">3.000 – 8.000 €</option>
+                <option value="8000-20000">8.000 – 20.000 €</option>
+                <option value="mas-20000">Más de 20.000 €</option>
+              </select>
+            </div>
+
+            <div class="campo campo--ancho">
+              <label for="mensaje">Cuéntanos tu idea <span class="campo__obligatorio" aria-hidden="true">*</span></label>
+              <textarea class="campo__control" id="mensaje" name="mensaje" rows="5" required
+                        placeholder="Objetivos, plazos, referencias… ¿Qué te gustaría conseguir?"
+                        aria-describedby="error-mensaje"></textarea>
+              <p class="campo__error" id="error-mensaje" hidden>El mensaje debe tener al menos 10 caracteres.</p>
+            </div>
+          </div>
+
+          <div class="formulario-presupuesto__pie">
+            <button type="submit" class="btn btn--primario">Enviar solicitud</button>
+            <p class="formulario-presupuesto__aviso">
+              Sin compromiso y sin spam. Solo usamos tus datos para responderte.
+            </p>
+          </div>
+
+          <p class="formulario-presupuesto__exito" id="presupuesto-exito" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="contenedor footer__interior">
+      <div class="footer__marca">
+        <a href="#inicio" class="logo" aria-label="Vértice, volver al inicio">
+          <span class="logo__marca" aria-hidden="true">◆</span>
+          <span class="logo__texto">Vértice<em>.</em></span>
+        </a>
+        <p class="footer__lema">Estudio de diseño independiente. Madrid, con gente en remoto.</p>
+      </div>
+
+      <nav class="footer__enlaces" aria-label="Enlaces del pie de página">
+        <a href="#trabajo">Trabajo</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#estudio">Estudio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="footer__social">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
+        <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" aria-label="Behance">Behance</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+        <a href="mailto:hola@vertice.studio" aria-label="Escríbenos un correo">hola@vertice.studio</a>
+      </div>
+    </div>
+
+    <div class="contenedor footer__legal">
+      <p>© <span id="anio">2026</span> Estudio Vértice. Todos los derechos reservados.</p>
+      <p>Hecho a mano, sin plantillas ni frameworks.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== MODAL DE PROYECTO ===================== -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
+    <div class="modal__fondo" data-cerrar></div>
+    <div class="modal__panel" role="document">
+      <button class="modal__cerrar" id="modal-cerrar" type="button" aria-label="Cerrar ventana">✕</button>
+      <div class="modal__visual" id="modal-visual"></div>
+      <div class="modal__contenido">
+        <p class="pill" id="modal-categoria">Categoría</p>
+        <h3 class="modal__titulo" id="modal-titulo">Título del proyecto</h3>
+        <p class="modal__descripcion" id="modal-descripcion"></p>
+        <dl class="modal__datos">
+          <div><dt>Año</dt><dd id="modal-anio"></dd></div>
+          <div><dt>Cliente</dt><dd id="modal-cliente"></dd></div>
+          <div><dt>Servicios</dt><dd id="modal-servicios"></dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

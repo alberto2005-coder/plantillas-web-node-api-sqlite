@@ -68,9 +68,11 @@ Copia `.env.example` → `.env` y rellena. Ya te dejo un `.env` de demo listo.
 |---|---|---|
 | `PORT` | no (3003) | Puerto del servidor |
 | `HOST` | no (127.0.0.1) | IP de escucha. Usa `0.0.0.0` en contenedores/servidor |
-| `SITE_URL` | no | URL pública (se usa en correos y enlaces) |
+| `SITE_URL` | no | URL pública (se usa en correos, enlaces y en el feed `/feed.xml`) |
 | `DB_FILE` | no | Ruta del fichero SQLite (se crea solo) |
 | `ADMIN_TOKEN` | sí para admin | Clave para crear/editar/borrar artículos |
+| `TRUST_PROXY` | no (`0`) | `1` solo detrás de un proxy inverso (Caddy/nginx/Cloudflare): el límite anti-spam usa la IP real del `X-Forwarded-For` |
+| `CSP` | no | Cabecera `Content-Security-Policy` que envía el servidor; `0` la apaga y un valor personalizado la cambia |
 | `POR_PAGINA` | no (3) | Artículos por página del listado |
 | `LIMITE_NEWSLETTER` | no (5) | Suscripciones máximas por IP y minuto |
 | `NEWSLETTER_DESTINO` | no | Correo que recibe el aviso de cada nueva suscripción |
@@ -100,9 +102,17 @@ y necesitan el header `x-admin-token`.
 | PUT | `/api/articulos/:slug` | campos a modificar (fusión parcial) | `{ok, slug, articulo}` | `x-admin-token` |
 | DELETE | `/api/articulos/:slug` | – | `{ok, borrados}` | `x-admin-token` |
 | POST | `/api/newsletter` | `{email, origen}` (`lateral`\|`ancha`) | `{ok, mensaje, correo}` (201) | no |
+| GET | `/feed.xml` (fuera de `/api/`) | – | RSS 2.0 con los 20 últimos artículos publicados | no |
 
 Notas:
 
+- **Feed RSS**: `/feed.xml` no es JSON sino XML (`application/rss+xml`), con los
+  20 últimos artículos publicados. Los enlaces salen de `SITE_URL`, así que en
+  local apuntan a `localhost` y en producción a tu dominio. La cabecera de
+  `index.html` y `articulo.html` incluye
+  `<link rel="alternate" type="application/rss+xml" href="/feed.xml">`, por lo
+  que los lectores de RSS lo detectan solos. Prueba:
+  `curl http://localhost:3003/feed.xml`.
 - **Paginación real**: `por_pagina` por defecto = `POR_PAGINA` (3). `pagina` se recorta al rango válido.
 - **Búsqueda sin tildes**: `?q=movil` encuentra "móvil", `?q=IA` encuentra "IA".
 - **El destacado no se duplica**: `GET /api/articulos` excluye `destacado = 1` (ya se
@@ -133,6 +143,9 @@ curl "http://localhost:3003/api/articulos/css-grid-en-produccion-10-patrones"
 # Categorías con contadores recalculados y el destacado de portada
 curl "http://localhost:3003/api/categorias"
 curl "http://localhost:3003/api/destacado"
+
+# Feed RSS (XML, 20 últimos artículos; los enlaces dependen de SITE_URL)
+curl "http://localhost:3003/feed.xml"
 
 # Newsletter (alta de suscriptor)
 echo {"email":"ana@correo.com","origen":"ancha"} > body.json

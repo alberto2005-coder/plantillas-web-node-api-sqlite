@@ -202,6 +202,7 @@ Todas las rutas responden JSON (`Content-Type: application/json; charset=utf-8`,
 | PUT | `/api/articulos/:slug` | `x-admin-token` | fusión parcial del cuerpo anterior | 200 `{ok,slug,articulo}` · 400 · 401 · 404 |
 | DELETE | `/api/articulos/:slug` | `x-admin-token` | – | 200 `{ok,borrados}` · 401 · 404 |
 | POST | `/api/newsletter` | no | `{email, origen?}` (`lateral`\|`ancha`) | 201 alta · 200 `ya_suscrito` · 400 correo · 429 límite |
+| GET | `/feed.xml` (fuera de `/api/`) | no | – | 200 `application/rss+xml` (RSS 2.0, 20 últimos publicados) · `Cache-Control: public, max-age=300` |
 
 Errores transversales: `404` ruta `/api/…` desconocida (`server.js:53`),
 `405` método que casa la ruta pero no el verbo (`router.js:96`),
@@ -441,6 +442,42 @@ Errores: `400 {"error":"El correo no tiene un formato válido."}`,
 `429 {"error":"Demasiadas suscripciones desde esta conexión. Inténtalo dentro de un minuto."}`
 (5 por minuto e IP, `LIMITE_NEWSLETTER`). Si el correo ya existía responde
 **200** con `{"ok":true,"ya_suscrito":true,"id":1,"mensaje":"¡Ese correo ya estaba suscrito!…"}`.
+
+### 4.10 `GET /feed.xml` (fuera de `/api/`)
+
+Única ruta que **no** responde JSON: feed RSS 2.0 con los **20 últimos
+artículos publicados** (`publicado = 1`, ordenados por fecha descendente,
+`LIMIT 20`).
+
+```bash
+curl http://localhost:3003/feed.xml
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" …>
+  <channel>
+    <title>Bitácora Digital</title>
+    <link>https://tudominio.com</link>
+    …
+    <item>
+      <title>…</title>
+      <link>https://tudominio.com/articulo.html?slug=…</link>
+      …
+```
+
+- Cabeceras: `Content-Type: application/rss+xml; charset=utf-8` y
+  `Cache-Control: public, max-age=300`.
+- Cada `<item>` lleva `title`, `link`, `guid`, `description`, `category`,
+  `dc:creator` y `pubDate`.
+- **`SITE_URL` manda**: `<link>`, `<guid>` y el `atom:link` de «self» se
+  construyen con `SITE_URL` del `.env` (barra final recortada). Si sigue en
+  `http://localhost:3003`, el feed enlaza a localhost.
+- Los lectores lo descubren sin configurar nada: `index.html:31` y
+  `articulo.html:30` incluyen
+  `<link rel="alternate" type="application/rss+xml" href="/feed.xml">`.
+- Fuente: `server/api.js:226` (`api.get('/feed.xml', …)`); `server/server.js:50`
+  lo despacha aunque la ruta no empiece por `/api/`.
 
 ---
 

@@ -190,6 +190,23 @@ y `js/articulo.js` pinta:
 Por detrás: `GET /api/articulos/:slug` → tabla `articulos`
 (`cuerpo_md` convertido a `cuerpo_html`).
 
+### 3.8 Feed RSS (`/feed.xml`)
+
+- No se ve en la página: es un enlace en la cabecera de `index.html` y
+  `articulo.html`
+  (`<link rel="alternate" type="application/rss+xml" href="/feed.xml">`) que
+  detectan solos los lectores de RSS (Feedly, NetNewsWire, Inoreader…).
+- Prueba rápida desde una terminal:
+
+```bash
+curl http://localhost:3003/feed.xml
+```
+
+- Devuelve un RSS 2.0 en XML con los **20 últimos artículos publicados**.
+- Los enlaces de cada artículo salen de `SITE_URL` en `.env`: en local apuntan
+  a `http://localhost:3003`; cámbialo a tu dominio antes de publicar (§5,
+  palanca 1) para que el feed no enlace a localhost.
+
 ---
 
 ## 4. Dónde ves lo que llega
@@ -238,6 +255,9 @@ curl.exe "http://localhost:3003/api/articulos?pagina=2&por_pagina=3"
 
 # Leer: el newsletter NO tiene endpoint de consulta; sí el detalle de un artículo
 curl.exe http://localhost:3003/api/articulos/css-grid-en-produccion-10-patrones
+
+# Leer el feed RSS (XML con los 20 últimos artículos publicados)
+curl.exe http://localhost:3003/feed.xml
 
 # Editar (token en la cabecera): subir los minutos de lectura
 $json = @'
@@ -319,6 +339,7 @@ Edita, guarda y **reinicia el servidor** (`Ctrl + C` y `npm start`):
 | `POR_PAGINA` | Artículos por página del listado (por defecto `3`) |
 | `LIMITE_NEWSLETTER` | Suscripciones máximas por IP y minuto (`5`) |
 | `ADMIN_TOKEN` | La llave del CRUD de artículos |
+| `SITE_URL` | URL pública: de aquí salen los enlaces de los correos **y** del feed RSS (`/feed.xml`) |
 | `NEWSLETTER_DESTINO` | Correo que recibe el aviso de cada suscripción |
 | `RESEND_API_KEY` / `SMTP_HOST` | Activan el envío real de correos |
 

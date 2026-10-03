@@ -138,8 +138,8 @@ module.exports = function registrar(api, { bd }) {
         `IP: ${ip}\n\n${mensaje}`
     });
 
-    limitePresupuesto.reiniciar(ip);
-
+    // Sin reiniciar el contador: el límite LIMITE_PRESUPUESTO cuenta TODOS
+    // los envíos (los válidos también), igual que en el resto de plantillas.
     ctx.json(
       {
         ok: true,

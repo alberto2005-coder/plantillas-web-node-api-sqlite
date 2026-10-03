@@ -25,6 +25,7 @@
 const { enviarCorreo } = require('./lib/email');
 const { crearLimitador } = require('./lib/limitador');
 const { markdownAHTML, markdownATexto } = require('./lib/markdown');
+const { cabecerasBase } = require('./lib/http');
 const { CATEGORIAS, slugificar, iniciales } = require('./datos/semillas');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -263,6 +264,8 @@ module.exports = function registrar(api, { bd }) {
       ''
     ].join('\n');
 
+    // Cabeceras de seguridad también en el XML (nosniff, CSP, Permissions-Policy)
+    cabecerasBase(ctx.res);
     ctx.res.writeHead(200, {
       'Content-Type': 'application/rss+xml; charset=utf-8',
       'Cache-Control': 'public, max-age=300'

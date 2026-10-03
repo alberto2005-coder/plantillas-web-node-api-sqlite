@@ -93,8 +93,8 @@ module.exports = function registrar(api, { bd }) {
       texto: `Nombre: ${nombre}\nCorreo: ${email}\n\n${mensaje}`
     });
 
-    limiteContacto.reiniciar(ip);
-
+    // Sin reiniciar el contador: LIMITE_CONTACTO cuenta TODOS los intentos
+    // (válidos y fallidos) en la ventana de un minuto, como documenta el README.
     ctx.json(
       {
         ok: true,

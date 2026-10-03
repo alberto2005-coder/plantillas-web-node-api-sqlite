@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nova Analytics — plantilla de dashboard y panel de administración con HTML, CSS y JavaScript vanilla. Tema claro y oscuro, gráficas SVG y diseño responsive.">
+  <title>Nova Analytics — Dashboard de administración</title>
+
+  <!-- Fuentes de Google (Sora para títulos + Inter para texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Evita el parpadeo al cargar: aplica el tema guardado o el del sistema -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('nova-tema');
+        var sistemaOscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var tema = guardado || (sistemaOscuro ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', tema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="salto-contenido" href="#contenido-principal">Saltar al contenido</a>
+
+  <!-- ============ BARRA LATERAL (SIDEBAR) ============ -->
+  <aside class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar__marca">
+      <span class="sidebar__logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 17l5-6 4 4 5-7 4 5"></path>
+          <path d="M3 21h18"></path>
+        </svg>
+      </span>
+      <span class="sidebar__nombre">Nova<span>Analytics</span></span>
+      <button class="sidebar__cerrar" id="cerrarSidebar" aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Secciones del panel">
+      <p class="sidebar__titulo">Principal</p>
+      <ul class="menu">
+        <li>
+          <button class="menu__item menu__item--activo" data-vista="resumen" aria-current="page">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            </svg>
+            <span>Resumen</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu__item" data-vista="ventas">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3v18h18"></path>
+              <path d="M7 15l4-5 3 3 5-7"></path>
+            </svg>
+            <span>Ventas</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu__item" data-vista="productos">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"></path>
+              <path d="M3.3 7.3L12 12l8.7-4.7M12 22V12"></path>
+            </svg>
+            <span>Productos</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu__item" data-vista="clientes">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.9"></path>
+            </svg>
+            <span>Clientes</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu__item" data-vista="pedidos">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <path d="M3 6h18M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Pedidos</span>
+            <span class="menu__contador" id="contadorMenuPedidos">12</span>
+          </button>
+        </li>
+      </ul>
+
+      <p class="sidebar__titulo">Cuenta</p>
+      <ul class="menu">
+        <li>
+          <button class="menu__item" data-vista="ajustes">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path>
+            </svg>
+            <span>Ajustes</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Tarjeta promocional -->
+    <div class="sidebar__pro">
+      <span class="sidebar__pro-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.9 6.3 6.8.8-5 4.6 1.3 6.8L12 17.3 6 20.5l1.3-6.8-5-4.6 6.8-.8z"></path>
+        </svg>
+      </span>
+      <p class="sidebar__pro-tit">Pasa a Nova Pro</p>
+      <p class="sidebar__pro-txt">Informes ilimitados, exportaciones y alertas en tiempo real.</p>
+      <button class="btn btn--acento btn--bloque" type="button">Actualizar ahora</button>
+    </div>
+
+    <div class="sidebar__usuario">
+      <span class="avatar" aria-hidden="true">MG</span>
+      <span class="sidebar__usuario-txt">
+        <strong>Marta Gil</strong>
+        <small>Administradora</small>
+      </span>
+    </div>
+  </aside>
+
+  <div class="fondo-sidebar" id="fondoSidebar" hidden></div>
+
+  <!-- ============ CONTENIDO PRINCIPAL ============ -->
+  <div class="app">
+    <header class="topbar">
+      <button class="icono-btn solo-movil" id="abrirSidebar" aria-label="Abrir menú de navegación" aria-controls="sidebar" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"></path>
+        </svg>
+      </button>
+
+      <div class="topbar__titulo">
+        <h1 id="tituloVista">Resumen</h1>
+        <p id="subtituloVista">Bienvenida, Marta. Esto es lo que ha pasado hoy.</p>
+      </div>
+
+      <div class="topbar__acciones">
+        <form class="buscador" role="search" onsubmit="return false;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M21 21l-4.3-4.3"></path>
+          </svg>
+          <input type="search" id="buscadorGlobal" placeholder="Buscar productos, pedidos…" aria-label="Buscar en el panel">
+          <kbd>Ctrl K</kbd>
+        </form>
+
+        <button class="icono-btn notificaciones" id="btnNotificaciones" aria-label="Notificaciones, 3 sin leer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.7 21a2 2 0 0 1-3.4 0"></path>
+          </svg>
+          <span class="badge-punto" id="badgeNotificaciones">3</span>
+        </button>
+
+        <button class="icono-btn" id="btnTema" aria-label="Cambiar a tema oscuro">
+          <!-- Sol: se muestra en tema oscuro (para cambiar a claro) -->
+          <svg class="ico-sol" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1.5 12h2M20.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path>
+          </svg>
+          <!-- Luna: se muestra en tema claro (para cambiar a oscuro) -->
+          <svg class="ico-luna" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+          </svg>
+        </button>
+
+        <span class="avatar avatar--topbar" title="Marta Gil">MG</span>
+      </div>
+    </header>
+
+    <main class="contenido" id="contenido-principal">
+
+      <!-- ==================== VISTA: RESUMEN ==================== -->
+      <section class="vista vista--activa" id="vista-resumen" aria-label="Resumen">
+        <!-- Tarjetas KPI -->
+        <div class="kpis">
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--primario" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Ingresos</span>
+            </div>
+            <p class="kpi__valor" id="kpiIngresos" data-contador="48920" data-prefijo="€" data-sufijo="">€0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--sube">▲ 12,4 %</span>
+              <span class="kpi__periodo">vs. mes anterior</span>
+            </div>
+            <svg class="sparkline" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sparkline__area" d="M0,26 L12,24 L24,27 L36,18 L48,21 L60,13 L72,16 L84,9 L96,12 L108,5 L120,8 L120,34 L0,34 Z"></path>
+              <path class="sparkline__linea" d="M0,26 L12,24 L24,27 L36,18 L48,21 L60,13 L72,16 L84,9 L96,12 L108,5 L120,8"></path>
+            </svg>
+          </article>
+
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--exito" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                  <path d="M3 6h18M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Ventas</span>
+            </div>
+            <p class="kpi__valor" id="kpiVentas" data-contador="1284" data-sufijo="">0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--sube">▲ 8,1 %</span>
+              <span class="kpi__periodo">184 hoy</span>
+            </div>
+            <svg class="sparkline" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sparkline__area" d="M0,30 L12,26 L24,28 L36,22 L48,24 L60,17 L72,20 L84,14 L96,16 L108,10 L120,6 L120,34 L0,34 Z"></path>
+              <path class="sparkline__linea" d="M0,30 L12,26 L24,28 L36,22 L48,24 L60,17 L72,20 L84,14 L96,16 L108,10 L120,6"></path>
+            </svg>
+          </article>
+
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--acento" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Visitantes</span>
+            </div>
+            <p class="kpi__valor" id="kpiVisitantes" data-contador="39410" data-sufijo="">0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--baja">▼ 2,3 %</span>
+              <span class="kpi__periodo">30 días</span>
+            </div>
+            <svg class="sparkline" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sparkline__area" d="M0,14 L12,17 L24,12 L36,19 L48,15 L60,22 L72,18 L84,25 L96,21 L108,27 L120,24 L120,34 L0,34 Z"></path>
+              <path class="sparkline__linea" d="M0,14 L12,17 L24,12 L36,19 L48,15 L60,22 L72,18 L84,25 L96,21 L108,27 L120,24"></path>
+            </svg>
+          </article>
+
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--aviso" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 3v18h18"></path>
+                  <path d="M7 14l4-4 3 3 5-6"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Tasa de conversión</span>
+            </div>
+            <p class="kpi__valor" id="kpiConversion" data-contador="3.4" data-decimales="1" data-sufijo=" %">0 %</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--sube">▲ 0,6 pt</span>
+              <span class="kpi__periodo">media 7 días</span>
+            </div>
+            <svg class="sparkline" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sparkline__area" d="M0,24 L12,22 L24,25 L36,20 L48,23 L60,16 L72,19 L84,13 L96,17 L108,11 L120,9 L120,34 L0,34 Z"></path>
+              <path class="sparkline__linea" d="M0,24 L12,22 L24,25 L36,20 L48,23 L60,16 L72,19 L84,13 L96,17 L108,11 L120,9"></path>
+            </svg>
+          </article>
+        </div>
+
+        <!-- Gráficas -->
+        <div class="rejilla-2">
+          <article class="tarjeta tarjeta--grafica">
+            <header class="tarjeta__cabecera">
+              <div>
+                <h2 class="tarjeta__titulo">Ingresos de los últimos 12 meses</h2>
+                <p class="tarjeta__subtitulo">Enero – Diciembre 2026</p>
+              </div>
+              <div class="leyenda-inlinea">
+                <span class="punto punto--primario" aria-hidden="true"></span> Ingresos
+                <span class="punto punto--acento" aria-hidden="true"></span> Objetivo
+              </div>
+            </header>
+            <div class="grafica" id="contenedorGraficaLineas">
+              <!-- SVG dibujado por JS en js/main.js -->
+            </div>
+          </article>
+
+          <article class="tarjeta tarjeta--grafica">
+            <header class="tarjeta__cabecera">
+              <div>
+                <h2 class="tarjeta__titulo">Ventas por categoría</h2>
+                <p class="tarjeta__subtitulo">Últimos 30 días</p>
+              </div>
+            </header>
+            <div class="dona-fila">
+              <div class="dona" id="contenedorDona" aria-label="Gráfica de dona con las ventas por categoría"></div>
+              <ul class="leyenda" id="leyendaDona"></ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="rejilla-2 rejilla-2--ancha">
+          <!-- Tabla de últimos pedidos -->
+          <article class="tarjeta">
+            <header class="tarjeta__cabecera">
+              <h2 class="tarjeta__titulo">Últimos pedidos</h2>
+              <button class="enlace" type="button" data-ir="pedidos">Ver todos</button>
+            </header>
+            <div class="tabla-contenedor">
+              <table class="tabla">
+                <thead>
+                  <tr>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col"><span class="visually-hidden">Acciones</span></th>
+                  </tr>
+                </thead>
+                <tbody id="cuerpoPedidosResumen"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <!-- Actividad reciente -->
+          <article class="tarjeta">
+            <header class="tarjeta__cabecera">
+              <h2 class="tarjeta__titulo">Actividad reciente</h2>
+            </header>
+            <ul class="actividad" id="listaActividad"></ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ==================== VISTA: VENTAS ==================== -->
+      <section class="vista" id="vista-ventas" aria-label="Ventas" hidden>
+        <div class="kpis kpis--3">
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--primario" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 17l5-6 4 4 5-7 4 5"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Facturación mensual</span>
+            </div>
+            <p class="kpi__valor" id="kpiFacturacion" data-contador="48920" data-prefijo="€">€0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--sube">▲ 12,4 %</span>
+              <span class="kpi__periodo">objetivo €45.000</span>
+            </div>
+          </article>
+
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--exito" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Pedidos cerrados</span>
+            </div>
+            <p class="kpi__valor" id="kpiCerrados" data-contador="1284">0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--sube">▲ 8,1 %</span>
+              <span class="kpi__periodo">meta 1.200</span>
+            </div>
+          </article>
+
+          <article class="tarjeta kpi">
+            <div class="kpi__cabecera">
+              <span class="kpi__ico kpi__ico--acento" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </span>
+              <span class="kpi__etiqueta">Ticket medio</span>
+            </div>
+            <p class="kpi__valor" id="kpiTicket" data-contador="38.10" data-decimales="2" data-prefijo="€">€0</p>
+            <div class="kpi__pie">
+              <span class="variacion variacion--baja">▼ 1,2 %</span>
+              <span class="kpi__periodo">últimos 30 días</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="tarjeta tarjeta--grafica">
+          <header class="tarjeta__cabecera">
+            <div>
+              <h2 class="tarjeta__titulo">Ventas por mes</h2>
+              <p class="tarjeta__titulo-subtitulo tarjeta__subtitulo">Número de unidades vendidas</p>
+            </div>
+            <span class="chip">2026</span>
+          </header>
+          <div class="grafica" id="contenedorGraficaBarras"></div>
+        </article>
+
+        <article class="tarjeta">
+          <header class="tarjeta__cabecera">
+            <h2 class="tarjeta__titulo">Rendimiento del equipo</h2>
+            <span class="tarjeta__subtitulo">Objetivo trimestral</span>
+          </header>
+          <div class="tabla-contenedor">
+            <table class="tabla">
+              <thead>
+                <tr>
+                  <th scope="col">Vendedor</th>
+                  <th scope="col">Pedidos</th>
+                  <th scope="col">Facturado</th>
+                  <th scope="col" class="col-ancha">Objetivo</th>
+                </tr>
+              </thead>
+              <tbody id="cuerpoVendedores"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- ==================== VISTA: PRODUCTOS ==================== -->
+      <section class="vista" id="vista-productos" aria-label="Productos" hidden>
+        <header class="vista__cabecera">
+          <div>
+            <h2 class="tarjeta__titulo">Catálogo de productos</h2>
+            <p class="tarjeta__subtitulo">42 artículos activos · 3 con stock bajo</p>
+          </div>
+          <button class="btn btn--primario" type="button">+ Añadir producto</button>
+        </header>
+        <div class="rejilla-productos" id="rejillaProductos"></div>
+      </section>
+
+      <!-- ==================== VISTA: CLIENTES ==================== -->
+      <section class="vista" id="vista-clientes" aria-label="Clientes" hidden>
+        <header class="vista__cabecera">
+          <div>
+            <h2 class="tarjeta__titulo">Cartera de clientes</h2>
+            <p class="tarjeta__subtitulo">1.204 cuentas · 18 altas esta semana</p>
+          </div>
+          <button class="btn btn--primario" type="button">+ Invitar cliente</button>
+        </header>
+        <div class="rejilla-clientes" id="rejillaClientes"></div>
+      </section>
+
+      <!-- ==================== VISTA: PEDIDOS ==================== -->
+      <section class="vista" id="vista-pedidos" aria-label="Pedidos" hidden>
+        <article class="tarjeta">
+          <header class="tarjeta__cabecera tarjeta__cabecera--envuelve">
+            <h2 class="tarjeta__titulo">Todos los pedidos</h2>
+            <div class="filtros" role="group" aria-label="Filtrar pedidos por estado">
+              <button class="chip chip--activo" type="button" data-filtro="todos">Todos</button>
+              <button class="chip" type="button" data-filtro="Entregado">Entregado</button>
+              <button class="chip" type="button" data-filtro="En curso">En curso</button>
+              <button class="chip" type="button" data-filtro="Pendiente">Pendiente</button>
+            </div>
+            <div class="filtros" role="group" aria-label="Acciones de la tabla de pedidos">
+              <button class="chip" type="button" id="btnRefrescarPedidos">↻ Refrescar</button>
+              <button class="btn btn--primario" type="button" id="btnExportarPedidos">Exportar CSV</button>
+            </div>
+          </header>
+          <div class="tabla-contenedor">
+            <table class="tabla">
+              <thead>
+                <tr>
+                  <th scope="col">Pedido</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Importe</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col"><span class="visually-hidden">Acciones</span></th>
+                </tr>
+              </thead>
+              <tbody id="cuerpoPedidos"></tbody>
+            </table>
+          </div>
+          <p class="vacio" id="pedidosVacio" hidden>No hay pedidos con ese estado.</p>
+        </article>
+      </section>
+
+      <!-- ==================== VISTA: AJUSTES ==================== -->
+      <section class="vista" id="vista-ajustes" aria-label="Ajustes" hidden>
+        <form class="ajustes" id="formAjustes" novalidate>
+          <article class="tarjeta">
+            <header class="tarjeta__cabecera">
+              <div>
+                <h2 class="tarjeta__titulo">Perfil</h2>
+                <p class="tarjeta__subtitulo">Esta información se muestra en tu cuenta.</p>
+              </div>
+            </header>
+            <div class="campos">
+              <div class="campo">
+                <label for="campoNombre">Nombre completo</label>
+                <input type="text" id="campoNombre" name="nombre" value="Marta Gil Serrano" autocomplete="name">
+              </div>
+              <div class="campo">
+                <label for="campoEmail">Correo electrónico</label>
+                <input type="email" id="campoEmail" name="email" value="marta.gil@novaanalytics.es" autocomplete="email">
+              </div>
+              <div class="campo">
+                <label for="campoEmpresa">Empresa</label>
+                <input type="text" id="campoEmpresa" name="empresa" value="Nova Analytics S.L.">
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <header class="tarjeta__cabecera">
+              <div>
+                <h2 class="tarjeta__titulo">Notificaciones</h2>
+                <p class="tarjeta__subtitulo">Elige qué quieres recibir.</p>
+              </div>
+            </header>
+            <ul class="switches">
+              <li class="switch-fila">
+                <div>
+                  <strong>Resumen semanal</strong>
+                  <small>Un correo los lunes con las métricas de la semana.</small>
+                </div>
+                <button class="switch" type="button" role="switch" aria-checked="true" data-switch="semanal" aria-label="Resumen semanal">
+                  <span class="switch__punto"></span>
+                </button>
+              </li>
+              <li class="switch-fila">
+                <div>
+                  <strong>Nuevos pedidos</strong>
+                  <small>Aviso en tiempo real cada vez que entra un pedido.</small>
+                </div>
+                <button class="switch" type="button" role="switch" aria-checked="true" data-switch="pedidos" aria-label="Nuevos pedidos">
+                  <span class="switch__punto"></span>
+                </button>
+              </li>
+              <li class="switch-fila">
+                <div>
+                  <strong>Stock bajo</strong>
+                  <small>Te avisamos cuando un producto baje de 10 unidades.</small>
+                </div>
+                <button class="switch" type="button" role="switch" aria-checked="false" data-switch="stock" aria-label="Stock bajo">
+                  <span class="switch__punto"></span>
+                </button>
+              </li>
+              <li class="switch-fila">
+                <div>
+                  <strong>Marketing y novedades</strong>
+                  <small>Nuevas funciones, consejos y ofertas de Nova.</small>
+                </div>
+                <button class="switch" type="button" role="switch" aria-checked="false" data-switch="marketing" aria-label="Marketing y novedades">
+                  <span class="switch__punto"></span>
+                </button>
+              </li>
+            </ul>
+          </article>
+
+          <article class="tarjeta">
+            <header class="tarjeta__cabecera">
+              <div>
+                <h2 class="tarjeta__titulo">Apariencia</h2>
+                <p class="tarjeta__subtitulo">Se guarda en este navegador.</p>
+              </div>
+            </header>
+            <div class="campo">
+              <label for="campoTema">Tema del panel</label>
+              <select id="campoTema">
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+              </select>
+            </div>
+          </article>
+
+          <div class="ajustes__pie">
+            <button class="btn btn--primario" type="submit">Guardar cambios</button>
+            <button class="btn" type="reset">Descartar</button>
+            <p class="aviso-exito" id="avisoExito" role="status" hidden>✓ Cambios guardados correctamente.</p>
+          </div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer class="pie">
+      <p>© <span id="anioActual">2026</span> Nova Analytics · Plantilla demo hecha con HTML, CSS y JavaScript vanilla.</p>
+    </footer>
+  </div>
+
+  <!-- Panel de notificaciones -->
+  <div class="panel-notificaciones" id="panelNotificaciones" role="dialog" aria-label="Notificaciones" hidden>
+    <header>
+      <strong>Notificaciones</strong>
+      <button class="enlace" type="button" id="marcarLeidas">Marcar como leídas</button>
+    </header>
+    <ul>
+      <li><span class="punto punto--exito" aria-hidden="true"></span><p><strong>Pedido #1042 entregado</strong><small>Lucía Fernández · hace 12 min</small></p></li>
+      <li><span class="punto punto--aviso" aria-hidden="true"></span><p><strong>Stock bajo en Auriculares Nova</strong><small>Quedan 6 unidades · hace 1 h</small></p></li>
+      <li><span class="punto punto--primario" aria-hidden="true"></span><p><strong>Nueva reseña de 5 estrellas</strong><small>Sobre Monitor NovaView 27" · hace 3 h</small></p></li>
+    </ul>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

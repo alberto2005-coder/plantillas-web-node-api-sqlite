@@ -1,0 +1,21 @@
+{
+  "name": "plantilla-03-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blog (Bitácora Digital) con servidor Node, API REST y base de datos SQLite (sin dependencias obligatorias).",
+  "main": "server/server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server/server.js",
+    "reiniciar": "node --disable-warning=ExperimentalWarning server/reset.js",
+    "sin-instalar": "node --disable-warning=ExperimentalWarning server/server.js"
+  },
+  "dependencies": {},
+  "optionalDependencies": {},
+  "keywords": ["plantilla", "blog", "node", "sqlite", "api", "newsletter"],
+  "license": "MIT"
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Artículo de Bitácora Digital — blog de tecnología.">
+  <title>Artículo — Bitácora Digital</title>
+
+  <!-- ============ SCRIPT ANTI-PARPADEO: aplica el tema antes de pintar ============ -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- ============ TIPOGRAFÍAS (Google Fonts) ============ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar" id="inicio">
+    <div class="contenedor navbar__inner">
+
+      <a href="index.html" class="logo" aria-label="Bitácora Digital, ir al inicio">
+        Bitácora<span class="logo__acento">Digital</span>
+      </a>
+
+      <button class="hamburguesa" id="hamburguesa" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menu-principal">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="menu" id="menu-principal" aria-label="Navegación principal">
+        <ul class="menu__lista">
+          <li><a href="index.html" class="menu__enlace">Inicio</a></li>
+          <li><a href="index.html#articulos" class="menu__enlace">Artículos</a></li>
+          <li><a href="index.html#categorias" class="menu__enlace">Categorías</a></li>
+          <li><a href="index.html#newsletter" class="menu__enlace">Newsletter</a></li>
+        </ul>
+
+        <!-- Toggle de tema -->
+        <button class="toggle-tema" id="toggle-tema" aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 17a5 5 0 100-10 5 5 0 000 10zm0-8a3 3 0 110 6 3 3 0 010-6zM12 1a1 1 0 011 1v2a1 1 0 11-2 0V2a1 1 0 011-1zm0 18a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM4.22 4.22a1 1 0 011.42 0l1.41 1.41A1 1 0 015.64 7.05L4.22 5.64a1 1 0 010-1.42zm12.73 12.73a1 1 0 011.41 0l1.42 1.41a1 1 0 01-1.42 1.42l-1.41-1.42a1 1 0 010-1.41zM2 12a1 1 0 011-1h2a1 1 0 110 2H3a1 1 0 01-1-1zm17 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM6.34 17.66a1 1 0 010 1.41l-1.41 1.42a1 1 0 11-1.42-1.42l1.42-1.41a1 1 0 011.41 0zM19.07 4.93a1 1 0 010 1.41l-1.41 1.42a1 1 0 11-1.42-1.42l1.42-1.41a1 1 0 011.41 0z"/>
+          </svg>
+          <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= ARTÍCULO ================= -->
+  <main class="contenedor pagina-articulo">
+
+    <a class="volver" href="index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="flecha-volver"><path d="M5 12h12.17l-5.58-5.59L13 5l8 8-8 8-1.41-1.41L17.17 14H5z"/></svg>
+      Volver al listado de artículos
+    </a>
+
+    <!-- Estado de carga / error (se oculta cuando el artículo se pinta) -->
+    <div class="aviso-pagina" id="aviso-pagina" role="status" aria-live="polite">
+      Cargando el artículo…
+    </div>
+
+    <article class="articulo" id="articulo" hidden>
+
+      <div class="articulo__cabecera">
+        <span class="pill" id="articulo-pill">Categoría</span>
+        <span class="meta-fecha" id="articulo-fecha"></span>
+      </div>
+
+      <h1 class="articulo__titulo" id="articulo-titulo"></h1>
+
+      <p class="articulo__extracto" id="articulo-extracto"></p>
+
+      <div class="autor-fila">
+        <span class="avatar" id="articulo-avatar" aria-hidden="true"></span>
+        <div class="autor-fila__datos">
+          <strong id="articulo-autor"></strong>
+          <span id="articulo-categoria"></span>
+        </div>
+        <span class="punto-separador" aria-hidden="true">•</span>
+        <span class="lectura">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="icono-reloj"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.59V6h-2v7.41l4.2 2.42 1-1.73L13 12.59z"/></svg>
+          <span id="articulo-minutos">– min de lectura</span>
+        </span>
+        <span class="punto-separador" aria-hidden="true">•</span>
+        <span class="lectura"><span id="articulo-vistas"></span></span>
+      </div>
+
+      <!-- El HTML viene de server/lib/markdown.js (Markdown escapado antes de formatear) -->
+      <div class="articulo__cuerpo" id="articulo-cuerpo"></div>
+
+      <div class="articulo__etiquetas">
+        <span class="etiqueta-superior">Etiquetas</span>
+        <div class="nube-tags" id="articulo-tags"></div>
+      </div>
+
+      <div class="articulo__pie">
+        <a class="btn btn--primario" href="index.html">
+          Volver al listado
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="flecha"><path d="M5 12h12.17l-5.58-5.59L13 5l8 8-8 8-1.41-1.41L17.17 14H5z"/></svg>
+        </a>
+        <p class="articulo__pie-texto">Bitácora Digital · artículos técnicos sin humo</p>
+      </div>
+    </article>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="contenedor footer__grid">
+
+      <div class="footer__col footer__col--marca">
+        <a href="index.html" class="logo">Bitácora<span class="logo__acento">Digital</span></a>
+        <p>
+          Publicamos artículos técnicos escritos por gente que programa de verdad.
+          Sin humo, sin titulares clickbait, con ejemplos que puedes copiar.
+        </p>
+        <div class="redes" aria-label="Redes sociales">
+          <a href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L1.5 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.07-1.9-3.07-1.9 0-2.2 1.46-2.2 2.97V21h-4V9z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Explorar</h3>
+        <ul class="footer__lista">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#articulos">Artículos</a></li>
+          <li><a href="index.html#categorias">Categorías</a></li>
+          <li><a href="index.html#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Temas</h3>
+        <ul class="footer__lista">
+          <li><a href="index.html?categoria=desarrollo">Desarrollo web</a></li>
+          <li><a href="index.html?categoria=ia">Inteligencia artificial</a></li>
+          <li><a href="index.html?categoria=seguridad">Ciberseguridad</a></li>
+          <li><a href="index.html?categoria=diseno">Diseño de interfaces</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Nosotros</h3>
+        <ul class="footer__lista">
+          <li><a href="#">Quiénes somos</a></li>
+          <li><a href="#">Escribir para el blog</a></li>
+          <li><a href="#">Publicidad</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <div class="contenedor footer__bottom-inner">
+        <p>© <span id="anio-actual">2026</span> Bitácora Digital. Todos los derechos reservados.</p>
+        <ul class="footer__legal">
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/articulo.js"></script>
+</body>
+</html>

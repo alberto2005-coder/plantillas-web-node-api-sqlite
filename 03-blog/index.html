@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bitácora Digital — blog de tecnología con artículos sobre desarrollo web, inteligencia artificial, seguridad y novedades del sector.">
+  <title>Bitácora Digital — Blog de Tecnología, Desarrollo e Innovación</title>
+
+  <!-- ============ SCRIPT ANTI-PARPADEO: aplica el tema antes de pintar ============ -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- ============ TIPOGRAFÍAS (Google Fonts) ============ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Si JavaScript está desactivado, mostramos todo el contenido -->
+  <noscript>
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; }
+      /* Sin JS mostramos el menú de móvil siempre desplegado */
+      @media (max-width: 980px) {
+        .menu { max-height: none !important; opacity: 1 !important; padding-block: 14px 6px !important; }
+        .hamburguesa { display: none !important; }
+      }
+    </style>
+  </noscript>
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar" id="inicio">
+    <div class="contenedor navbar__inner">
+
+      <a href="#" class="logo" aria-label="Bitácora Digital, ir al inicio">
+        Bitácora<span class="logo__acento">Digital</span>
+      </a>
+
+      <!-- Botón hamburguesa (solo móvil) -->
+      <button class="hamburguesa" id="hamburguesa" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menu-principal">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="menu" id="menu-principal" aria-label="Navegación principal">
+        <ul class="menu__lista">
+          <li><a href="#inicio" class="menu__enlace activo">Inicio</a></li>
+          <li><a href="#articulos" class="menu__enlace">Artículos</a></li>
+          <li><a href="#categorias" class="menu__enlace">Categorías</a></li>
+          <li><a href="#newsletter" class="menu__enlace">Newsletter</a></li>
+        </ul>
+
+        <!-- Buscador funcional de la navbar -->
+        <form class="buscador buscador--navbar" id="form-buscar-nav" role="search">
+          <label class="sr-only" for="buscar-nav">Buscar artículos</label>
+          <svg class="buscador__icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M10 2a8 8 0 105.29 14.03l4.84 4.84 1.41-1.41-4.84-4.84A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+          </svg>
+          <input type="search" id="buscar-nav" class="buscador__input" placeholder="Buscar artículos…" autocomplete="off">
+        </form>
+
+        <!-- Toggle de tema -->
+        <button class="toggle-tema" id="toggle-tema" aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 17a5 5 0 100-10 5 5 0 000 10zm0-8a3 3 0 110 6 3 3 0 010-6zM12 1a1 1 0 011 1v2a1 1 0 11-2 0V2a1 1 0 011-1zm0 18a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM4.22 4.22a1 1 0 011.42 0l1.41 1.41A1 1 0 015.64 7.05L4.22 5.64a1 1 0 010-1.42zm12.73 12.73a1 1 0 011.41 0l1.42 1.41a1 1 0 01-1.42 1.42l-1.41-1.42a1 1 0 010-1.41zM2 12a1 1 0 011-1h2a1 1 0 110 2H3a1 1 0 01-1-1zm17 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM6.34 17.66a1 1 0 010 1.41l-1.41 1.42a1 1 0 11-1.42-1.42l1.42-1.41a1 1 0 011.41 0zM19.07 4.93a1 1 0 010 1.41l-1.41 1.42a1 1 0 11-1.42-1.42l1.42-1.41a1 1 0 011.41 0z"/>
+          </svg>
+          <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= ARTÍCULO DESTACADO ================= -->
+    <section class="destacado contenedor reveal" aria-labelledby="titulo-destacado">
+      <article class="destacado__card">
+
+        <div class="destacado__media gradiente-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="media-icono">
+            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          </svg>
+        </div>
+
+        <div class="destacado__contenido">
+          <div class="meta-superior">
+            <span class="pill pill--acento">Inteligencia Artificial</span>
+            <span class="meta-fecha">28 de septiembre, 2026</span>
+          </div>
+
+          <h1 class="destacado__titulo" id="titulo-destacado">
+            La nueva ola de agentes autónomos: cómo están cambiando el desarrollo de software
+          </h1>
+
+          <p class="destacado__extracto">
+            Los asistentes programadores dejaron de ser una curiosidad para convertirse en compañeros de equipo.
+            Analizamos qué cambió en los últimos doce meses, qué tareas funcionan bien delegadas y dónde aún
+            hace falta el criterio humano para tomar decisiones de arquitectura.
+          </p>
+
+          <div class="autor-fila">
+            <span class="avatar" aria-hidden="true">MG</span>
+            <div class="autor-fila__datos">
+              <strong>Marina Gutiérrez</strong>
+              <span>Editora de tecnología</span>
+            </div>
+            <span class="punto-separador" aria-hidden="true">•</span>
+            <span class="lectura">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="icono-reloj"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.59V6h-2v7.41l4.2 2.42 1-1.73L13 12.59z"/></svg>
+              9 min de lectura
+            </span>
+          </div>
+
+          <a href="#articulos" class="btn btn--primario">Leer el artículo
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="flecha"><path d="M5 12h12.17l-5.58-5.59L13 5l8 8-8 8-1.41-1.41L17.17 14H5z"/></svg>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================= LISTADO + SIDEBAR ================= -->
+    <div class="contenedor layout-blog">
+
+      <!-- ---------- COLUMNA PRINCIPAL ---------- -->
+      <section class="principal" id="articulos" aria-labelledby="titulo-articulos">
+
+        <div class="seccion-cabecera reveal">
+          <div>
+            <span class="etiqueta-superior">Lo último</span>
+            <h2 class="seccion-titulo" id="titulo-articulos">Artículos recientes</h2>
+          </div>
+          <p class="contador-resultados" id="contador-resultados" role="status">8 artículos</p>
+        </div>
+
+        <!-- Chips de filtro (versión superior) -->
+        <div class="chips reveal" id="chips-filtro" role="group" aria-label="Filtrar por categoría">
+          <button class="chip activo" data-categoria="todos">Todos</button>
+          <button class="chip" data-categoria="desarrollo">Desarrollo</button>
+          <button class="chip" data-categoria="ia">Inteligencia Artificial</button>
+          <button class="chip" data-categoria="seguridad">Seguridad</button>
+          <button class="chip" data-categoria="movil">Móvil</button>
+          <button class="chip" data-categoria="diseno">Diseño</button>
+        </div>
+
+        <!-- Grid de tarjetas -->
+        <div class="grid-articulos" id="grid-articulos">
+
+          <article class="tarjeta reveal" data-categoria="desarrollo" data-tags="javascript,frontend,rendimiento" data-titulo="css grid en producción diez patrones que todo equipo debería conocer">
+            <div class="tarjeta__media gradiente-2" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm1 2v10h14V7H5zm2 2h5v2H7V9zm0 4h8v2H7v-2z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--desarrollo">Desarrollo</span>
+              <h3 class="tarjeta__titulo"><a href="#">CSS Grid en producción: 10 patrones que todo equipo debería conocer</a></h3>
+              <p class="tarjeta__extracto">Del layout editorial al dashboard denso: ejemplos reales con medidas de una línea y cómo evitar el colapso de columnas.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">JR</span>
+                <span class="tarjeta__autor">Javier Ruiz</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">26 sep 2026</span>
+                <span class="lectura">6 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="ia" data-tags="ia,modelo,llm" data-titulo="entrenar menos y preguntar mejor como la ingeniería de prompts se volvió un oficio">
+            <div class="tarjeta__media gradiente-3" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M12 2a5 5 0 015 5v1a5 5 0 01-1 3 5 5 0 011 3v1a5 5 0 01-10 0v-1a5 5 0 011-3 5 5 0 01-1-3V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v1a3 3 0 006 0V7a3 3 0 00-3-3zm0 12a3 3 0 003-3v-1a3 3 0 00-6 0v1a3 3 0 003 3z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--ia">Inteligencia Artificial</span>
+              <h3 class="tarjeta__titulo"><a href="#">Entrenar menos y preguntar mejor: cómo la ingeniería de prompts se volvió un oficio</a></h3>
+              <p class="tarjeta__extracto">Equipos completos dedican su jornada a afinar instrucciones. Repasamos técnicas que sí reducen el tiempo de respuesta.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">LC</span>
+                <span class="tarjeta__autor">Lucía Campos</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">24 sep 2026</span>
+                <span class="lectura">8 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="seguridad" data-tags="seguridad,passwords,phishing" data-titulo="passkeys en la práctica lo que aprendimos tras desplegarlas en una tienda online">
+            <div class="tarjeta__media gradiente-4" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M12 2l8 4v6c0 5-3.4 9.4-8 10-4.6-.6-8-5-8-10V6l8-4zm0 2.2L6 6.9V12c0 3.9 2.6 7.4 6 7.9 3.4-.5 6-4 6-7.9V6.9l-6-2.7zm-1 4v2H8v2h3v2h2v-2h3v-2h-3V8.2h-2z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--seguridad">Seguridad</span>
+              <h3 class="tarjeta__titulo"><a href="#">Passkeys en la práctica: lo que aprendimos tras desplegarlas en una tienda online</a></h3>
+              <p class="tarjeta__extracto">Menos abandono en el registro, menos tickets de soporte y una pregunta complicada: ¿qué hacemos con los usuarios antiguos?</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">DM</span>
+                <span class="tarjeta__autor">Diego Molina</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">22 sep 2026</span>
+                <span class="lectura">7 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="movil" data-tags="movil,android,ios,apps" data-titulo="apps más ligeras por qué volver al rendering nativo ganó terreno en 2026">
+            <div class="tarjeta__media gradiente-5" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2zm0 3v12h10V5H7zm3 13h4v1h-4v-1z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--movil">Móvil</span>
+              <h3 class="tarjeta__titulo"><a href="#">Apps más ligeras: por qué volver al rendering nativo ganó terreno en 2026</a></h3>
+              <p class="tarjeta__extracto">Batería, arranque en frío y tamaño de descarga volvieron a pesar más que la velocidad de desarrollo.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">AS</span>
+                <span class="tarjeta__autor">Ana Serrano</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">20 sep 2026</span>
+                <span class="lectura">5 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="diseno" data-tags="diseno,ux,accesibilidad" data-titulo="contraste y foco la accesibilidad que sí mejora la conversión">
+            <div class="tarjeta__media gradiente-6" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M12 3a9 9 0 000 18V3zm0 0v18a9 9 0 000-18z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--diseno">Diseño</span>
+              <h3 class="tarjeta__titulo"><a href="#">Contraste y foco: la accesibilidad que sí mejora la conversión</a></h3>
+              <p class="tarjeta__extracto">Medimos el impacto de tres cambios sencillos en un formulario de suscripción: foco visible, jerarquía y color.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">PT</span>
+                <span class="tarjeta__autor">Pablo Torres</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">18 sep 2026</span>
+                <span class="lectura">6 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="desarrollo" data-tags="javascript,backend,node" data-titulo="sin frameworks mantener un backend de 4000 líneas es más fácil de lo que crees">
+            <div class="tarjeta__media gradiente-7" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2 3v2h5V7H6zm0 4v2h8v-2H6zm0 4v2h12v-2H6z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--desarrollo">Desarrollo</span>
+              <h3 class="tarjeta__titulo"><a href="#">Sin frameworks: mantener un backend de 4.000 líneas es más fácil de lo que crees</a></h3>
+              <p class="tarjeta__extracto">Menos dependencias, despliegues más rápidos y un equipo que entiende cada línea. Nuestra experiencia de dos años.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">MG</span>
+                <span class="tarjeta__autor">Marina Gutiérrez</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">15 sep 2026</span>
+                <span class="lectura">10 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="ia" data-tags="ia,datos,privacidad" data-titulo="datos sintéticos cuando tu modelo no puede tocar la información real">
+            <div class="tarjeta__media gradiente-1" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M4 6c0-1.66 3.58-3 8-3s8 1.34 8 3-3.58 3-8 3-8-1.34-8-3zm0 4c0 1.66 3.58 3 8 3s8-1.34 8-3v3c0 1.66-3.58 3-8 3s-8-1.34-8-3v-3zm0 6c0 1.66 3.58 3 8 3s8-1.34 8-3v3c0 1.66-3.58 3-8 3s-8-1.34-8-3v-3z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--ia">Inteligencia Artificial</span>
+              <h3 class="tarjeta__titulo"><a href="#">Datos sintéticos: cuando tu modelo no puede tocar la información real</a></h3>
+              <p class="tarjeta__extracto">Regulación, sesgos y coste de etiquetado: por qué los equipos de datos están generando copias de sus conjuntos.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">LC</span>
+                <span class="tarjeta__autor">Lucía Campos</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">12 sep 2026</span>
+                <span class="lectura">7 min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta reveal" data-categoria="seguridad" data-tags="seguridad,supply-chain,dependencias" data-titulo="dependencias fantasma cómo revisamos la cadena de suministro de npm">
+            <div class="tarjeta__media gradiente-3" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="media-icono"><path d="M10.59 13.41l1.41-1.41 4 4a2 2 0 11-2.83 2.83l-4-4 1.41-1.41 4 4a.5.5 0 10.71-.71l-4-4zM7 7l4 4 1.41-1.41-4-4A2 2 0 005.6 7.2l4 4L11 9.8l-4-4A.5.5 0 006.3 7.1z"/></svg>
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="pill pill--seguridad">Seguridad</span>
+              <h3 class="tarjeta__titulo"><a href="#">Dependencias fantasma: cómo revisamos la cadena de suministro de npm</a></h3>
+              <p class="tarjeta__extracto">Un script de auditoría, tres paquetes huérfanos y una lección sobre lo que ocurre cuando nadie mira el árbol de módulos.</p>
+              <div class="tarjeta__pie">
+                <span class="avatar avatar--sm" aria-hidden="true">DM</span>
+                <span class="tarjeta__autor">Diego Molina</span>
+                <span class="punto-separador" aria-hidden="true">•</span>
+                <span class="meta-fecha">9 sep 2026</span>
+                <span class="lectura">9 min</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Mensaje cuando no hay resultados -->
+        <p class="sin-resultados" id="sin-resultados" hidden>
+          No encontramos artículos con esos criterios. Prueba con otra búsqueda o categoría.
+        </p>
+
+        <!-- Paginación simulada -->
+        <nav class="paginacion reveal" aria-label="Paginación de artículos">
+          <button class="paginacion__btn" aria-label="Página anterior">‹</button>
+          <button class="paginacion__btn activo" aria-current="page">1</button>
+          <button class="paginacion__btn">2</button>
+          <button class="paginacion__btn">3</button>
+          <span class="paginacion__puntos" aria-hidden="true">…</span>
+          <button class="paginacion__btn">12</button>
+          <button class="paginacion__btn" aria-label="Página siguiente">›</button>
+        </nav>
+      </section>
+
+      <!-- ---------- SIDEBAR ---------- -->
+      <aside class="sidebar" aria-label="Barra lateral con contenido relacionado">
+
+        <!-- Buscador -->
+        <div class="widget reveal">
+          <h2 class="widget__titulo">Buscar</h2>
+          <form class="buscador buscador--sidebar" id="form-buscar-side" role="search">
+            <label class="sr-only" for="buscar-side">Buscar en el blog</label>
+            <svg class="buscador__icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 2a8 8 0 105.29 14.03l4.84 4.84 1.41-1.41-4.84-4.84A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+            </svg>
+            <input type="search" id="buscar-side" class="buscador__input" placeholder="Escribe y pulsa intro…" autocomplete="off">
+          </form>
+        </div>
+
+        <!-- Categorías -->
+        <div class="widget reveal" id="categorias">
+          <h2 class="widget__titulo">Categorías</h2>
+          <ul class="lista-categorias">
+            <li><button class="item-categoria activo" data-categoria="todos"><span>Todas</span><span class="contador">8</span></button></li>
+            <li><button class="item-categoria" data-categoria="desarrollo"><span>Desarrollo</span><span class="contador">2</span></button></li>
+            <li><button class="item-categoria" data-categoria="ia"><span>Inteligencia Artificial</span><span class="contador">2</span></button></li>
+            <li><button class="item-categoria" data-categoria="seguridad"><span>Seguridad</span><span class="contador">2</span></button></li>
+            <li><button class="item-categoria" data-categoria="movil"><span>Móvil</span><span class="contador">1</span></button></li>
+            <li><button class="item-categoria" data-categoria="diseno"><span>Diseño</span><span class="contador">1</span></button></li>
+          </ul>
+        </div>
+
+        <!-- Artículos populares -->
+        <div class="widget reveal">
+          <h2 class="widget__titulo">Lo más leído</h2>
+          <ol class="lista-populares">
+            <li>
+              <span class="num-popular">1</span>
+              <div>
+                <a href="#">Diez años depurando el mismo bug: lecciones de un heredado en PHP</a>
+                <span class="lectura">12 min</span>
+              </div>
+            </li>
+            <li>
+              <span class="num-popular">2</span>
+              <div>
+                <a href="#">Guía práctica de diseño de APIs que no odian ni clientes ni equipo</a>
+                <span class="lectura">11 min</span>
+              </div>
+            </li>
+            <li>
+              <span class="num-popular">3</span>
+              <div>
+                <a href="#">Web Components en 2026: lo bueno, lo regular y lo que ya no falla</a>
+                <span class="lectura">7 min</span>
+              </div>
+            </li>
+            <li>
+              <span class="num-popular">4</span>
+              <div>
+                <a href="#">Cómo medimos el rendimiento real más allá del Lighthouse</a>
+                <span class="lectura">6 min</span>
+              </div>
+            </li>
+            <li>
+              <span class="num-popular">5</span>
+              <div>
+                <a href="#">Trabajo remoto: protocolos de equipo que sobrevivieron a tres años</a>
+                <span class="lectura">8 min</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Etiquetas -->
+        <div class="widget reveal">
+          <h2 class="widget__titulo">Etiquetas</h2>
+          <div class="nube-tags" id="nube-tags">
+            <button class="tag" data-tag="javascript">#javascript</button>
+            <button class="tag" data-tag="frontend">#frontend</button>
+            <button class="tag" data-tag="ia">#ia</button>
+            <button class="tag" data-tag="seguridad">#seguridad</button>
+            <button class="tag" data-tag="movil">#móvil</button>
+            <button class="tag" data-tag="diseno">#diseño</button>
+            <button class="tag" data-tag="ux">#ux</button>
+            <button class="tag" data-tag="backend">#backend</button>
+            <button class="tag" data-tag="rendimiento">#rendimiento</button>
+            <button class="tag" data-tag="accesibilidad">#accesibilidad</button>
+            <button class="tag" data-tag="datos">#datos</button>
+          </div>
+          <button class="btn btn--texto" id="limpiar-filtros" hidden>Limpiar filtros ✕</button>
+        </div>
+
+        <!-- Newsletter lateral -->
+        <div class="widget widget--newsletter reveal">
+          <span class="widget__emoji" aria-hidden="true">✉️</span>
+          <h2 class="widget__titulo">Boquita semanal</h2>
+          <p class="widget__texto">Un correo los lunes con lo más interesante del mundo tech. Sin ruido.</p>
+          <form class="form-newsletter" data-newsletter>
+            <label class="sr-only" for="email-side">Tu correo electrónico</label>
+            <input type="email" id="email-side" class="campo-email" placeholder="tucorreo@ejemplo.com" required>
+            <button type="submit" class="btn btn--primario btn--bloque">Suscribirme</button>
+            <p class="mensaje-form" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- ================= NEWSLETTER ANCHA ================= -->
+    <section class="newsletter-ancha" id="newsletter" aria-labelledby="titulo-newsletter">
+      <div class="contenedor reveal">
+        <span class="etiqueta-superior">Newsletter</span>
+        <h2 class="seccion-titulo seccion-titulo--claro" id="titulo-newsletter">
+          Recibe lo mejor de la semana en tu bandeja de entrada
+        </h2>
+        <p class="newsletter-ancha__texto">
+          Cada lunes seleccionamos cinco lecturas sobre desarrollo, inteligencia artificial y seguridad.
+          Puedes darte de baja cuando quieras, sin formularios eternos.
+        </p>
+
+        <form class="form-newsletter form-newsletter--ancha" data-newsletter novalidate>
+          <label class="sr-only" for="email-ancha">Tu correo electrónico</label>
+          <input type="email" id="email-ancha" class="campo-email" placeholder="tucorreo@ejemplo.com" required>
+          <button type="submit" class="btn btn--acento">Quiero suscribirme</button>
+          <p class="mensaje-form" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="newsletter-ancha__nota">Únete a 12.400 lectores. Sin spam, lo prometemos.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="contenedor footer__grid">
+
+      <div class="footer__col footer__col--marca">
+        <a href="#inicio" class="logo">Bitácora<span class="logo__acento">Digital</span></a>
+        <p>
+          Publicamos artículos técnicos escritos por gente que programa de verdad.
+          Sin humo, sin titulares clickbait, con ejemplos que puedes copiar.
+        </p>
+        <div class="redes" aria-label="Redes sociales">
+          <a href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L1.5 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.07-1.9-3.07-1.9 0-2.2 1.46-2.2 2.97V21h-4V9z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Explorar</h3>
+        <ul class="footer__lista">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#articulos">Artículos</a></li>
+          <li><a href="#categorias">Categorías</a></li>
+          <li><a href="#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Temas</h3>
+        <ul class="footer__lista">
+          <li><a href="#">Desarrollo web</a></li>
+          <li><a href="#">Inteligencia artificial</a></li>
+          <li><a href="#">Ciberseguridad</a></li>
+          <li><a href="#">Diseño de interfaces</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__titulo">Nosotros</h3>
+        <ul class="footer__lista">
+          <li><a href="#">Quiénes somos</a></li>
+          <li><a href="#">Escribir para el blog</a></li>
+          <li><a href="#">Publicidad</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <div class="contenedor footer__bottom-inner">
+        <p>© <span id="anio-actual">2026</span> Bitácora Digital. Todos los derechos reservados.</p>
+        <ul class="footer__legal">
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

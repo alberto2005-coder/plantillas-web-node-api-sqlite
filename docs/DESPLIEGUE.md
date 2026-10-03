@@ -14,6 +14,8 @@ La tabla siguiente resume qué cambia al pasar de **local** a **producción**:
 | `ADMIN_TOKEN` | `cambia-esto-en-produccion` | **Token largo y aleatorio** (mín. 32 caracteres, `openssl rand -hex 32`) | `.env` / panel del proveedor (secreto) |
 | `CORS` | `1` (abierto para desarrollo) | `0` (cerrado) salvo que otra web consuma la API | `.env` / panel del proveedor |
 | `CORS_ORIGEN` | `*` | `https://tudominio.com` (si `CORS=1`) | `.env` / panel del proveedor |
+| `TRUST_PROXY` | `0` (no hay proxy en local) | `1` **solo** detrás de proxy inverso (Caddy/nginx/Cloudflare) | `.env` / panel del proveedor |
+| `CSP` | Por defecto (recursos propios + Google Fonts) | Personalizada si añades analíticas, formularios o embeds externos; `0` para no enviarla | `.env` / panel del proveedor |
 | Correo (`RESEND_API_KEY`, `SMTP_*`) | Vacío → modo demo | Claves reales de Resend / SMTP | `.env` / panel del proveedor (secretos) |
 | Stripe (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID_*`) | Vacío → modo demo | Claves **live** (no test) + webhook configurado en Stripe Dashboard | `.env` / panel del proveedor (secretos) |
 | HTTPS | No (http://localhost) | **Obligatorio** (certificado válido, HSTS) | Proxy (Caddy/Nginx) o proveedor PaaS |
@@ -142,7 +144,23 @@ tienda.tudominio.com {
 
 Recarga: `sudo systemctl reload caddy`. Caddy obtiene y renueva certificados Let's Encrypt **solo**.
 
-> **Nginx** (alternativa): usa `certbot --nginx -d tienda.tudominio.com` y configura `proxy_pass http://127.0.0.1:3000;` con cabeceras equivalentes.
+**Paso obligatorio: `TRUST_PROXY=1` en `.env` de la plantilla** (y reinicia el
+servidor). Detrás de un proxy **todas** las peticiones llegan a Node desde la
+misma IP: la del proxy. Si no avisas, el limitador anti-spam contaría los
+envíos de **todos** los visitantes en un único contador por IP y cualquiera
+agotaría el límite de todos (429 para todo el mundo). Con `TRUST_PROXY=1` el
+limitador usa la **primera IP real** del header `X-Forwarded-For` que añade
+Caddy.
+
+```dotenv
+TRUST_PROXY=1
+```
+
+> ⚠️ **Solo con proxy delante.** Si el servidor es público y no hay proxy,
+> déjalo en `0` (el defecto): cualquiera podría inventarse un
+> `X-Forwarded-For` a su medida y esquivar el límite anti-spam.
+
+> **Nginx** (alternativa): usa `certbot --nginx -d tienda.tudominio.com` y configura `proxy_pass http://127.0.0.1:3000;` con cabeceras equivalentes. Igual que con Caddy, pon `TRUST_PROXY=1` en `.env` para que el límite anti-spam use la IP real del visitante y no la del proxy (si usas Cloudflare delante, lo mismo).
 
 ### 6. Firewall (UFW)
 
@@ -296,7 +314,44 @@ Si el proyecto crece (escrituras concurrentes altas, réplicas, backups PITR), m
 
 ---
 
-## Checklist antes de abrir (15 puntos verificables)
+## Content-Security-Policy (CSP)
+
+Las plantillas envían por defecto la cabecera `Content-Security-Policy`
+(definida en `server/lib/http.js`): **solo recursos del propio sitio** más
+Google Fonts, junto con `Permissions-Policy`. Es la opción más segura, pero se
+queda corta en cuanto añades scripts o formularios de otros dominios.
+
+Se gobierna con `CSP` en `.env` (reinicia tras cambiarla):
+
+| Valor en `.env` | Efecto |
+|---|---|
+| sin definir `CSP` | la CSP por defecto del servidor (recursos propios + Google Fonts) |
+| `CSP=0` | no se envía la cabecera |
+| `CSP=default-src 'self'; …` | tu política personalizada |
+
+```dotenv
+# Desactivar la cabecera
+CSP=0
+
+# Personalizar: Plausible + Formspree + vídeos de YouTube
+CSP=default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://formspree.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://plausible.io; connect-src 'self' https://plausible.io https://formspree.io; frame-src https://www.youtube.com
+```
+
+Casos habituales:
+
+- **Analíticas** (Plausible, Umami, GA4) → añade su dominio a `script-src` (y a `connect-src` si envían eventos).
+- **Formularios externos** (Formspree, Web3Forms) → su dominio en `form-action` y `connect-src`.
+- **Vídeos/incrustados** (YouTube, Vimeo, mapas) → su dominio en `frame-src`.
+- **Stripe** (02 y 04) → `https://js.stripe.com` en `script-src` y `connect-src`.
+
+> Verifica con `curl -I https://tudominio.com/` → `content-security-policy`.
+> Si algo deja de cargarse en producción (scripts tachados en la consola del
+> navegador), te falta ese dominio en la política: amplíala en lugar de
+> desactivarla con `CSP=0`.
+
+---
+
+## Checklist antes de abrir (17 puntos verificables)
 
 | # | Verificación | Cómo comprobarlo |
 |---|---|---|
@@ -315,6 +370,8 @@ Si el proyecto crece (escrituras concurrentes altas, réplicas, backups PITR), m
 | 13 | Correo de prueba llega a bandeja real | Usa formulario de contacto / registro |
 | 14 | Rate limits no bloquean tráfico legítimo | Simula 5-10 peticiones seguidas → 200, la 11ª → 429 |
 | 15 | Logs accesibles y rotados (systemd/journald, PaaS logs) | `journalctl -u tienda -n 50` / panel PaaS |
+| 16 | `TRUST_PROXY=1` **solo** si hay proxy inverso delante (Caddy/nginx/Cloudflare) | `grep ^TRUST_PROXY= .env` → `1` con proxy, `0` sin proxy |
+| 17 | `CSP` revisada si añades scripts o formularios externos (analíticas, Formspree, embeds) | `curl -I https://tudominio.com/` → `content-security-policy`; `CSP=0` solo si la quieres apagar |
 
 ---
 

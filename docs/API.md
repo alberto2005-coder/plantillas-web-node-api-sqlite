@@ -7,7 +7,7 @@ Cada plantilla tiene su propio conjunto de endpoints específicos, pero comparte
 ## 1. Convenciones generales
 
 *   **Ruta Base**: Todas las llamadas a la API se hacen bajo el prefijo `/api`.
-*   **Formato de datos**: Todas las respuestas son JSON (`application/json`). Las peticiones POST/PATCH deben enviar JSON y tener la cabecera `Content-Type: application/json`.
+*   **Formato de datos**: Casi todas las respuestas son JSON (`application/json`); la única excepción es `GET /feed.xml` (03-blog), que devuelve XML. Las peticiones POST/PATCH deben enviar JSON y tener la cabecera `Content-Type: application/json`.
 *   **Cabeceras de seguridad**: cada respuesta (JSON, HTML y estáticos) lleva `Content-Security-Policy` (solo recursos propios + Google Fonts) y `Permissions-Policy`, además de `X-Content-Type-Options`, `Referrer-Policy` y `X-Frame-Options`. Se configuran con `CSP` en el `.env` (`CSP=0` la apaga, un valor personalizado la cambia; ver [despliegue](DESPLIEGUE.md)).
 *   **CORS**: Deshabilitado por defecto. Se puede habilitar poniendo `CORS=1` en el `.env`, útil si alojas el front y back separados.
 
@@ -47,16 +47,14 @@ Feed RSS 2.0 del blog (no lleva prefijo `/api`).
 *   **Detección**: `index.html` y `articulo.html` declaran `<link rel="alternate" type="application/rss+xml" href="/feed.xml">`, así que cualquier lector de RSS lo encuentra solo.
 
 ```bash
-curl http://localhost:3000/feed.xml
+curl http://localhost:3003/feed.xml
 ```
 
 ## 4. Patrones de Autenticación
 
 Las áreas protegidas (lectura de mensajes, exportación de CSV, cambio de estado de pedidos) se protegen mediante un token definido en el `.env` (ej. `ADMIN_TOKEN`).
 
-El token viaja **solo** en una cabecera:
-
-1.  **Cabecera personalizada**: `x-admin-token: tu-token-secreto`
+El token viaja **solo** en la cabecera `x-admin-token: tu-token-secreto`:
 
 ```bash
 curl -H "x-admin-token: TU_TOKEN" http://localhost:3000/api/mensajes

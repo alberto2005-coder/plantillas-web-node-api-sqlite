@@ -196,12 +196,7 @@ Por detrás: `GET /api/articulos/:slug` → tabla `articulos`
   `articulo.html`
   (`<link rel="alternate" type="application/rss+xml" href="/feed.xml">`) que
   detectan solos los lectores de RSS (Feedly, NetNewsWire, Inoreader…).
-- Prueba rápida desde una terminal:
-
-```bash
-curl http://localhost:3003/feed.xml
-```
-
+- Prueba rápida desde una terminal: `curl http://localhost:3003/feed.xml`
 - Devuelve un RSS 2.0 en XML con los **20 últimos artículos publicados**.
 - Los enlaces de cada artículo salen de `SITE_URL` en `.env`: en local apuntan
   a `http://localhost:3003`; cámbialo a tu dominio antes de publicar (§5,

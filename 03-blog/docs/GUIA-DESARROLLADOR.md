@@ -190,6 +190,8 @@ Todas las rutas responden JSON (`Content-Type: application/json; charset=utf-8`,
 `Cache-Control: no-store`). Las de escritura aceptan
 `Content-Type: application/json`. Fuente: `server/api.js` (9 rutas) +
 `server/lib/router.js` (404/405) + `server/lib/http.js` (400/413/403).
+La única excepción en formato es `GET /feed.xml` (fuera de `/api/`): responde
+XML, ver §4.10.
 
 | Método | Ruta | Auth | Parámetros / cuerpo | Respuestas y códigos |
 |---|---|---|---|---|
@@ -566,7 +568,7 @@ api.get('/api/suscriptores', (ctx) => {
 });
 ```
 
-`esAdmin()`, `ctx.json` y `ctx.fallo` ya existen (`api.js:65-70`, `router.js:75-76`).
+`esAdmin()`, `ctx.json` y `ctx.fallo` ya existen (`api.js:66-71`, `router.js:99-100`).
 Prueba:
 
 ```bash

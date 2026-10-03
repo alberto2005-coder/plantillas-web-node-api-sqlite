@@ -88,7 +88,8 @@ Cambios en `.env`: **reinicia el servidor** (`Ctrl + C` y `npm start`).
 
 ## 4. API REST
 
-Todas las respuestas son JSON. Las de escritura aceptan `Content-Type: application/json`
+Todas las respuestas son JSON (salvo `/feed.xml`, que devuelve XML). Las de
+escritura aceptan `Content-Type: application/json`
 y necesitan el header `x-admin-token`.
 
 | Método | Ruta | Query / Body | Respuesta | Auth |

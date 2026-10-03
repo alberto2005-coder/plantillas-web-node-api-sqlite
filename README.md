@@ -51,7 +51,8 @@ conectar lo que necesites).
 
 - `server/lib/` → `env.js` (lector de `.env`), `http.js` (JSON + estáticos),
   `router.js` (enrutador REST), `db.js` (SQLite), `email.js` (Resend/SMTP),
-  `limitador.js` (anti-spam por IP).
+  `limitador.js` (anti-spam por IP), `token.js` (comparación de secretos en
+  tiempo constante con `crypto.timingSafeEqual`).
 - `GET /api/salud` → comprobación de que la API viva.
 - `.env` + `.env.example` + `.gitignore` + `package.json` con scripts.
 - README con la **misma estructura** en las siete (fácil de comparar).
@@ -114,7 +115,9 @@ PORT=3102 npm start
 | `npm run reiniciar` | Borra la BD y la vuelve a sembrar con los datos de ejemplo |
 | `node server/server.js` | Arranque directo, sin npm |
 
-| Comando (en la **raíz** del repositorio) | Qué hace |
+**En la raíz del repositorio** (compartido para las 7):
+
+| Comando | Qué hace |
 |---|---|
 | `npm test` | pruebas de las 7 plantillas (`node --test`) |
 
@@ -399,7 +402,7 @@ llevarla de "demo" a "web real".
 | Documento | Para quién | Qué encontrarás |
 |---|---|---|
 | [docs/GUIA-USUARIO.md](docs/GUIA-USUARIO.md) | Quien **no programa** | Instalación, recorrido por las 7 webs clic a clic, dónde ver los datos que llegan, cambios sin tocar código y checklist de prueba |
-| [docs/GUIA-DESARROLLADOR.md](docs/GUIA-DESARROLLADOR.md) | Quien **va a tocar código** | Arquitectura y ciclo de una petición, las 6 librerías compartidas, patrones del front, convenciones, recetas de extensión con código, pruebas y seguridad |
+| [docs/GUIA-DESARROLLADOR.md](docs/GUIA-DESARROLLADOR.md) | Quien **va a tocar código** | Arquitectura y ciclo de una petición, las 7 librerías compartidas, patrones del front, convenciones, recetas de extensión con código, pruebas y seguridad |
 | [docs/API.md](docs/API.md) | Consulta rápida | Índice de **todos** los endpoints de las 7 plantillas con códigos, auth y ejemplos `curl` |
 | [docs/DESPLIEGUE.md](docs/DESPLIEGUE.md) | Quien la **publica** | VPS con HTTPS, plataformas PaaS (ojo al disco efímero), backups de la BD y checklist antes de abrir |
 | [docs/PERSONALIZACION.md](docs/PERSONALIZACION.md) | Quien la **personaliza** | Paleta, textos, imágenes, datos desde la BD, `.env` por plantilla y tabla «quiero X → dónde tocar» |

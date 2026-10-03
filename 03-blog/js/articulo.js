@@ -176,6 +176,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (aviso) aviso.hidden = true;
     if (caja) caja.hidden = false;
+
+    // JSON-LD (SEO): datos estructurados del artículo cargado
+    if (a && a.titulo) {
+      const datos = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: a.titulo,
+        description: a.extracto || '',
+        datePublished: a.fecha || undefined,
+        author: { '@type': 'Person', name: a.autor || '' },
+        inLanguage: 'es'
+      }).replace(/</g, '\\u003c');
+      let guion = document.getElementById('datos-estructurados');
+      if (!guion) {
+        guion = document.createElement('script');
+        guion.id = 'datos-estructurados';
+        guion.type = 'application/ld+json';
+        document.head.appendChild(guion);
+      }
+      guion.textContent = datos;
+    }
   }
 
   (function cargar() {

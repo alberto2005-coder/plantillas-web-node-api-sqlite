@@ -366,6 +366,44 @@
     if (!grid) return;
     const lista = obtenerProductos();
     grid.innerHTML = lista.map(tarjetaProducto).join('');
+
+    // JSON-LD (SEO): ItemList con los productos del catálogo.
+    // Se inyecta justo después de pintar y se reutiliza el mismo <script>.
+    const datos = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: catalogo.map((p, i) => {
+        const oferta = {
+          '@type': 'Offer',
+          price: Number(precioFinal(p).toFixed(2)),
+          priceCurrency: 'EUR'
+        };
+        if (typeof p.stock === 'number') {
+          oferta.availability = p.stock > 0
+            ? 'https://schema.org/InStock'
+            : 'https://schema.org/OutOfStock';
+        }
+        return {
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'Product',
+            name: p.nombre,
+            category: etiquetas[p.categoria] || p.categoria,
+            offers: oferta
+          }
+        };
+      })
+    }).replace(/</g, '\\u003c');
+    let guion = document.getElementById('datos-estructurados');
+    if (!guion) {
+      guion = document.createElement('script');
+      guion.id = 'datos-estructurados';
+      guion.type = 'application/ld+json';
+      document.head.appendChild(guion);
+    }
+    guion.textContent = datos;
+
     if (vacio) vacio.hidden = lista.length > 0;
 
     // Reobservamos los nuevos elementos para que se animen al aparecer

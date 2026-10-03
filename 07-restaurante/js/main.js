@@ -430,6 +430,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (cartaVacia) cartaVacia.hidden = visibles.length > 0;
+
+    // JSON-LD (SEO): carta completa como menú con sus platos.
+    // Se inyecta justo después de pintar y se reutiliza el mismo <script>.
+    var datos = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Menu',
+      name: 'Carta de Casa Olivera',
+      inLanguage: 'es',
+      hasMenuItem: carta.map(function (plato) {
+        var item = {
+          '@type': 'MenuItem',
+          name: plato.nombre,
+          description: plato.descripcion
+        };
+        if (typeof plato.precio === 'number' && isFinite(plato.precio)) {
+          item.offers = {
+            '@type': 'Offer',
+            price: Number(plato.precio.toFixed(2)),
+            priceCurrency: 'EUR'
+          };
+        }
+        return item;
+      })
+    }).replace(/</g, '\\u003c');
+    var guion = document.getElementById('datos-estructurados');
+    if (!guion) {
+      guion = document.createElement('script');
+      guion.id = 'datos-estructurados';
+      guion.type = 'application/ld+json';
+      document.head.appendChild(guion);
+    }
+    guion.textContent = datos;
   }
 
   function pintarDestacado() {

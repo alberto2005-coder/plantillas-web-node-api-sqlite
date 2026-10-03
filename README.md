@@ -114,6 +114,10 @@ PORT=3102 npm start
 | `npm run reiniciar` | Borra la BD y la vuelve a sembrar con los datos de ejemplo |
 | `node server/server.js` | Arranque directo, sin npm |
 
+| Comando (en la **raíz** del repositorio) | Qué hace |
+|---|---|
+| `npm test` | pruebas de las 7 plantillas (`node --test`) |
+
 **Sin servidor** (modo estático): doble clic en `index.html`. Verás la web
 completa; los formularios responderán en *modo demo* y la consola del navegador
 (`F12`) avisará de que no hay API.
@@ -181,6 +185,9 @@ plantillas-web/
 │   └── PERSONALIZACION.md     ← recetas para hacerla tuya
 ├── 01-portfolio/
 │   ├── index.html             ← contenido (español)
+│   ├── 404.html               ← página de error estilada (status 404 real)
+│   ├── favicon.svg · og.png · manifest.json · robots.txt · sitemap.xml
+│   │                           ← ficheros SEO: icono, imagen para redes y buscadores
 │   ├── css/styles.css         ← paleta, tipografías, componentes
 │   ├── js/main.js             ← comportamiento + cliente API (con fallback)
 │   ├── .env                   ← configuración local (NO se sube a git)
@@ -214,7 +221,7 @@ subirse. Reglas de la raíz:
 git init
 git add -A
 git status        # comprobación: NO debe aparecer ningún .env
-git commit -m "Plantillas web: 6 sitios con servidor, API y docs"
+git commit -m "Plantillas web: 7 sitios con servidor, API y docs"
 ```
 
 > Si algún día instalas una dependencia opcional (`npm install nodemailer`),
@@ -239,7 +246,9 @@ Claves comunes a las siete:
 | `PORT` / `HOST` | dónde escucha el servidor |
 | `SITE_URL` | URL pública (enlaces en correos) |
 | `DB_FILE` | ruta de la base SQLite |
-| `ADMIN_TOKEN` | clave de las operaciones de administración (header `x-admin-token`) |
+| `ADMIN_TOKEN` | clave de las operaciones de administración (solo header `x-admin-token`) |
+| `TRUST_PROXY` | `1` si hay proxy inverso delante (Caddy/nginx/Cloudflare): el límite usa la IP real del header `X-Forwarded-For` |
+| `CSP` | cabecera `Content-Security-Policy`: por defecto activa, `0` la desactiva y un valor personalizado la cambia |
 | `LIMITE_*` | envíos máximos por IP y minuto |
 | `RESEND_API_KEY` / `EMAIL_DE` | correo real por API REST (sin instalar nada) |
 | `SMTP_HOST` … | correo real por SMTP (requiere `npm install nodemailer`) |
@@ -343,6 +352,10 @@ Cada README tiene sus recetas concretas (con código). Aquí va el mapa global:
 - [ ] HTTPS activo.
 - [ ] Límites de envío activos (`LIMITE_*`).
 - [ ] Revisa `CORS=0` si nadie de otro dominio necesita la API.
+- [ ] Activa `TRUST_PROXY=1` **solo** si hay un proxy inverso delante
+      (ver [despliegue](docs/DESPLIEGUE.md)); si no, déjalo en `0`.
+- [ ] Revisa la `CSP` si añades scripts o formularios externos (analíticas,
+      Formspree…): por defecto solo permite recursos propios y Google Fonts.
 - [ ] Copias de seguridad de la base de datos.
 - [ ] Si expones la API a Internet: añade validación de esquema (`zod`) y, si
       crece, autenticación por usuario (no solo token compartido).

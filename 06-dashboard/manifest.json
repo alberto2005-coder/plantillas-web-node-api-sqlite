@@ -1,0 +1,18 @@
+{
+  "name": "Nova Analytics",
+  "short_name": "Nova Analytics",
+  "description": "Nova Analytics — plantilla de dashboard y panel de administración con HTML, CSS y JavaScript vanilla. Tema claro y oscuro, gráficas SVG y diseño responsive.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

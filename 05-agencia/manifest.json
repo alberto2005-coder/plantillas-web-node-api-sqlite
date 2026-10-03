@@ -1,0 +1,18 @@
+{
+  "name": "Estudio Creativo Vértice",
+  "short_name": "Vértice",
+  "description": "Estudio Creativo Vértice — Agencia de diseño de branding, web y motion. Creamos identidades con carácter para marcas que quieren destacar.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6d5efc",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Alex Moreno",
+  "short_name": "Alex Moreno",
+  "description": "Portfolio personal de Alex Moreno, desarrollador front-end y diseñador de interfaces. Proyectos, habilidades y contacto.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5b6cff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

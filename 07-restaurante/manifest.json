@@ -1,0 +1,18 @@
+{
+  "name": "Casa Olivera",
+  "short_name": "Casa Olivera",
+  "description": "Casa Olivera — restaurante de cocina mediterránea de mercado en València. Arroces, producto de temporada y vinos de la tierra desde 1998. Reserva tu mesa.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#146b57",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

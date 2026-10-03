@@ -1,0 +1,18 @@
+{
+  "name": "NovaTech Store",
+  "short_name": "NovaTech",
+  "description": "NovaTech Store — tienda online de auriculares, teclados, ratones y monitores. Envío gratis en pedidos superiores a 50€.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5b5bf0",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

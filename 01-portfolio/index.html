@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio personal de Alex Moreno, desarrollador front-end y diseñador de interfaces. Proyectos, habilidades y contacto.">
+  <meta name="author" content="Alex Moreno">
+  <title>Alex Moreno · Portfolio personal de desarrollo y diseño</title>
+
+  <!-- ============================================================
+       TIPOGRAFÍAS (Google Fonts) — puedes cambiarlas en styles.css
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       SCRIPT ANTI-PARPADEO DEL TEMA
+       Se ejecuta antes de pintar la página: aplica el tema guardado
+       en localStorage o el que prefiera el sistema operativo.
+       ============================================================ -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       BARRA DE NAVEGACIÓN (glassmorphism)
+       ============================================================ -->
+  <header class="navbar" id="navbar">
+    <nav class="navbar__inner contenedor" aria-label="Navegación principal">
+
+      <!-- Logo / nombre -->
+      <a href="#inicio" class="navbar__logo" aria-label="Ir al inicio de la página">
+        <span class="navbar__logo-mark" aria-hidden="true">AM</span>
+        <span class="navbar__logo-text">Alex Moreno</span>
+      </a>
+
+      <!-- Enlaces de navegación -->
+      <ul class="navbar__menu" id="menu-navegacion">
+        <li><a href="#inicio" class="navbar__link is-active">Inicio</a></li>
+        <li><a href="#sobre-mi" class="navbar__link">Sobre mí</a></li>
+        <li><a href="#proyectos" class="navbar__link">Proyectos</a></li>
+        <li><a href="#habilidades" class="navbar__link">Habilidades</a></li>
+        <li><a href="#experiencia" class="navbar__link">Experiencia</a></li>
+        <li><a href="#contacto" class="navbar__link">Contacto</a></li>
+      </ul>
+
+      <!-- Acciones: tema + botón hamburguesa -->
+      <div class="navbar__acciones">
+        <button class="btn-tema" id="btn-tema" type="button"
+                aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <!-- Icono sol (se muestra en tema oscuro) -->
+          <svg class="icono-sol" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <!-- Icono luna (se muestra en tema claro) -->
+          <svg class="icono-luna" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" type="button"
+                aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menu-navegacion">
+          <span class="btn-hamburguesa__linea" aria-hidden="true"></span>
+          <span class="btn-hamburguesa__linea" aria-hidden="true"></span>
+          <span class="btn-hamburguesa__linea" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ============================================================
+         HERO · PANTALLA COMPLETA
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-titulo">
+      <div class="hero__fondo" aria-hidden="true"></div>
+
+      <div class="hero__contenido contenedor">
+        <div class="hero__texto">
+          <p class="hero__saludo reveal">¡Hola! Soy</p>
+
+          <h1 class="hero__titulo reveal" id="hero-titulo">
+            Alex Moreno<span class="texto-degradado">.</span>
+          </h1>
+
+          <p class="hero__subtitulo reveal">
+            Desarrollador <strong>front-end</strong> y diseñador de interfaces en Madrid.
+            Construyo productos web rápidos, accesibles y con una estética cuidada,
+            desde la primera idea hasta el último pixel.
+          </p>
+
+          <div class="hero__acciones reveal">
+            <a href="#proyectos" class="btn btn--primario">Ver proyectos</a>
+            <a href="#contacto" class="btn btn--secundario">Contactar</a>
+          </div>
+
+          <ul class="hero__redes reveal" aria-label="Redes sociales">
+            <li>
+              <a href="#" class="red-social" aria-label="Perfil de Alex en GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                     fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.74.08-.74 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.13-.3-.54-1.53.11-3.18 0 0 1.01-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.29-1.56 3.3-1.24 3.3-1.24.65 1.65.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.83.57A12 12 0 0 0 12 .5z"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="red-social" aria-label="Perfil de Alex en LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                     fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21H9z"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="red-social" aria-label="Perfil de Alex en Dribbble">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8.5 2.9c4 5 5.6 9.6 6.2 17.7M2.4 10.5c6.9.2 12.3-1.3 16.7-5.1M21.7 13.6c-5.3-1.6-10.1-1.2-14.4 1.4"></path>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tarjeta decorativa / avatar -->
+        <div class="hero__tarjeta reveal" aria-hidden="true">
+          <div class="hero__avatar">
+            <span class="hero__avatar-iniciales">AM</span>
+          </div>
+          <div class="hero__tarjeta-cuerpo">
+            <span class="pill pill--disponible">● Disponible para proyectos</span>
+            <p class="hero__tarjeta-frase">“Código limpio, interfaces claras.”</p>
+            <div class="hero__tarjeta-datos">
+              <div>
+                <strong>+5</strong>
+                <span>años exp.</span>
+              </div>
+              <div>
+                <strong>+40</strong>
+                <span>proyectos</span>
+              </div>
+              <div>
+                <strong>100%</strong>
+                <span>remoto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#sobre-mi" class="hero__scroll" aria-label="Desplazarse a la sección Sobre mí">
+        <span aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <!-- ============================================================
+         SOBRE MÍ
+         ============================================================ -->
+    <section class="seccion" id="sobre-mi" aria-labelledby="sobre-mi-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="seccion__etiqueta">Sobre mí</p>
+          <h2 class="seccion__titulo" id="sobre-mi-titulo">Diseño y programo con la misma obsesión</h2>
+        </header>
+
+        <div class="sobre-mi__grid">
+          <div class="sobre-mi__foto reveal" role="img" aria-label="Retrato de Alex Moreno con sus iniciales AM">
+            <span aria-hidden="true">AM</span>
+            <div class="sobre-mi__foto-badge" aria-hidden="true">👋</div>
+          </div>
+
+          <div class="sobre-mi__contenido reveal">
+            <p>
+              Soy Alex, desarrollador front-end con más de cinco años creando productos digitales
+              para startups y estudios de diseño. Me especializo en <strong>HTML semántico</strong>,
+              <strong>CSS moderno</strong> y <strong>JavaScript</strong>, con especial atención al
+              rendimiento, la accesibilidad y los detalles que hacen que una web se sienta premium.
+            </p>
+            <p>
+              Fuera del editor encuentro inspiración en la fotografía urbana, el café de filtro
+              y los mapas antiguos. Creo firmemente que una buena interfaz se nota porque
+              no se nota: todo fluye donde esperas que esté.
+            </p>
+
+            <dl class="sobre-mi__datos">
+              <div class="dato">
+                <dt>Experiencia</dt>
+                <dd>+5 años</dd>
+              </div>
+              <div class="dato">
+                <dt>Proyectos</dt>
+                <dd>+40</dd>
+              </div>
+              <div class="dato">
+                <dt>Clientes</dt>
+                <dd>+25</dd>
+              </div>
+              <div class="dato">
+                <dt>Valoración</dt>
+                <dd>4.9/5</dd>
+              </div>
+            </dl>
+
+            <a href="#contacto" class="btn btn--primario">¿Trabajamos juntos?</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROYECTOS
+         ============================================================ -->
+    <section class="seccion seccion--alterna" id="proyectos" aria-labelledby="proyectos-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="seccion__etiqueta">Proyectos</p>
+          <h2 class="seccion__titulo" id="proyectos-titulo">Trabajos seleccionados</h2>
+          <p class="seccion__descripcion">
+            Una muestra de lo que he construido últimamente. Usa los filtros para ver
+            proyectos por categoría.
+          </p>
+        </header>
+
+        <!-- Filtros por categoría -->
+        <div class="filtros reveal" role="group" aria-label="Filtrar proyectos por categoría">
+          <button class="filtro is-activo" type="button" data-filtro="todos">Todos</button>
+          <button class="filtro" type="button" data-filtro="web">Web</button>
+          <button class="filtro" type="button" data-filtro="app">Apps</button>
+          <button class="filtro" type="button" data-filtro="diseno">Diseño</button>
+          <button class="filtro" type="button" data-filtro="marca">Branding</button>
+        </div>
+
+        <div class="proyectos__grid" id="grid-proyectos">
+
+          <article class="proyecto reveal" data-categoria="web">
+            <div class="proyecto__imagen proyecto__imagen--1" aria-hidden="true">
+              <span class="pill">Web</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">Web · 2025</p>
+              <h3 class="proyecto__titulo">Panadería La Miga</h3>
+              <p class="proyecto__descripcion">
+                Sitio con pedidos online para una panadería artesanal de Valencia.
+                Menú adaptable, carrito sencillo y 98 puntos en Lighthouse.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Código</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" data-categoria="app">
+            <div class="proyecto__imagen proyecto__imagen--2" aria-hidden="true">
+              <span class="pill">App</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">App · 2025</p>
+              <h3 class="proyecto__titulo">RutaVerde</h3>
+              <p class="proyecto__descripcion">
+                Aplicación de rutas de senderismo con mapa, perfil de altitud y
+                guardado de favoritos. PWA instalable y modo sin conexión.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Código</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" data-categoria="diseno">
+            <div class="proyecto__imagen proyecto__imagen--3" aria-hidden="true">
+              <span class="pill">Diseño</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">Diseño UI · 2024</p>
+              <h3 class="proyecto__titulo">Panel Nébula</h3>
+              <p class="proyecto__descripcion">
+                Sistema de diseño y panel de analítica para una plataforma SaaS:
+                tablas, gráficos, estados vacíos y biblioteca de componentes.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Caso de estudio</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" data-categoria="marca">
+            <div class="proyecto__imagen proyecto__imagen--4" aria-hidden="true">
+              <span class="pill">Branding</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">Branding · 2024</p>
+              <h3 class="proyecto__titulo">Estudio Horizonte</h3>
+              <p class="proyecto__descripcion">
+                Identidad visual completa para un estudio de arquitectura: logotipo,
+                paleta, tipografía y plantillas para redes sociales.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Behance</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" data-categoria="web">
+            <div class="proyecto__imagen proyecto__imagen--4" aria-hidden="true">
+              <span class="pill">Web</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">Web · 2024</p>
+              <h3 class="proyecto__titulo">Blog Tinta Rica</h3>
+              <p class="proyecto__descripcion">
+                Blog de escritura con lectura cómoda, modo oscuro, tabla de contenidos
+                y tiempo estimado de lectura por artículo.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Código</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proyecto reveal" data-categoria="app">
+            <div class="proyecto__imagen proyecto__imagen--5" aria-hidden="true">
+              <span class="pill">App</span>
+            </div>
+            <div class="proyecto__cuerpo">
+              <p class="proyecto__categoria">App · 2024</p>
+              <h3 class="proyecto__titulo">ContaFácil</h3>
+              <p class="proyecto__descripcion">
+                Herramienta de gastos compartidos para pisos de estudiantes:
+                liquidación automática, avisos y exportación a CSV.
+              </p>
+              <div class="proyecto__enlaces">
+                <a href="#" class="enlace">Ver demo</a>
+                <a href="#" class="enlace enlace--secundario">Código</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <p class="proyectos__vacio" id="proyectos-vacio" hidden>
+          No hay proyectos en esta categoría todavía. ¡Prueba con otro filtro!
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HABILIDADES
+         ============================================================ -->
+    <section class="seccion" id="habilidades" aria-labelledby="habilidades-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="seccion__etiqueta">Habilidades</p>
+          <h2 class="seccion__titulo" id="habilidades-titulo">Tecnologías con las que trabajo</h2>
+        </header>
+
+        <div class="habilidades__grid">
+          <!-- Barras de progreso animadas al hacer scroll -->
+          <div class="barras reveal">
+            <div class="barra" data-valor="95">
+              <div class="barra__cabecera">
+                <span>HTML5 / Semántica</span>
+                <span class="barra__porcentaje">0%</span>
+              </div>
+              <div class="barra__pista" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="HTML5 y semántica: 95 por ciento">
+                <span class="barra__relleno"></span>
+              </div>
+            </div>
+
+            <div class="barra" data-valor="92">
+              <div class="barra__cabecera">
+                <span>CSS3 / Grid y animaciones</span>
+                <span class="barra__porcentaje">0%</span>
+              </div>
+              <div class="barra__pista" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="CSS3: 92 por ciento">
+                <span class="barra__relleno"></span>
+              </div>
+            </div>
+
+            <div class="barra" data-valor="88">
+              <div class="barra__cabecera">
+                <span>JavaScript (ES2023)</span>
+                <span class="barra__porcentaje">0%</span>
+              </div>
+              <div class="barra__pista" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="JavaScript: 88 por ciento">
+                <span class="barra__relleno"></span>
+              </div>
+            </div>
+
+            <div class="barra" data-valor="85">
+              <div class="barra__cabecera">
+                <span>Diseño de interfaces</span>
+                <span class="barra__porcentaje">0%</span>
+              </div>
+              <div class="barra__pista" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Diseño de interfaces: 85 por ciento">
+                <span class="barra__relleno"></span>
+              </div>
+            </div>
+
+            <div class="barra" data-valor="80">
+              <div class="barra__cabecera">
+                <span>Figma / Prototipado</span>
+                <span class="barra__porcentaje">0%</span>
+              </div>
+              <div class="barra__pista" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Figma: 80 por ciento">
+                <span class="barra__relleno"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Badges de tecnologías -->
+          <div class="badges reveal">
+            <h3 class="badges__titulo">Otras tecnologías</h3>
+            <ul class="badges__lista">
+              <li class="badge">TypeScript</li>
+              <li class="badge">React</li>
+              <li class="badge">Node.js</li>
+              <li class="badge">Git / GitHub</li>
+              <li class="badge">Tailwind CSS</li>
+              <li class="badge">Vite</li>
+              <li class="badge">Sass</li>
+              <li class="badge">Accesibilidad WCAG</li>
+              <li class="badge">SEO técnico</li>
+              <li class="badge">Rendimiento web</li>
+              <li class="badge">Framer Motion</li>
+              <li class="badge">Storybook</li>
+            </ul>
+
+            <div class="badges__nota">
+              <p>
+                Siempre aprendiendo: ahora mismo profundizando en <strong>Web Components</strong>
+                y <strong>rendimiento web</strong> con Core Web Vitals.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         EXPERIENCIA · TIMELINE
+         ============================================================ -->
+    <section class="seccion seccion--alterna" id="experiencia" aria-labelledby="experiencia-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="seccion__etiqueta">Experiencia</p>
+          <h2 class="seccion__titulo" id="experiencia-titulo">Mi trayectoria profesional</h2>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item reveal">
+            <div class="timeline__punto" aria-hidden="true"></div>
+            <div class="timeline__tarjeta">
+              <span class="timeline__fecha">2023 — Actualidad</span>
+              <h3 class="timeline__puesto">Desarrollador front-end senior</h3>
+              <p class="timeline__empresa">Estudio Bit · Remoto</p>
+              <p class="timeline__descripcion">
+                Lidero el desarrollo de interfaces para clientes de e-commerce y SaaS.
+                Responsable del design system, la accesibilidad y la mentoría de dos juniors.
+              </p>
+              <ul class="timeline__tags">
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Design System</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="timeline__item reveal">
+            <div class="timeline__punto" aria-hidden="true"></div>
+            <div class="timeline__tarjeta">
+              <span class="timeline__fecha">2021 — 2023</span>
+              <h3 class="timeline__puesto">Desarrollador web front-end</h3>
+              <p class="timeline__empresa">Agencia Horizonte · Madrid</p>
+              <p class="timeline__descripcion">
+                Maqueté más de 20 webs corporativas y campañas interactivas.
+                Introduje pruebas automatizadas y una guía de estilo compartida en el equipo.
+              </p>
+              <ul class="timeline__tags">
+                <li>JavaScript</li>
+                <li>WordPress</li>
+                <li>SEO</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="timeline__item reveal">
+            <div class="timeline__punto" aria-hidden="true"></div>
+            <div class="timeline__tarjeta">
+              <span class="timeline__fecha">2020 — 2021</span>
+              <h3 class="timeline__puesto">Diseñador de interfaces (junior)</h3>
+              <p class="timeline__empresa">Freelance · Diversos clientes</p>
+              <p class="timeline__descripcion">
+                Primeros proyectos por cuenta propia: identidad visual, landings
+                y paneles administrativos para pequeños negocios locales.
+              </p>
+              <ul class="timeline__tags">
+                <li>Figma</li>
+                <li>UI/UX</li>
+                <li>Branding</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="timeline__item reveal">
+            <div class="timeline__punto" aria-hidden="true"></div>
+            <div class="timeline__tarjeta">
+              <span class="timeline__fecha">2016 — 2020</span>
+              <h3 class="timeline__puesto">Grado en Ingeniería Informática</h3>
+              <p class="timeline__empresa">Universidad Politécnica · Madrid</p>
+              <p class="timeline__descripcion">
+                Especialidad en ingeniería de software. Trabajo final sobre
+                accesibilidad web en aplicaciones de gobierno electrónico.
+              </p>
+              <ul class="timeline__tags">
+                <li>Algoritmos</li>
+                <li>Bases de datos</li>
+                <li>Accesibilidad</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACTO
+         ============================================================ -->
+    <section class="seccion" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <p class="seccion__etiqueta">Contacto</p>
+          <h2 class="seccion__titulo" id="contacto-titulo">¿Tienes un proyecto en mente?</h2>
+          <p class="seccion__descripcion">
+            Cuéntame qué necesitas y te responderé en menos de 24 horas laborables.
+          </p>
+        </header>
+
+        <div class="contacto__grid">
+          <div class="contacto__info reveal">
+            <div class="contacto__tarjeta">
+              <span class="contacto__icono" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" focusable="false">
+                  <path d="M4 4h16v16H4z"></path>
+                  <path d="m4 6 8 6 8-6"></path>
+                </svg>
+              </span>
+              <div>
+                <h3>Correo</h3>
+                <a href="mailto:hola@alexmoreno.dev">hola@alexmoreno.dev</a>
+              </div>
+            </div>
+
+            <div class="contacto__tarjeta">
+              <span class="contacto__icono" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" focusable="false">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </span>
+              <div>
+                <h3>Ubicación</h3>
+                <p>Madrid, España · Trabajo en remoto</p>
+              </div>
+            </div>
+
+            <div class="contacto__tarjeta">
+              <span class="contacto__icono" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" focusable="false">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </span>
+              <div>
+                <h3>Disponibilidad</h3>
+                <p>Lunes a viernes · 9:00 a 18:00 (CET)</p>
+              </div>
+            </div>
+
+            <div class="contacto__redes">
+              <a href="#" class="btn btn--secundario">LinkedIn</a>
+              <a href="#" class="btn btn--secundario">GitHub</a>
+              <a href="#" class="btn btn--secundario">Dribbble</a>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <form class="formulario reveal" id="formulario-contacto" novalidate>
+            <div class="campo">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name"
+                     placeholder="Ej. María García" required
+                     aria-describedby="error-nombre">
+              <p class="campo__error" id="error-nombre" hidden>Escribe tu nombre (mínimo 2 letras).</p>
+            </div>
+
+            <div class="campo">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" autocomplete="email"
+                     placeholder="tucorreo@ejemplo.com" required
+                     aria-describedby="error-email">
+              <p class="campo__error" id="error-email" hidden>Introduce un correo válido, por ejemplo nombre@dominio.com.</p>
+            </div>
+
+            <div class="campo">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" rows="5" required
+                        placeholder="Cuéntame sobre tu proyecto, plazos y presupuesto aproximado…"
+                        aria-describedby="error-mensaje"></textarea>
+              <p class="campo__error" id="error-mensaje" hidden>El mensaje debe tener al menos 10 caracteres.</p>
+            </div>
+
+            <button type="submit" class="btn btn--primario btn--ancho">Enviar mensaje</button>
+
+            <p class="formulario__exito" id="form-exito" role="status" hidden>
+              ✅ ¡Gracias por escribir! He recibido tu mensaje y te responderé muy pronto.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       PIE DE PÁGINA
+       ============================================================ -->
+  <footer class="footer">
+    <div class="contenedor footer__interior">
+      <div class="footer__marca">
+        <span class="navbar__logo-mark" aria-hidden="true">AM</span>
+        <p>Hecho con HTML, CSS y JavaScript vanilla — sin frameworks.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Navegación del pie de página">
+        <a href="#inicio">Inicio</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#habilidades">Habilidades</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <p class="footer__copyright">
+        © <span id="anio-actual">2026</span> Alex Moreno. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

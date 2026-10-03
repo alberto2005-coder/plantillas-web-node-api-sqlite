@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="La página que buscas no existe. Vuelve al inicio de Alex Moreno.">
+  <meta name="theme-color" content="#5b6cff">
+  <title>404 — Página no encontrada</title>
+
+  <!-- Rutas absolutas: esta página puede servirse desde cualquier profundidad -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Script anti-parpadeo (mismo esencial que index.html) -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- Estilos de respaldo: se ven aunque /css/styles.css no cargue.
+       Van ANTES de la hoja real para que, si carga, sus reglas sigan mandando. -->
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body, 'Inter', 'Segoe UI', system-ui, sans-serif);
+      background: var(--color-fondo, var(--color-bg, #fff));
+      color: var(--color-texto, var(--color-text, #111));
+    }
+    .error-404 {
+      box-sizing: border-box;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1.1rem;
+      padding: 4rem 1.5rem;
+      background: var(--color-fondo, var(--color-bg, #fff));
+      color: var(--color-texto, var(--color-text, #111));
+    }
+    .error-404__marca {
+      margin: 0;
+      font-family: var(--font-heading, 'Sora', 'Segoe UI', system-ui, sans-serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-primary, #5b6cff);
+    }
+    h1 {
+      margin: 0;
+      font-family: var(--font-heading, 'Sora', 'Segoe UI', system-ui, sans-serif);
+      font-size: clamp(1.7rem, 5vw, 3rem);
+      line-height: 1.15;
+      font-weight: 800;
+      color: inherit;
+    }
+    .error-404__sub {
+      margin: 0;
+      max-width: 46ch;
+      line-height: 1.65;
+      color: var(--color-texto-suave, var(--color-text-muted, #5b6376));
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.6rem;
+      padding: 0.85rem 1.7rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-family: var(--font-heading, 'Sora', 'Segoe UI', system-ui, sans-serif);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      background: var(--color-primary, #5b6cff);
+      color: #fff;
+    }
+  </style>
+
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <main class="error-404">
+    <p class="error-404__marca">Alex Moreno</p>
+    <h1>404 · Esta página no existe</h1>
+    <p class="error-404__sub">
+      La dirección que has escrito no corresponde a ninguna página de este portfolio:
+      puede que el enlace esté roto o que la sección se haya movido. Vuelve al inicio y
+      sigue explorando proyectos, habilidades y contacto.
+    </p>
+    <a class="btn btn--primario" href="/">Volver al inicio</a>
+  </main>
+</body>
+</html>

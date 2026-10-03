@@ -29,12 +29,13 @@ const TIPOS = ['web', 'landing', 'branding', 'app', 'seo', 'otro'];
 /** Tramos de presupuesto admitidos (deben coincidir con el <select>) */
 const TRAMOS = ['menos-3000', '3000-8000', '8000-20000', 'mas-20000'];
 
-/** Comprueba el token de administración (header o query) */
+const { tokenValido } = require('./lib/token');
+
+/** Comprueba el token de administración (solo cabecera x-admin-token) */
 function esAdmin(ctx) {
   const token = process.env.ADMIN_TOKEN;
   if (!token) return false;
-  const enviado = ctx.cabecera('x-admin-token') || ctx.query.token || '';
-  return enviado === token;
+  return tokenValido(ctx.cabecera('x-admin-token') || '', token);
 }
 
 /** Crea un código corto y legible para localizar la solicitud en la BD */

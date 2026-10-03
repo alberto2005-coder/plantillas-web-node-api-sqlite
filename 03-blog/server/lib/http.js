@@ -32,11 +32,38 @@ const MIME = {
 /** Ficheros que NUNCA se sirven al cliente (por seguridad) */
 const BLOQUEADOS = new Set(['.env', '.env.local', '.env.example', '.db', '.sqlite', '.sqlite-wal', '.sqlite-shm', '.md', '.log']);
 
+/**
+ * Content-Security-Policy por defecto: solo recursos del propio sitio
+ * (más Google Fonts, que es lo único externo que cargan las plantillas).
+ * Se puede cambiar o desactivar desde .env:
+ *   CSP=0                 → no envía la cabecera
+ *   CSP=default-src 'self'; …  → valor personalizado (analíticas, formularios
+ *                                 externos, Stripe… ver docs/DESPLIEGUE.md)
+ */
+const CSP_PREDETERMINADA = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'self'",
+  "form-action 'self'",
+  'img-src \'self\' data: blob:',
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  'font-src \'self\' data: https://fonts.gstatic.com',
+  "script-src 'self' 'unsafe-inline'",
+  "connect-src 'self'"
+].join('; ');
+
 /** Cabeceras comunes de seguridad y cache */
 function cabecerasBase(res) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), usb=(), payment=(self)');
+
+  const csp = Object.prototype.hasOwnProperty.call(process.env, 'CSP')
+    ? process.env.CSP
+    : CSP_PREDETERMINADA;
+  if (csp && csp !== '0') res.setHeader('Content-Security-Policy', csp);
 }
 
 /** Respuesta JSON. `datos` puede ser cualquier estructura serializable. */
@@ -100,7 +127,15 @@ function consulta(req) {
  */
 function estatico(req, res, raiz) {
   const { url } = consulta(req);
-  let rel = decodeURIComponent(url.pathname);
+
+  // decodeURIComponent puede lanzar con URLs malformadas (/%zz): 400, no 500
+  let rel;
+  try {
+    rel = decodeURIComponent(url.pathname);
+  } catch (e) {
+    return error(res, 400, 'URL no válida');
+  }
+
   if (rel === '/') rel = '/index.html';
 
   const absoluto = path.normalize(path.join(raiz, rel));
@@ -118,9 +153,7 @@ function estatico(req, res, raiz) {
 
   fs.stat(absoluto, (err, stat) => {
     if (err || !stat.isFile()) {
-      cabecerasBase(res);
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      return res.end('404 — No encontrado: ' + rel);
+      return noEncontrado(req, res, raiz, rel);
     }
 
     const etag = 'W/"' + stat.size + '-' + Number(stat.mtimeMs).toString(36) + '"';
@@ -138,6 +171,36 @@ function estatico(req, res, raiz) {
     });
     fs.createReadStream(absoluto).pipe(res);
   });
+}
+
+/**
+ * Respuesta 404: si la plantilla incluye un `404.html` estilado, se sirve
+ * (con status 404 de verdad, para que Google y los navegadores lo indexen
+ * como error). Si no, texto plano como hasta ahora.
+ */
+function noEncontrado(req, res, raiz, rel) {
+  const personalizado = path.join(raiz, '404.html');
+
+  if (req.method === 'GET') {
+    let stat = null;
+    try {
+      stat = fs.statSync(personalizado);
+    } catch (e) { /* la plantilla no tiene 404.html */ }
+
+    if (stat && stat.isFile()) {
+      cabecerasBase(res);
+      res.writeHead(404, {
+        'Content-Type': MIME['.html'],
+        'Content-Length': stat.size,
+        'Cache-Control': 'no-cache'
+      });
+      return fs.createReadStream(personalizado).pipe(res);
+    }
+  }
+
+  cabecerasBase(res);
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('404 — No encontrado: ' + rel);
 }
 
 module.exports = { MIME, json, error, leerCuerpo, consulta, estatico, cabecerasBase };

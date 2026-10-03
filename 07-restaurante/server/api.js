@@ -47,12 +47,13 @@ function entero(clave, defecto) {
    Ayudas generales
    -------------------------------------------------------------------------- */
 
-/** Comprueba el token de administración (header o query) */
+const { tokenValido } = require('./lib/token');
+
+/** Comprueba el token de administración (solo cabecera x-admin-token) */
 function esAdmin(ctx) {
   const token = process.env.ADMIN_TOKEN;
   if (!token) return false;
-  const enviado = ctx.cabecera('x-admin-token') || ctx.query.token || '';
-  return enviado === token;
+  return tokenValido(ctx.cabecera('x-admin-token') || '', token);
 }
 
 /** 'Fideuà' → 'fideua' (misma normalización que usa js/main.js) */

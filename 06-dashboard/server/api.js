@@ -25,6 +25,7 @@
 const crypto = require('node:crypto');
 
 const { crearLimitador } = require('./lib/limitador');
+const { tokenValido } = require('./lib/token');
 
 /** Estados permitidos en la tabla de pedidos */
 const ESTADOS = ['Entregado', 'En curso', 'Pendiente'];
@@ -36,11 +37,11 @@ const VIDA_TOKEN_MS = 24 * 60 * 60 * 1000;
    Autenticación
    -------------------------------------------------------------------------- */
 
-/** Devuelve el token que ha enviado el cliente (Bearer, x-admin-token o ?token=) */
+/** Devuelve el token que ha enviado el cliente (Bearer o x-admin-token) */
 function tokenRecibido(ctx) {
   const auth = ctx.cabecera('authorization') || '';
   if (/^bearer\s+/i.test(auth)) return auth.replace(/^bearer\s+/i, '').trim();
-  return ctx.cabecera('x-admin-token') || ctx.query.token || '';
+  return ctx.cabecera('x-admin-token') || '';
 }
 
 /**
@@ -52,7 +53,7 @@ function crearComprobador(bd) {
   return function esAdmin(ctx) {
     const token = tokenRecibido(ctx);
     if (!token) return false;
-    if (process.env.ADMIN_TOKEN && token === process.env.ADMIN_TOKEN) return true;
+    if (process.env.ADMIN_TOKEN && tokenValido(token, process.env.ADMIN_TOKEN)) return true;
     return Boolean(sesionValida(bd, token));
   };
 }

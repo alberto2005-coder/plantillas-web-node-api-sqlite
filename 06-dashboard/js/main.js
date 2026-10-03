@@ -1289,11 +1289,9 @@
         enlace.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       } catch (e) {
-        // Reserva: el servidor también acepta el token en la query string
-        window.open(
-          API_BASE + '/api/exportar/pedidos.csv?token=' + encodeURIComponent(token),
-          '_blank'
-        );
+        // Sin respuesta del servidor no hay CSV que descargar
+        console.warn('[exportar] No se pudo descargar el CSV:', e);
+        alert('No se pudo exportar el CSV. Comprueba que sigues con sesión iniciada.');
       }
     });
   }

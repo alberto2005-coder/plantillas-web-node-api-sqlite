@@ -31,12 +31,13 @@ const { entero, opcional } = require('./lib/env');
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PERIODOS = new Set(['mensual', 'anual']);
 
-/** Comprueba el token de administración (header x-admin-token o ?token=) */
+const { tokenValido } = require('./lib/token');
+
+/** Comprueba el token de administración (solo cabecera x-admin-token) */
 function esAdmin(ctx) {
   const token = process.env.ADMIN_TOKEN;
   if (!token) return false;
-  const enviado = ctx.cabecera('x-admin-token') || ctx.query.token || '';
-  return enviado === token;
+  return tokenValido(ctx.cabecera('x-admin-token') || '', token);
 }
 
 /** Raíz pública del sitio (para enlaces de verificación y de pago) */

@@ -31,6 +31,30 @@ function compilar(patron) {
   };
 }
 
+/**
+ * IP real de la petición (la usa el limitador anti-spam).
+ *
+ * - Por defecto: la dirección del socket (correcto en local y en directo).
+ * - Con `TRUST_PROXY=1` en .env (detrás de Caddy/nginx/Cloudflare, tal como
+ *   recomienda docs/DESPLIEGUE.md): la primera IP del header X-Forwarded-For,
+ *   que es la que ha escrito el proxy. Sin esto, TODOS los visitantes
+ *   compartirían la IP del proxy y un único usuario agotaría el límite
+ *   de envíos de todos.
+ *
+ * Nunca actives TRUST_PROXY si el servidor es público y no hay proxy delante:
+ * entonces cualquiera podría mandar un X-Forwarded-For falso y esquivar el límite.
+ */
+function ipCliente(req) {
+  const confiado = process.env.TRUST_PROXY === '1' || process.env.TRUST_PROXY === 'true';
+  if (confiado) {
+    const cabecera = req.headers['x-forwarded-for'];
+    if (typeof cabecera === 'string' && cabecera.trim()) {
+      return cabecera.split(',')[0].trim();
+    }
+  }
+  return (req.socket && req.socket.remoteAddress) || 'desconocida';
+}
+
 function crearRouter() {
   const rutas = [];
   const router = {};
@@ -76,7 +100,7 @@ function crearRouter() {
         fallo: (codigo, mensaje, detalle) => error(res, codigo, mensaje, detalle),
         cuerpo: () => leerCuerpo(req),
         cabecera: (nombre) => req.headers[nombre.toLowerCase()],
-        ip: (req.socket && req.socket.remoteAddress) || 'desconocida'
+        ip: ipCliente(req)
       };
 
       try {

@@ -21,12 +21,13 @@ const { crearLimitador } = require('./lib/limitador');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/** Comprueba el token de administración (header o query) */
+const { tokenValido } = require('./lib/token');
+
+/** Comprueba el token de administración (solo cabecera x-admin-token) */
 function esAdmin(ctx) {
   const token = process.env.ADMIN_TOKEN;
   if (!token) return false;
-  const enviado = ctx.cabecera('x-admin-token') || ctx.query.token || '';
-  return enviado === token;
+  return tokenValido(ctx.cabecera('x-admin-token') || '', token);
 }
 
 module.exports = function registrar(api, { bd }) {

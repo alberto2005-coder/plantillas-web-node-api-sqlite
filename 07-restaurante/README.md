@@ -82,6 +82,8 @@ Copia `.env.example` → `.env` y rellena. Ya te dejo un `.env` de demo listo.
 | `EMAIL_DE` | opcional | Remitente visible (`Casa Olivera <hola@x.com>`) |
 | `SMTP_HOST` / `SMTP_PUERTO` / `SMTP_USUARIO` / `SMTP_CLAVE` | opcional | Envío por SMTP (requiere `npm install nodemailer`) |
 | `CORS` / `CORS_ORIGEN` | no (`0`) | Para consumir la API desde otro dominio |
+| `TRUST_PROXY` | no (`0`) | `1` solo detrás de un proxy inverso (Caddy/nginx/Cloudflare): el límite anti-spam usa la IP real del visitante, no la del proxy |
+| `CSP` | no | Cabecera `Content-Security-Policy` que envía el servidor; `CSP=0` la desactiva y un valor propio la personaliza (analíticas, formularios externos…)
 
 Cambios en `.env`: **reinicia el servidor** (`Ctrl + C` y `npm start`).
 

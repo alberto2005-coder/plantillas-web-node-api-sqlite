@@ -71,8 +71,6 @@ Copia `.env.example` → `.env` y rellena. Ya te dejo un `.env` de demo listo.
 | `SITE_URL` | no | URL pública (se usa en correos, enlaces y en el feed `/feed.xml`) |
 | `DB_FILE` | no | Ruta del fichero SQLite (se crea solo) |
 | `ADMIN_TOKEN` | sí para admin | Clave para crear/editar/borrar artículos |
-| `TRUST_PROXY` | no (`0`) | `1` solo detrás de un proxy inverso (Caddy/nginx/Cloudflare): el límite anti-spam usa la IP real del `X-Forwarded-For` |
-| `CSP` | no | Cabecera `Content-Security-Policy` que envía el servidor; `0` la apaga y un valor personalizado la cambia |
 | `POR_PAGINA` | no (3) | Artículos por página del listado |
 | `LIMITE_NEWSLETTER` | no (5) | Suscripciones máximas por IP y minuto |
 | `NEWSLETTER_DESTINO` | no | Correo que recibe el aviso de cada nueva suscripción |
@@ -81,6 +79,8 @@ Copia `.env.example` → `.env` y rellena. Ya te dejo un `.env` de demo listo.
 | `EMAIL_DE` | opcional | Remitente visible (`Nombre <hola@x.com>`) |
 | `SMTP_HOST` / `SMTP_PUERTO` / `SMTP_USUARIO` / `SMTP_CLAVE` | opcional | Envío por SMTP (requiere `npm install nodemailer`) |
 | `CORS` / `CORS_ORIGEN` | no (`0`) | Para consumir la API desde otro dominio |
+| `TRUST_PROXY` | no (`0`) | `1` solo detrás de un proxy inverso (Caddy/nginx/Cloudflare): el límite anti-spam usa la IP real del visitante, no la del proxy |
+| `CSP` | no | Cabecera `Content-Security-Policy` que envía el servidor; `CSP=0` la desactiva y un valor propio la personaliza (analíticas, formularios externos…)
 
 Cambios en `.env`: **reinicia el servidor** (`Ctrl + C` y `npm start`).
 

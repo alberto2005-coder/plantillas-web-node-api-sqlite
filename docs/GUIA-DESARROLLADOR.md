@@ -39,6 +39,12 @@ El servidor no usa Express.js. Todo se maneja a través de módulos nativos en `
 *   `db.js`: Un wrapper muy fino sobre `node:sqlite` para proveer métodos `ejecutar`, `todos` y `uno`.
 *   `env.js`: Parsea el archivo `.env` línea por línea.
 *   `limitador.js`: Implementa un rate limit en memoria usando un `Map` (útil contra spam básico en formularios).
+*   `token.js`: Compara el token de administración con `crypto.timingSafeEqual` (comparación en tiempo constante, no un `===`) y lo lee **solo** de la cabecera `x-admin-token`; el token nunca viaja por la query string.
+
+> **Regla de oro de `server/lib/`**: los ficheros de `server/lib/` deben ser
+> **idénticos** en las 7 plantillas (están copiados, no compartidos). Si
+> modificas uno, hazlo en las siete a la vez: hay una prueba que compara sus
+> contenidos y falla si detecta deriva.
 
 ## 3. Base de datos (`node:sqlite`)
 
@@ -60,3 +66,22 @@ Para soportar el modo estático, `js/main.js` incluye una lógica de *fallback*:
 *   **Para producción**: Reemplaza el servidor nativo por Express/Fastify si necesitas lógica muy compleja o middlewares pesados.
 *   **Seguridad**: Las contraseñas en el panel de admin actual (plantilla 06) o los tokens son en texto plano para demostración. Implementa bcrypt o jwt para aplicaciones reales.
 *   **Modificaciones rápidas**: Usa `npm run dev` que levanta el servidor usando `--watch` nativo de Node.
+
+## 6. Pruebas
+
+Desde la **raíz** del repositorio (no desde cada plantilla):
+
+```bash
+npm test      # ejecuta: node --test pruebas/
+```
+
+Qué cubre:
+
+*   **Humo de las 7 APIs**: comprueba que cada plantilla arranca y que su API responde (empezando por `GET /api/salud`).
+*   **Seguridad**: bloqueo de ficheros sensibles (`.env`, `.md`), cabeceras de seguridad y que el token de administración se recibe **solo** por `x-admin-token`.
+*   **Deriva de `server/lib/`**: verifica que los ficheros de `server/lib/` siguen siendo idénticos en las 7 plantillas.
+
+Complementos:
+
+*   `verificar.sh` → equivalente Unix de `verificar.ps1`: arranca las 7 plantillas y comprueba su API.
+*   `.github/workflows/ci.yml` → CI que ejecuta las pruebas en cada push.

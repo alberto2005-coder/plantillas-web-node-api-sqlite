@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NovaTech Store — tienda online de auriculares, teclados, ratones y monitores. Envío gratis en pedidos superiores a 50€.">
+  <title>NovaTech Store — Tienda online de tecnología y accesorios</title>
+
+  <!-- Fuentes de Google Fonts (Sora para títulos + Inter para texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Script anti-parpadeo: aplica el tema guardado ANTES de pintar la página -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('novatech-tema');
+        var sistema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', guardado || sistema);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ BARRA DE ANUNCIO SUPERIOR ============ -->
+  <div class="anuncio" id="anuncio">
+    <p class="anuncio__texto">
+      <span class="anuncio__pill">OFERTA</span>
+      Envío gratis en pedidos superiores a 50€ &nbsp;·&nbsp; Devoluciones sin coste durante 30 días
+    </p>
+    <button class="anuncio__cerrar" id="cerrarAnuncio" type="button" aria-label="Cerrar la barra de anuncio">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" id="navbar">
+    <div class="contenedor navbar__interior">
+
+      <!-- Logo -->
+      <a class="logo" href="#" aria-label="NovaTech Store, ir al inicio">
+        <span class="logo__marca" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M12 22V12"/><path d="m3 7 9 5 9-5"/>
+          </svg>
+        </span>
+        <span class="logo__texto">Nova<span>Tech</span></span>
+      </a>
+
+      <!-- Buscador -->
+      <form class="buscador" role="search" id="formBuscador">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>
+        </svg>
+        <label class="sr-only" for="buscar">Buscar productos</label>
+        <input type="search" id="buscar" name="buscar" placeholder="Buscar auriculares, teclados…" autocomplete="off">
+      </form>
+
+      <!-- Enlaces de navegación -->
+      <nav class="nav" id="navMenu" aria-label="Navegación principal">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#ventajas">Ventajas</a>
+        <a href="#testimonios">Opiniones</a>
+        <a href="#newsletter">Ofertas</a>
+      </nav>
+
+      <!-- Acciones -->
+      <div class="navbar__acciones">
+        <!-- Carrito con contador de unidades -->
+        <button class="icono-btn carrito-btn" id="abrirCarrito" type="button" aria-label="Abrir el carrito de la compra" aria-controls="carritoPanel" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>
+            <path d="M2 3h2.2l2.3 12.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.5L21 7H5.4"/>
+          </svg>
+          <span class="badge-contador" id="contadorCarrito" aria-hidden="true">0</span>
+        </button>
+
+        <!-- Toggle de tema (sol / luna) -->
+        <button class="icono-btn" id="toggleTema" type="button" aria-label="Cambiar entre tema claro y oscuro">
+          <svg class="icono-sol" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"/>
+            <path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/>
+          </svg>
+          <svg class="icono-luna" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.7 6.7 0 0 0 9.9 9.9z"/>
+          </svg>
+        </button>
+
+        <!-- Menú hamburguesa (móvil) -->
+        <button class="icono-btn hamburguesa" id="toggleMenu" type="button" aria-label="Abrir menú de navegación" aria-controls="navMenu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO PROMOCIONAL ============ -->
+    <section class="hero" aria-labelledby="heroTitulo">
+      <div class="contenedor hero__interior">
+        <div class="hero__contenido reveal">
+          <span class="pill pill--acento">Rebajas de temporada · hasta -40%</span>
+          <h1 id="heroTitulo">Tecnología que <span class="texto-degradado">se siente de verdad</span></h1>
+          <p class="hero__subtitulo">
+            Auriculares, teclados, ratones y monitores seleccionados por nuestro equipo.
+            Calidad probada, garantía de 2 años y envío en 24-48 h a toda España.
+          </p>
+          <div class="hero__acciones">
+            <a class="btn btn--primario btn--grande" href="#catalogo">Ver catálogo</a>
+            <a class="btn btn--fantasma btn--grande" href="#ventajas">Por qué NovaTech</a>
+          </div>
+          <ul class="hero__datos">
+            <li><strong>+18.000</strong><span>clientes felices</span></li>
+            <li><strong>4,8/5</strong><span>valoración media</span></li>
+            <li><strong>24-48 h</strong><span>entrega nacional</span></li>
+          </ul>
+        </div>
+
+        <!-- Tarjeta de producto destacado -->
+        <article class="producto-destacado reveal" aria-label="Producto destacado">
+          <div class="producto-destacado__imagen">
+            <span class="badge badge--oferta">-25%</span>
+            <svg viewBox="0 0 24 24" width="86" height="86" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 14v-2a8 8 0 0 1 16 0v2"/>
+              <rect x="2.5" y="13.5" width="4.5" height="7" rx="2"/>
+              <rect x="17" y="13.5" width="4.5" height="7" rx="2"/>
+            </svg>
+          </div>
+          <div class="producto-destacado__cuerpo">
+            <p class="producto-destacado__marca">NovaTech Pro</p>
+            <h2 class="producto-destacado__nombre">Auriculares Aura X2 con cancelación de ruido</h2>
+            <div class="estrellas" aria-label="Valoración 5 de 5 estrellas">
+              <span aria-hidden="true">★★★★★</span>
+              <small>5,0 · 312 opiniones</small>
+            </div>
+            <div class="producto-destacado__precio">
+              <span class="precio">89,99 €</span>
+              <span class="precio-antiguo">119,99 €</span>
+            </div>
+            <button class="btn btn--primario btn--bloque" type="button" data-add-rapido="Aura X2">Añadir al carrito</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ FRANJA DE VENTAJAS ============ -->
+    <section class="ventajas" id="ventajas" aria-label="Ventajas de comprar en NovaTech">
+      <div class="contenedor ventajas__grid">
+        <div class="ventaja reveal">
+          <span class="ventaja__icono">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h11v9H2z"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>
+            </svg>
+          </span>
+          <div><h3>Envío rápido</h3><p>Recíbelo en 24-48 h y gratis desde 50€.</p></div>
+        </div>
+        <div class="ventaja reveal">
+          <span class="ventaja__icono">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>
+            </svg>
+          </span>
+          <div><h3>Devoluciones fáciles</h3><p>30 días para cambiar de opinión, sin coste.</p></div>
+        </div>
+        <div class="ventaja reveal">
+          <span class="ventaja__icono">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l8 3v6c0 4.4-3.2 7.9-8 9-4.8-1.1-8-4.6-8-9V6z"/><path d="m9 12 2 2 4-4"/>
+            </svg>
+          </span>
+          <div><h3>Pago seguro</h3><p>Cifrado SSL y tarjetas, Bizum y PayPal.</p></div>
+        </div>
+        <div class="ventaja reveal">
+          <span class="ventaja__icono">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 13a8 8 0 0 1 16 0"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M20 19v.5a3 3 0 0 1-3 3h-3"/>
+            </svg>
+          </span>
+          <div><h3>Soporte 24/7</h3><p>Equipo humano disponible todos los días.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATÁLOGO ============ -->
+    <section class="catalogo seccion" id="catalogo" aria-labelledby="tituloCatalogo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <div>
+            <span class="pill">Catálogo</span>
+            <h2 id="tituloCatalogo">Los favoritos de nuestros clientes</h2>
+            <p>Selecciona por categoría y ordénalos como prefieras. Añade al carrito con un clic.</p>
+          </div>
+        </header>
+
+        <!-- Barra de filtros y orden -->
+        <div class="filtros reveal" role="group" aria-label="Filtros del catálogo">
+          <div class="filtros__categorias" id="filtrosCategorias">
+            <button class="chip chip--activo" type="button" data-filtro="todas">Todas</button>
+            <button class="chip" type="button" data-filtro="auriculares">Auriculares</button>
+            <button class="chip" type="button" data-filtro="teclados">Teclados</button>
+            <button class="chip" type="button" data-filtro="ratones">Ratones</button>
+            <button class="chip" type="button" data-filtro="monitores">Monitores</button>
+          </div>
+          <div class="filtros__orden">
+            <label for="ordenar">Ordenar por</label>
+            <select id="ordenar">
+              <option value="destacados">Destacados</option>
+              <option value="precio-asc">Precio: de menor a mayor</option>
+              <option value="precio-desc">Precio: de mayor a menor</option>
+              <option value="valoracion">Mejor valorados</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="productos-grid" id="gridProductos"><!-- Se genera con JS --></div>
+        <p class="productos-vacio" id="productosVacio" hidden>No hay productos que coincidan con la búsqueda. Prueba con otro filtro.</p>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIOS ============ -->
+    <section class="testimonios seccion" id="testimonios" aria-labelledby="tituloTestimonios">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <div>
+            <span class="pill">Opiniones</span>
+            <h2 id="tituloTestimonios">Lo que dicen nuestros clientes</h2>
+            <p>Más de 18.000 pedidos enviados con una valoración media de 4,8 sobre 5.</p>
+          </div>
+        </header>
+
+        <div class="testimonios__grid">
+          <figure class="testimonio reveal">
+            <div class="estrellas" aria-label="5 de 5 estrellas"><span aria-hidden="true">★★★★★</span></div>
+            <blockquote>“Los Aura X2 me cambiaron la mañana: trabajo en un espacio compartido y la cancelación es bestial. Llegaron en un día.”</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">MR</span>
+              <span><strong>María Ruiz</strong><small>Madrid · Auriculares</small></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonio reveal">
+            <div class="estrellas" aria-label="5 de 5 estrellas"><span aria-hidden="true">★★★★★</span></div>
+            <blockquote>“Pedí el teclado mecánico K87 un viernes y lo tenía el lunes. La atención por chat resolvió mis dudas en dos minutos.”</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">JL</span>
+              <span><strong>Javier López</strong><small>Valencia · Teclados</small></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonio reveal">
+            <div class="estrellas" aria-label="4 de 5 estrellas"><span aria-hidden="true">★★★★☆</span></div>
+            <blockquote>“El monitor de 27\" es precioso y el precio imbatible. La devolución de un ratón que no me convenció fue sin problemas.”</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">AS</span>
+              <span><strong>Ana Sánchez</strong><small>Sevilla · Monitores</small></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="newsletter seccion" id="newsletter" aria-labelledby="tituloNewsletter">
+      <div class="contenedor">
+        <div class="newsletter__tarjeta reveal">
+          <div class="newsletter__texto">
+            <span class="pill pill--acento">Newsletter</span>
+            <h2 id="tituloNewsletter">Un 10% en tu primer pedido</h2>
+            <p>Recibe ofertas semanales, novedades y guías de compra. Sin spam, puedes darte de baja cuando quieras.</p>
+          </div>
+          <form class="newsletter__form" id="formNewsletter" novalidate>
+            <div class="campo">
+              <label class="sr-only" for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tu@correo.com" required aria-describedby="mensajeEmail">
+            </div>
+            <button class="btn btn--primario" type="submit">Suscribirme</button>
+            <p class="mensaje" id="mensajeEmail" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="contenedor footer__grid">
+      <div class="footer__col footer__marca">
+        <a class="logo" href="#" aria-label="NovaTech Store, ir al inicio">
+          <span class="logo__marca" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M12 22V12"/><path d="m3 7 9 5 9-5"/>
+            </svg>
+          </span>
+          <span class="logo__texto">Nova<span>Tech</span></span>
+        </a>
+        <p>Tecnología seleccionada con criterio, precios honestos y soporte real de personas.</p>
+        <div class="rrss">
+          <a href="#" aria-label="NovaTech en Instagram">Instagram</a>
+          <a href="#" aria-label="NovaTech en X">X</a>
+          <a href="#" aria-label="NovaTech en YouTube">YouTube</a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h3>Tienda</h3>
+        <ul>
+          <li><a href="#catalogo">Auriculares</a></li>
+          <li><a href="#catalogo">Teclados</a></li>
+          <li><a href="#catalogo">Ratones</a></li>
+          <li><a href="#catalogo">Monitores</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3>Ayuda</h3>
+        <ul>
+          <li><a href="#">Envíos y plazos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Garantía de 2 años</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3>Contacto</h3>
+        <ul>
+          <li><a href="mailto:hola@novatech.es">hola@novatech.es</a></li>
+          <li><a href="tel:+34900123456">900 123 456</a></li>
+          <li>Calle Mayor 12, Madrid</li>
+          <li>Lun-Dom · 9:00 a 21:00</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__base">
+      <div class="contenedor footer__base-interior">
+        <p>© <span id="anio">2026</span> NovaTech Store. Todos los derechos reservados.</p>
+        <nav aria-label="Enlaces legales">
+          <a href="#">Aviso legal</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Cookies</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ CARRITO (DRAWER LATERAL) ============ -->
+  <div class="overlay" id="overlayCarrito" hidden></div>
+
+  <aside class="carrito" id="carritoPanel" role="dialog" aria-modal="true" aria-labelledby="tituloCarrito" aria-hidden="true">
+    <header class="carrito__cabecera">
+      <h2 id="tituloCarrito">Tu carrito</h2>
+      <button class="icono-btn" id="cerrarCarrito" type="button" aria-label="Cerrar el carrito">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="carrito__lista" id="listaCarrito">
+      <!-- Se genera con JS -->
+    </div>
+
+    <footer class="carrito__pie">
+      <div class="carrito__subtotal">
+        <span>Subtotal</span>
+        <strong id="subtotalCarrito">0,00 €</strong>
+      </div>
+      <p class="carrito__nota" id="notaEnvio">Añade productos para conseguir envío gratis desde 50€.</p>
+
+      <!-- ====== CHECKOUT: datos de envío (usa POST /api/pedidos) ====== -->
+      <form class="checkout" id="formCheckout" novalidate>
+        <p class="checkout__titulo">Datos de envío</p>
+        <div class="checkout__grid">
+          <div class="campo checkout__ancho">
+            <label class="sr-only" for="coNombre">Nombre y apellidos</label>
+            <input type="text" id="coNombre" name="nombre" placeholder="Nombre y apellidos" autocomplete="name" required>
+          </div>
+          <div class="campo checkout__ancho">
+            <label class="sr-only" for="coEmail">Correo electrónico</label>
+            <input type="email" id="coEmail" name="email" placeholder="tu@correo.com" autocomplete="email" required>
+          </div>
+          <div class="campo checkout__ancho">
+            <label class="sr-only" for="coDireccion">Dirección</label>
+            <input type="text" id="coDireccion" name="direccion" placeholder="Calle y número" autocomplete="street-address" required>
+          </div>
+          <div class="campo">
+            <label class="sr-only" for="coCiudad">Ciudad</label>
+            <input type="text" id="coCiudad" name="ciudad" placeholder="Ciudad" autocomplete="address-level2" required>
+          </div>
+          <div class="campo">
+            <label class="sr-only" for="coCp">Código postal</label>
+            <input type="text" id="coCp" name="cp" placeholder="Código postal" inputmode="numeric" autocomplete="postal-code" maxlength="10" required>
+          </div>
+        </div>
+
+        <div class="carrito__acciones">
+          <button class="btn btn--texto" id="vaciarCarrito" type="button">Vaciar carrito</button>
+          <button class="btn btn--primario btn--grande" id="finalizarCompra" type="submit">Finalizar compra</button>
+        </div>
+        <p class="mensaje" id="mensajeCompra" role="status" aria-live="polite"></p>
+      </form>
+    </footer>
+  </aside>
+
+  <!-- Aviso flotante al añadir productos -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -86,7 +86,7 @@ La web se sirve desde `index.html`. Cada sección tiene su `id` real; lo que ves
 
 ### 3.1 Con `curl` (PowerShell y bash)
 
-El token de admin está en `.env`: `ADMIN_TOKEN=demo-token-tienda-7b31e5c9d2`. Se envía en la cabecera `x-admin-token` (o `?token=…` en la URL).
+El token de admin está en `.env`: `ADMIN_TOKEN=demo-token-tienda-7b31e5c9d2`. Se envía **solo** en la cabecera `x-admin-token` (nunca en la URL: `?token=…` se filtraría en los logs, el historial y el `Referer`; además la comparación es en tiempo constante).
 
 **PowerShell** — *el body JSON va en fichero para evitar problemas de comillas*:
 
@@ -140,7 +140,7 @@ curl -X POST http://localhost:3004/api/pedidos \
   -d '{"cliente":{"nombre":"Ana Prueba","email":"ana@correo.com","direccion":"Calle Mayor 12","ciudad":"Madrid","cp":"28013"},"lineas":[{"id":1,"cantidad":1},{"id":3,"cantidad":2}]}'
 ```
 
-> En esta plantilla también vale el token en la query: `?token=demo-token-tienda-7b31e5c9d2` si te resulta más cómodo en el navegador. Si el token no coincide → `401 {"error": "Token de administración no válido…"}`.
+> El token viaja **solo** en la cabecera: `curl -H "x-admin-token: demo-token-tienda-7b31e5c9d2" http://localhost:3004/api/pedidos` (la comparación es en tiempo constante). Si el token no coincide → `401 {"error": "Token de administración no válido…"}`.
 
 ### 3.2 Con DB Browser for SQLite (visual)
 

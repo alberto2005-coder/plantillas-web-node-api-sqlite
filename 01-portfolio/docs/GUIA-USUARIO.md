@@ -165,7 +165,7 @@ curl.exe -H "x-admin-token: demo-token-portfolio-9f4c2b7e1a" http://localhost:30
 [System.IO.File]::WriteAllText("$PWD\body.json", '{"nombre":"Ana","email":"ana@correo.com","mensaje":"Quiero un presupuesto para mi web."}')
 curl.exe -X POST http://localhost:3000/api/contacto -H "Content-Type: application/json" --data-binary "@body.json"
 
-# 3) Borrar el mensaje 2 (el token puede ir también en la query: ?token=…)
+# 3) Borrar el mensaje 2 (el token va SOLO en la cabecera: x-admin-token)
 curl.exe -X DELETE -H "x-admin-token: demo-token-portfolio-9f4c2b7e1a" http://localhost:3000/api/mensajes/2
 ```
 

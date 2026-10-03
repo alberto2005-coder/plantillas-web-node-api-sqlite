@@ -85,9 +85,9 @@ function tokenAdmin(pedir) {
 ```
 fetch('/api/pedidos/1043/estado', {method:'PATCH', headers:{'x-admin-token':TOKEN}, body:{estado:'Entregado'}})
   → api.patch('/api/pedidos/:id/estado', async ctx) [api.js:260]
-  → esAdmin(ctx) [api.js:51-58]:
-      token = ctx.cabecera('x-admin-token') || ctx.query.token || Bearer
-      true si token === process.env.ADMIN_TOKEN O sesionValida(bd, token)
+  → esAdmin(ctx) [api.js:53-58]:
+      token = Authorization: Bearer … o cabecera x-admin-token (la query ya NO se admite)
+      true si tokenValido(token, process.env.ADMIN_TOKEN) — comparación en tiempo constante — O sesionValida(bd, token)
   → valida estado ∈ ['Entregado','En curso','Pendiente']
   → bd.ejecutar('UPDATE pedidos SET estado = ? WHERE referencia = ?', estado, ref)
   → inserta en actividad (tipo según estado)

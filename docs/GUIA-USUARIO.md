@@ -479,9 +479,12 @@ curl -X POST http://localhost:3000/api/contacto \
   -d '{"nombre":"Ana Prueba","email":"ana@correo.com","mensaje":"Quiero una web para mi negocio, ¿hablamos?"}'
 ```
 
-> En las siete plantillas también vale el token en la query
-> (`?token=DEMO_TOKEN`) si te resulta más cómodo en el navegador. Si el token no
-> coincide, la respuesta es `401 {"error": "Token de administración no válido…"}`.
+> En las siete plantillas el token viaja **solo** en la cabecera
+> `x-admin-token`; ya no se admite en la URL (`?token=…` se filtraba en los
+> logs, en el historial del navegador y en la cabecera `Referer`). Si el token
+> no coincide, la respuesta es `401 {"error": "Token de administración no
+> válido…"}` (la comparación se hace en tiempo constante con
+> `crypto.timingSafeEqual`).
 
 **La 06, además, con usuario y contraseña** (24 h de duración):
 

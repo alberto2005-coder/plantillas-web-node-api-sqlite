@@ -380,7 +380,7 @@ Errores:
 
 | Código | Cuándo |
 |---|---|
-| 401 | `{"error":"Token de administración no válido (header x-admin-token)"}` (también acepta `?token=` en la query) |
+| 401 | `{"error":"Token de administración no válido (header x-admin-token)"}` (el token viaja **solo** en la cabecera `x-admin-token`; comparación en tiempo constante) |
 | 400 | `{"error":"Revisa los datos del artículo","detalle":["El título debe tener al menos 5 caracteres."]}` |
 | 409 | `{"error":"Ya existe un artículo con ese slug"}` |
 | 413 | Cuerpo mayor de 1 MB |
@@ -704,7 +704,7 @@ y la ruta relativa (`server/data/blog.db`).
 | Límite de tasa en el newsletter: 5/min por IP (429) | `api.js:203-206`, `limitador.js` |
 | Cuerpo máximo **1 MB** (413) y JSON inválido → 400 | `http.js:62-87` |
 | `Cache-Control: no-store` en JSON y `no-cache` en HTML | `http.js:49`, `http.js:137` |
-| El token solo se acepta por cabecera `x-admin-token` o `?token=` y se compara con `===` | `api.js:65-70` |
+| El token solo se acepta por cabecera `x-admin-token` y se compara en tiempo constante (`crypto.timingSafeEqual`, sin `===`) | `api.js:66-71`, `server/lib/token.js` |
 | CORS **desactivado** por defecto (`CORS=0`) | `.env`, `router.js:50` |
 
 ### 8.2 Tú debes añadir

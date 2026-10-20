@@ -176,7 +176,7 @@ protegida con token. Sin servidor, el formulario sigue funcionando en modo demo.
 ```
 plantillas-web/
 ├── README.md                  ← este documento
-├── LICENSE                    ← licencia MIT de todo el repositorio
+├── LICENSE                    ← licencia GPL-3.0 de todo el repositorio
 ├── .gitignore                 ← raíz: deja fuera .env, BD y node_modules
 ├── configurar.ps1 / .sh       ← crea cada .env desde su .env.example
 ├── verificar.ps1              ← arranca las 7 y comprueba su API
@@ -408,7 +408,8 @@ llevarla de "demo" a "web real".
 | [docs/PERSONALIZACION.md](docs/PERSONALIZACION.md) | Quien la **personaliza** | Paleta, textos, imágenes, datos desde la BD, `.env` por plantilla y tabla «quiero X → dónde tocar» |
 | `README.md` de cada plantilla | Ambos | Referencia técnica de esa plantilla: arranque, `.env`, API, BD, recetas, problemas y seguridad (12 secciones) |
 | `docs/` de cada plantilla | Ambos | `GUIA-USUARIO.md` (uso real de esa web) y `GUIA-DESARROLLADOR.md` (su API completa y sus extensiones) |
-| [LICENSE](LICENSE) | Todos | **Licencia MIT** — Copyright (c) 2026 Alberto Ortiz. Puedes usar, copiar, modificar y vender las plantillas conservando este aviso |
+| [LICENSE](LICENSE) | Todos | **Licencia GPL-3.0** — Copyright (C) 2026 Alberto Ortiz. Puedes usar, copiar y modificar el código; si lo distribuyes, publica su fuente bajo la misma licencia |
+
 
 **Orden recomendado:** primero la [guía de usuario](docs/GUIA-USUARIO.md) para
 verlo funcionar, después el [README de la plantilla](01-portfolio/README.md) que

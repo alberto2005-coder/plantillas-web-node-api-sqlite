@@ -15,7 +15,7 @@
 | **Resetear BD a datos de ejemplo** | `npm run reiniciar` | — |
 | **Modo desarrollo (auto-recarga)** | `npm run dev` | `http://localhost:3006` |
 
-**Requisito**: Node 22.13+ (`node -v` para comprobar).
+**Requisito**: Node 22.23.4+ (`node -v` para comprobar).
 
 El puerto real sale de `.env` (`PORT=3006`). Si cambias `.env`, **reinicia** el servidor (`Ctrl+C` → `npm start`).
 
@@ -112,7 +112,7 @@ curl -i -H "x-admin-token: demo-token-dashboard-9f4c2b7e1a" http://localhost:300
 
 | Síntoma | Causa | Solución |
 |---|---|---|
-| `No se pudo cargar "node:sqlite"` | Node < 22.13 | Actualiza Node (`node -v`). |
+| `No se pudo cargar "node:sqlite"` | Node < 22.23.4 | Actualiza Node (`node -v`). |
 | `EADDRINUSE: port 3006` | Puerto ocupado | Cambia `PORT` en `.env` o mata proceso. |
 | Panel no navega / datos estáticos | Sin servidor | Ejecuta `npm start` y usa `http://localhost:3006`. |
 | `401 Token de administración no válido` | Token erróneo | Usa `ADMIN_TOKEN` del `.env` en header `x-admin-token`. |

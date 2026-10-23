@@ -19,7 +19,7 @@ echo "  ---------------------------"
 # 1) Node -------------------------------------------------------------------
 if ! command -v node >/dev/null 2>&1; then
   echo "${rojo}  [X] No encuentro Node.js.${sin}"
-  echo "       Instálalo desde https://nodejs.org (versión 22.13 o superior)."
+  echo "       Instálalo desde https://nodejs.org (versión 22.23.4 o superior)."
   exit 1
 fi
 
@@ -27,10 +27,12 @@ version="$(node -v | sed 's/^v//')"
 mayor="${version%%.*}"
 resto="${version#*.}"
 menor="${resto%%.*}"
-mayor="${mayor//[^0-9]/}"; menor="${menor//[^0-9]/}"
+resto2="${resto#*.}"
+parche="${resto2%%.*}"
+mayor="${mayor//[^0-9]/}"; menor="${menor//[^0-9]/}"; parche="${parche//[^0-9]/}"
 
-if [ "${mayor:-0}" -lt 22 ] || { [ "${mayor:-0}" -eq 22 ] && [ "${menor:-0}" -lt 13 ]; }; then
-  echo "${rojo}  [X] Node $version es demasiado antiguo: hace falta 22.13 o superior.${sin}"
+if [ "${mayor:-0}" -lt 22 ] || { [ "${mayor:-0}" -eq 22 ] && [ "${menor:-0}" -lt 23 ]; } || { [ "${mayor:-0}" -eq 22 ] && [ "${menor:-0}" -eq 23 ] && [ "${parche:-0}" -lt 4 ]; }; then
+  echo "${rojo}  [X] Node $version es demasiado antiguo: hace falta 22.23.4 o superior.${sin}"
   exit 1
 fi
 echo "${verde}  [OK] Node $version${sin}"

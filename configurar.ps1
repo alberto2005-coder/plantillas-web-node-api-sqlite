@@ -6,7 +6,7 @@
       powershell -ExecutionPolicy Bypass -File .\configurar.ps1
 
   Qué hace:
-    1. Comprueba que tienes Node 22.13 o superior.
+    1. Comprueba que tienes Node 22.23.4 o superior.
     2. Crea el fichero .env de cada plantilla si no existe
        (copiándolo de .env.example, que viene documentado).
     3. Te dice cómo arrancar cada una.
@@ -26,7 +26,7 @@ Write-Host '  ---------------------------'
 $nodo = Get-Command node -ErrorAction SilentlyContinue
 if (-not $nodo) {
     Write-Host '  [X] No encuentro Node.js.' -ForegroundColor Red
-    Write-Host '       Instálalo desde https://nodejs.org (versión 22.13 o superior).'
+    Write-Host '       Instálalo desde https://nodejs.org (versión 22.23.4 o superior).'
     exit 1
 }
 
@@ -34,10 +34,14 @@ $version = (node -v).TrimStart('v')
 $partes = $version.Split('.')
 $mayor = [int]$partes[0]
 $menor = if ($partes.Count -gt 1) { [int]$partes[1] } else { 0 }
+$parche = if ($partes.Count -gt 2) { [int]$partes[2] } else { 0 }
 
-if ($mayor -lt 22 -or ($mayor -eq 22 -and $menor -lt 13)) {
-    Write-Host "  [X] Node $version es demasiado antiguo: hace falta 22.13 o superior." -ForegroundColor Red
-    Write-Host '       (Las plantillas usan node:sqlite, incluido en Node 22.13+)'
+if (
+    $mayor -lt 22 -or
+    ($mayor -eq 22 -and ($menor -lt 23 -or ($menor -eq 23 -and $parche -lt 4)))
+) {
+    Write-Host "  [X] Node $version es demasiado antiguo: hace falta 22.23.4 o superior." -ForegroundColor Red
+    Write-Host '       (Las plantillas usan node:sqlite, incluido en Node 22.23.4+)'
     exit 1
 }
 Write-Host "  [OK] Node $version" -ForegroundColor Green

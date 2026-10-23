@@ -2,7 +2,7 @@
    CAPA DE DATOS — SQLite con el módulo nativo `node:sqlite`
    --------------------------------------------------------------------------
    Ventaja: NO hay que instalar nada (`npm install` no hace falta).
-   Requisito: Node 22.13 o superior (el módulo es experimental y Node avisa
+   Requisito: Node 22.23.4 o superior (el módulo es experimental y Node avisa
    con un warning; es inofensivo. Los scripts de package.json ya lo silencian).
 
    Uso:
@@ -29,7 +29,7 @@ try {
 } catch (e) {
   console.error(
     '\n[bd] No se pudo cargar "node:sqlite".\n' +
-      '     Necesitas Node 22.13 o superior (actual: ' + process.version + ').\n' +
+      '     Necesitas Node 22.23.4 o superior (actual: ' + process.version + ').\n' +
       '     Instálalo desde https://nodejs.org y vuelve a arrancar.\n'
   );
   process.exit(1);

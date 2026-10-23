@@ -45,8 +45,8 @@ sin programar, usa la [guía de usuario](GUIA-USUARIO.md).
         └── limitador.js  ← crearLimitador() en memoria por IP
 ```
 
-Requisito duro: **Node ≥ 22.13** (`node:sqlite`); `engines` de `package.json`
-lo fija en `>=22.13.0`.
+Requisito duro: **Node ≥ 22.23.4** (`node:sqlite`); `engines` de `package.json`
+lo fija en `>=22.23.4`.
 
 ---
 

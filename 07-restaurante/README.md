@@ -38,7 +38,7 @@ noche hasta tarde).
 
 ## 2. Arranque rápido
 
-**Requisito: Node 22.13 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
+**Requisito: Node 22.23.4 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
 
 ```bash
 # Opción A — con servidor (recomendada): API + web en el mismo puerto
@@ -397,7 +397,7 @@ Notas:
 |---|---|---|
 | `nodemailer` | enviar correos por SMTP | si activas `SMTP_HOST` |
 | `express` | servidor web más amplio | si la API crece mucho |
-| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.13 |
+| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.23.4 |
 | `zod` / `joi` | validación de datos declarativa | muchos endpoints |
 | `bcrypt` + `jsonwebtoken` | usuarios y login reales | si añades área privada |
 | `stripe` | pagos de señales al reservar | si cobras por adelantado |
@@ -409,7 +409,7 @@ Notas:
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 | `EADDRINUSE: port 3007` | Cambia `PORT` en `.env` o cierra el proceso anterior |
 | El formulario dice «modo demo» | No hay servidor: ejecuta `npm start` y abre `http://localhost:3007` |
 | **`409 Esa hora ya no está disponible`** | Otro cliente (o tú mismo) ya tiene esa fecha y hora ocupada: la disponibilidad se re comprueba en el instante del envío. Elige otra hora — el desplegable ya te la muestra como «(ocupada)» cuando `libre:false` |

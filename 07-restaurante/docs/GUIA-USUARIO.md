@@ -15,7 +15,7 @@
 | **Resetear BD a datos de ejemplo** | `npm run reiniciar` | — |
 | **Modo desarrollo (auto-recarga)** | `npm run dev` | `http://localhost:3007` |
 
-**Requisito**: Node 22.13+ (`node -v` para comprobar).
+**Requisito**: Node 22.23.4+ (`node -v` para comprobar).
 
 El puerto real sale de `.env` (`PORT=3007`). Si cambias `.env`, **reinicia** el servidor (`Ctrl+C` → `npm start`).
 
@@ -137,7 +137,7 @@ curl.exe -X DELETE -H "x-admin-token: demo-token-restaurante-7a3f91c258" `
 
 | Síntoma | Causa | Solución |
 |---|---|---|
-| `No se pudo cargar "node:sqlite"` | Node < 22.13 | Actualiza Node (`node -v`). |
+| `No se pudo cargar "node:sqlite"` | Node < 22.23.4 | Actualiza Node (`node -v`). |
 | `EADDRINUSE: port 3007` | Puerto ocupado | Cambia `PORT` en `.env` o mata proceso. |
 | Formulario dice «modo demo» | Sin servidor | Ejecuta `npm start` y usa `http://localhost:3007`. |
 | **`409 Esa hora ya no está disponible`** | Hueco lleno (`MAX_POR_HORA`) o reserva duplicada (mismo tel/email/nombre/IP) | Elige otra hora; el desplegable ya la muestra como `(ocupada)`. |

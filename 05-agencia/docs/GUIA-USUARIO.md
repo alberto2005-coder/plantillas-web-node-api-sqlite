@@ -14,7 +14,7 @@ quiere programar para esto).
 | Necesitas | No necesitas |
 |---|---|
 | Un navegador (Chrome, Edge, Firefox…) | Saber programar |
-| [Node](https://nodejs.org) **22.13 o superior** (`node -v` para comprobarlo) | Instalar bases de datos ni crear cuentas |
+| [Node](https://nodejs.org) **22.23.4 o superior** (`node -v` para comprobarlo) | Instalar bases de datos ni crear cuentas |
 | Cinco minutos y esta carpeta | Dependencias: `npm install` es opcional |
 
 ⚠️ **Esta plantilla no tiene panel web.** No verás ninguna pantalla de
@@ -326,7 +326,7 @@ Marca cada casilla cuando la compruebes. Todo con el servidor arrancado.
 | `429 Demasiadas solicitudes` | Espera un minuto o sube `LIMITE_PRESUPUESTO` en `.env` |
 | `401 Token de administración no válido` en la bandeja | El header `x-admin-token` no coincide con `ADMIN_TOKEN` del `.env` |
 | `400 El cuerpo no es JSON válido` | El fichero del body tiene BOM o comillas rotas: usa `[IO.File]::WriteAllText` (§4.1) |
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 
 La tabla completa de síntomas y soluciones está en el
 [§10 del README](../README.md#10-problemas-frecuentes).

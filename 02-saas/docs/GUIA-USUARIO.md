@@ -149,7 +149,7 @@ sqlite3 server/data/saas.db ".mode table" "SELECT * FROM suscripciones ORDER BY 
 
 | Síntoma | Solución en 1 línea | Véase README §10 |
 |---------|---------------------|------------------|
-| `No se pudo cargar "node:sqlite"` | Instala **Node ≥ 22.13** (`node -v`) | ✅ |
+| `No se pudo cargar "node:sqlite"` | Instala **Node ≥ 22.23.4** (`node -v`) | ✅ |
 | `EADDRINUSE: port 3000` | Cambia `PORT` en `.env` o mata el proceso anterior | ✅ |
 | El formulario dice "modo demo" | Ejecuta `npm start` y usa `http://localhost:3000` (no `file://`) | ✅ |
 | Los precios no cambian al editar la BD | Reinicia el servidor y comprueba `curl /api/planes` | ✅ |

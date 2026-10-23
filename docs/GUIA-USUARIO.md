@@ -38,7 +38,7 @@ inventado. Si algo **no existe**, lo digo con esas palabras.
 
 | Requisito | Cómo comprobarlo | Por qué |
 |---|---|---|
-| Node **22.13 o superior** | `node -v` | La base de datos usa `node:sqlite`, incluido en esa versión |
+| Node **22.23.4 o superior** | `node -v` | La base de datos usa `node:sqlite`, incluido en esa versión |
 | npm | `npm -v` | Viene con Node; solo se usan sus scripts |
 | Un navegador actual | – | Chrome, Edge, Firefox o Safari |
 | **No** hace falta `npm install` | – | Las plantillas no tienen dependencias obligatorias |
@@ -50,7 +50,7 @@ inventado. Si algo **no existe**, lo digo con esas palabras.
 ### 2.1 Comprobar Node
 
 ```powershell
-node -v        # debe imprimir v22.13.0 o superior
+node -v        # debe imprimir v22.23.4 o superior
 ```
 
 Si sale `v20.x` (o el comando no existe) instala Node desde
@@ -612,7 +612,7 @@ ejemplo [04-tienda/README.md](../04-tienda/README.md).
 
 ## 7. Prueba completa en 5 minutos antes de enseñar tu web
 
-- [ ] ✅ `node -v` imprime **v22.13 o superior**.
+- [ ] ✅ `node -v` imprime **v22.23.4 o superior**.
 - [ ] ✅ Las siete APIs responden: `powershell -ExecutionPolicy Bypass -File .\verificar.ps1`
       → «7 de 7 plantillas verificadas».
 - [ ] ✅ Arrancas la plantilla que vas a enseñar y abres `http://localhost:<PUERTO>`
@@ -638,7 +638,7 @@ ejemplo [04-tienda/README.md](../04-tienda/README.md).
 
 | Fallo | Arreglo en una línea |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v`. |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v`. |
 | `EADDRINUSE` / puerto ocupado | Cierra la otra plantilla (01 y 02 compiten por el 3000) o arranca con `$env:PORT=3101; npm start`. |
 | El formulario dice «Modo demo» | No hay servidor: `npm start` en esa carpeta y abre `http://localhost:<PUERTO>`, no el `index.html` con doble clic. |
 | `401 Token de administración no válido` | Usa el `ADMIN_TOKEN` de **ese** `.env` en la cabecera `x-admin-token` (§5.1). |

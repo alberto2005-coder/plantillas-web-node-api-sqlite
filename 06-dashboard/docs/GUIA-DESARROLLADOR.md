@@ -14,7 +14,7 @@
 ├── css/styles.css        # :root { --color-primary, --color-accent… }
 ├── js/main.js            # 17 secciones: API client, render, gráficas SVG, login
 ├── .env                  # PORT=3006, ADMIN_USER, ADMIN_PASSWORD, ADMIN_TOKEN…
-├── package.json          # start, dev, reiniciar (Node ≥ 22.13)
+├── package.json          # start, dev, reiniciar (Node ≥ 22.23.4)
 └── server/
     ├── server.js         # HTTP server: .env → BD → API router → estáticos
     ├── api.js            # 11 endpoints REST (ver §5)

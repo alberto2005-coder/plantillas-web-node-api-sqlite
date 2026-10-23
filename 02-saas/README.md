@@ -36,7 +36,7 @@ del propio HTML y el formulario responde en "modo demo".
 
 ## 2. Arranque rápido
 
-**Requisito: Node 22.13 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
+**Requisito: Node 22.23.4 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
 
 ```bash
 # Opción A — con servidor (recomendada): API + web en el mismo puerto
@@ -350,7 +350,7 @@ Ninguna es obligatoria: sin ellas la plantilla arranca igual.
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 | `EADDRINUSE: port 3000` | Cambia `PORT` en `.env` o cierra el proceso anterior |
 | El formulario dice "modo demo" | No hay servidor: ejecuta `npm start` y abre `http://localhost:3000` |
 | Los precios no cambian al editar la BD | Reinicia el servidor y comprueba `curl /api/planes` |

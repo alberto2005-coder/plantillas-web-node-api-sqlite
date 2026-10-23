@@ -25,12 +25,12 @@ conectar lo que necesites).
 
 | Requisito | Versión | Comprobarlo |
 |---|---|---|
-| Node.js | **22.13 o superior** (recomendado 24) | `node -v` |
+| Node.js | **22.23.4 o superior** (recomendado 24) | `node -v` |
 | npm | cualquier (incluido con Node) | `npm -v` |
 | Navegador | Chrome/Edge/Firefox/Safari actuales | – |
 | Cuenta de correo/pagos | solo si activas esas integraciones | – |
 
-> ¿Por qué Node 22.13? Porque la base de datos usa `node:sqlite`, el módulo
+> ¿Por qué Node 22.23.4? Porque la base de datos usa `node:sqlite`, el módulo
 > SQLite que viene **dentro** de Node. No hay que compilar ni instalar nada.
 
 ---
@@ -369,7 +369,7 @@ Cada README tiene sus recetas concretas (con código). Aquí va el mapa global:
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 (`node -v`) |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 (`node -v`) |
 | `EADDRINUSE` / puerto ocupado | Cambia `PORT` en `.env` o en la línea de comando |
 | La web estática pero "no envía" | No hay servidor: `npm start` y abre `http://localhost:3000` |
 | `429 Demasiados envíos` | Espera 1 min o sube `LIMITE_*` en `.env` |
@@ -446,12 +446,12 @@ connect whatever you need).
 
 | Requirement | Version | How to check |
 | --- | --- | --- |
-| Node.js | **22.13 or higher** (24 recommended) | `node -v` |
+| Node.js | **22.23.4 or higher** (24 recommended) | `node -v` |
 | npm | Any (bundled with Node) | `npm -v` |
 | Browser | Modern Chrome / Edge / Firefox / Safari | – |
 | Email / Payment account | Only if enabling those integrations | – |
 
-> Why Node 22.13? Because the database relies on `node:sqlite`, the built-in
+> Why Node 22.23.4? Because the database relies on `node:sqlite`, the built-in
 > SQLite module **included directly** in Node. No compilation or external packages needed.
 
 ---
@@ -798,7 +798,7 @@ SVG visual charts, will automatically inherit the new theme.
 
 | Symptom | Resolution |
 | --- | --- |
-| `Could not load "node:sqlite"` | Upgrade to Node.js ≥ 22.13 (`node -v`) |
+| `Could not load "node:sqlite"` | Upgrade to Node.js ≥ 22.23.4 (`node -v`) |
 | `EADDRINUSE` / Port conflict | Update `PORT` in `.env` or pass an override via CLI |
 | Webpage loads but forms do not submit | Server is not running: execute `npm start` and visit `http://localhost:3000` |
 | `429 Too Many Requests` | Wait 1 minute or increase `LIMITE_*` thresholds in `.env` |

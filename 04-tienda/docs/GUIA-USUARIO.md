@@ -19,7 +19,7 @@ Todo lo que aquí se cita (puertos, tokens, rutas y tablas) está leído de los 
 
 | Requisito | Cómo comprobarlo | Por qué |
 |---|---|---|
-| Node **22.13 o superior** | `node -v` | La base de datos usa `node:sqlite`, incluido en esa versión |
+| Node **22.23.4 o superior** | `node -v` | La base de datos usa `node:sqlite`, incluido en esa versión |
 | npm | `npm -v` | Viene con Node; solo se usan sus scripts |
 | Un navegador actual | – | Chrome, Edge, Firefox o Safari |
 | **No** hace falta `npm install` | – | La plantilla no tiene dependencias obligatorias |
@@ -232,7 +232,7 @@ Recarga: botones, enlaces, badges, gráficas y degradados de productos usan esa 
 
 | Síntoma | Qué pasa | Arreglo |
 |---|---|---|
-| `No se pudo cargar "node:sqlite"` | Node < 22.13 | Instala Node ≥ 22.13 (`node -v` para comprobar) |
+| `No se pudo cargar "node:sqlite"` | Node < 22.23.4 | Instala Node ≥ 22.23.4 (`node -v` para comprobar) |
 | `EADDRINUSE: port 3004` | Puerto ocupado | Cambia `PORT` en `.env` o cierra el proceso anterior (`Ctrl+C`) |
 | Checkout dice "modo demo" / no crea pedido | No hay servidor corriendo | Ejecuta `npm start` y abre `http://localhost:3004` (no doble clic) |
 | `409 Stock insuficiente para "X": quedan N y has pedido M` | Pediste más de lo que hay en `productos.stock` | Baja unidades en el carrito o repone stock (`UPDATE productos SET stock=…`) |

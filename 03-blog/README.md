@@ -36,7 +36,7 @@ página de detalle (`articulo.html?slug=…`) y el newsletter guarda suscripcion
 
 ## 2. Arranque rápido
 
-**Requisito: Node 22.13 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
+**Requisito: Node 22.23.4 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
 
 ```bash
 # Opción A — con servidor (recomendada): API + web en el mismo puerto
@@ -359,7 +359,7 @@ o con cualquier cliente SQLite (DB Browser for SQLite, VS Code con extensión,
 | `marked` + `dompurify` | Markdown → HTML con más funciones (y sanitizado) | si crece el Markdown de los artículos (hoy ya tienes `server/lib/markdown.js`) |
 | `express` | servidor web más amplio | si la API crece mucho |
 | `nodemailer` | enviar correos por SMTP | si activas `SMTP_HOST` |
-| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.13 |
+| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.23.4 |
 | `bcrypt` + `jsonwebtoken` | usuarios y login reales | si añades área privada / editores |
 | `zod` / `joi` | validación de datos declarativa | muchos endpoints |
 | `nodemon` | reinicio automático | ya cubierto con `npm run dev` |
@@ -372,7 +372,7 @@ Recuerda: ninguna es obligatoria; sin ellas la plantilla funciona entera.
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 | `EADDRINUSE: port 3003` | Cambia `PORT` en `.env` o cierra el proceso anterior |
 | La web se ve sin artículos de la API / sale "modo estático" en consola | No hay servidor: ejecuta `npm start` y abre `http://localhost:3003` |
 | `articulo.html` dice "No hay servidor conectado" | Esa página necesita la API; arranca el servidor |

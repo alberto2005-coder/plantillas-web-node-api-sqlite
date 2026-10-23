@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ['22', '24']
+        node: ['22.23.4', '24']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          check-latest: true
         # Sin cache npm: el repo no tiene package-lock.json y setup-node
         # fallaría con "Dependencies lock file is not found".
 
@@ -44,10 +45,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Node 22
+      - name: Node 22.23.4
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '22.23.4'
+          check-latest: true
 
       - name: Configurar y verificar
         run: bash configurar.sh && bash verificar.sh

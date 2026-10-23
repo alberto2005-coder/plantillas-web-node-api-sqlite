@@ -29,7 +29,7 @@ La tabla siguiente resume qué cambia al pasar de **local** a **producción**:
 
 ### 1. Requisitos previos
 
-- **Node ≥ 22.13** (recomendado 24 LTS). Verifica: `node -v`.
+- **Node ≥ 22.23.4** (recomendado 24 LTS). Verifica: `node -v`.
 - Usuario **sin privilegios** (ej. `deploy`), **no** `root`.
 - Firewall: puertos **80** y **443** abiertos; el puerto de la app (ej. `3000`) **solo** en localhost.
 
@@ -239,7 +239,7 @@ fly deploy
 
 ## Base de datos en producción
 
-Todas las plantillas usan **SQLite** (`node:sqlite`, módulo nativo de Node ≥22.13). El fichero `.db` está en `server/data/` por defecto (configurable con `DB_FILE`).
+Todas las plantillas usan **SQLite** (`node:sqlite`, módulo nativo de Node ≥22.23.4). El fichero `.db` está en `server/data/` por defecto (configurable con `DB_FILE`).
 
 ### Backup (copia en frío — servidor **parado**)
 
@@ -387,7 +387,7 @@ Casos habituales:
 | `Correo no sale (demo)` | `RESEND_API_KEY` / `SMTP_*` vacíos | Rellena variables y **reinicia** la app |
 | `CORS bloquea front en otro dominio` | `CORS=0` u origen no permitido | `CORS=1` + `CORS_ORIGEN=https://app.otrodominio.com` |
 | `Token admin rechazado (401)` | Header mal escrito / token distinto | Header exacto: `x-admin-token: <valor exacto de ADMIN_TOKEN>` |
-| `Node: sqlite module not found` | Node < 22.13 | `node -v` → actualiza a ≥22.13 |
+| `Node: sqlite module not found` | Node < 22.23.4 | `node -v` → actualiza a ≥22.23.4 |
 | `Permisos en server/data` (VPS) | Usuario systemd no puede escribir | `ReadWritePaths=/ruta/server/data` en unit file; `chown deploy:deploy server/data` |
 
 ---

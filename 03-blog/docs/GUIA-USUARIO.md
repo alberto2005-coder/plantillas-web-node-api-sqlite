@@ -21,7 +21,7 @@ Lo único que necesitas:
 | Requisito | Detalle |
 |---|---|
 | Un navegador | Chrome, Firefox, Edge o Safari (cualquiera moderno) |
-| Node 22.13 o superior | Solo para arrancar el servidor: compruébalo con `node -v` |
+| Node 22.23.4 o superior | Solo para arrancar el servidor: compruébalo con `node -v` |
 | Un editor de texto | El Bloc de notas vale para tocar `.env` y los HTML |
 | (Opcional) DB Browser for SQLite | Para mirar y editar la base de datos con ratón |
 

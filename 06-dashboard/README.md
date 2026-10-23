@@ -37,7 +37,7 @@ en el servidor y se pueden exportar a CSV.
 
 ## 2. Arranque rápido
 
-**Requisito: Node 22.13 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
+**Requisito: Node 22.23.4 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
 
 ```bash
 # Opción A — con servidor (recomendada): API + web en el mismo puerto
@@ -332,7 +332,7 @@ extensión, `sqlite3` CLI) o restáurala con `npm run reiniciar`.
 | `express` | servidor web más amplio | si la API crece mucho |
 | `bcrypt` + `jsonwebtoken` | usuarios y login reales | si publicas el panel (§6.6) |
 | `ws` | métricas en tiempo real | si quieres actualizar sin recargar (§6.7) |
-| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.13 |
+| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.23.4 |
 | `stripe` | cobros reales | si conectas la facturación (§6.5) |
 | `zod` / `joi` | validación de datos declarativa | muchos endpoints |
 | `nodemailer` | correos por SMTP | si activas `SMTP_HOST` |
@@ -344,7 +344,7 @@ extensión, `sqlite3` CLI) o restáurala con `npm run reiniciar`.
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 | `EADDRINUSE: port 3006` | Cambia `PORT` en `.env` o cierra el proceso anterior |
 | El panel no cambia nada al navegar | Estás en modo estático: ejecuta `npm start` y abre `http://localhost:3006` |
 | Los datos se ven siempre igual (no llegan de la API) | Mira la consola del navegador: si aparece *«API no disponible → modo estático»* no hay servidor |

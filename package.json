@@ -5,7 +5,7 @@
   "description": "Siete plantillas web (portafolio, SaaS, blog, tienda, agencia, dashboard y restaurante) con servidor Node sin dependencias, pruebas y scripts de verificación.",
   "license": "MIT",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "test": "node --test \"pruebas/*.test.mjs\"",

@@ -6,7 +6,7 @@ Esta guía es para **quien va a tocar código**: añadir endpoints, cambiar la b
 
 | Lo que necesitas | Cuánto |
 |---|---|
-| Node 22.13+ (`node -v`) | obligatorio |
+| Node 22.23.4+ (`node -v`) | obligatorio |
 | Editor de código (VS Code, etc.) | ya lo tienes |
 | `npm install` | ❌ no hace falta (solo módulos nativos) |
 
@@ -127,7 +127,7 @@ Tabla exhaustiva verificada contra `server/api.js`:
 ```bash
 # GET /api/salud
 curl http://localhost:3000/api/salud
-# {"ok":true,"servicio":"portfolio-api","version":"1.0.0","node":"v22.13.0","hora":"2026-10-02T13:29:42.157Z","uptime_s":3}
+# {"ok":true,"servicio":"portfolio-api","version":"1.0.0","node":"v22.23.4","hora":"2026-10-02T13:29:42.157Z","uptime_s":3}
 
 # GET /api/proyectos
 curl http://localhost:3000/api/proyectos

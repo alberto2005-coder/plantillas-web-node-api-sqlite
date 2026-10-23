@@ -37,7 +37,7 @@ newsletter guarda suscriptores.
 
 ## 2. Arranque rápido
 
-**Requisito: Node 22.13 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
+**Requisito: Node 22.23.4 o superior** ([nodejs.org](https://nodejs.org)). Compruébalo con `node -v`.
 
 ```bash
 # Opción A — con servidor (recomendada): API + web en el mismo puerto
@@ -452,7 +452,7 @@ SELECT estado FROM pedidos WHERE referencia = 'NV-2026-1001';
 | `nodemailer` | enviar correos por SMTP | si activas `SMTP_HOST` |
 | `@stripe/stripe-js` | formulario de tarjeta en el front | checkout con Stripe Elements |
 | `express` | servidor web más amplio | si la API crece mucho |
-| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.13 |
+| `better-sqlite3` | SQLite alternativa a `node:sqlite` | si usas Node < 22.23.4 |
 | `zod` / `joi` | validación de datos declarativa | muchos endpoints |
 | `bcrypt` + `jsonwebtoken` | clientes con login y área privada | si añades cuentas |
 | `nodemon` | reinicio automático | ya cubierto con `npm run dev` |
@@ -465,7 +465,7 @@ Ninguna es obligatoria: la plantilla arranca con `npm start` y cero dependencias
 
 | Síntoma | Solución |
 |---|---|
-| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.13 y comprueba con `node -v` |
+| `No se pudo cargar "node:sqlite"` | Instala Node ≥ 22.23.4 y comprueba con `node -v` |
 | `EADDRINUSE: port 3004` | Cambia `PORT` en `.env` o cierra el proceso anterior |
 | El checkout dice "modo demo" | No hay servidor: ejecuta `npm start` y abre `http://localhost:3004` |
 | `409 Stock insuficiente…` | Baja las unidades en el carrito o repone stock (`UPDATE productos SET stock=…`) |

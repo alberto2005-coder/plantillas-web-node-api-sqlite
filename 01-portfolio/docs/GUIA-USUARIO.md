@@ -9,7 +9,7 @@ enseñar la web sin miedo a romperla.
 | Lo que necesitas | Cuánto |
 |---|---|
 | Un navegador (Chrome, Edge, Firefox o Safari) | ya lo tienes |
-| Node 22.13 o superior, solo para el servidor | `node -v` |
+| Node 22.23.4 o superior, solo para el servidor | `node -v` |
 | Cuenta de correo, tarjeta o instalaciones | ❌ nada de eso |
 
 - **No hace falta** `npm install`: los scripts de la plantilla no tienen
@@ -34,7 +34,7 @@ fallos típicos.
    ```powershell
    node -v
    ```
-   Debe salir `v22.13.0` o superior. Si no, instálalo desde
+   Debe salir `v22.23.4` o superior. Si no, instálalo desde
    [nodejs.org](https://nodejs.org).
 3. Arranca el servidor:
    ```powershell
@@ -328,7 +328,7 @@ Marca cada paso en tu propio navegador antes de pasar la web a nadie.
 | `429 Demasiados envíos` | superaste `LIMITE_CONTACTO=5` por minuto; espera 60 s o sube el valor en `.env` |
 | `401 Token no válido` en la bandeja | el `x-admin-token` no coincide con `ADMIN_TOKEN` del `.env` |
 | `EADDRINUSE` al arrancar | el puerto 3000 está ocupado: cambia `PORT` en `.env` o cierra el proceso anterior |
-| `No se pudo cargar "node:sqlite"` | tu Node es viejo: instala 22.13 o superior (`node -v`) |
+| `No se pudo cargar "node:sqlite"` | tu Node es viejo: instala 22.23.4 o superior (`node -v`) |
 | Los proyectos no tienen enlaces | `url_demo` / `url_codigo` están vacíos en la base de datos (receta R2) |
 
 Estos y otros más, con sus soluciones, están en la

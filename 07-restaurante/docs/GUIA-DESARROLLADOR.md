@@ -15,7 +15,7 @@
 ├── js/main.js            # 13 secciones: API client, carta, horarios, opiniones, reserva, contadores
 ├── .env                  # PORT=3007, ADMIN_TOKEN, MAX_POR_HORA, INTERVALO_RESERVA…
 ├── .env.example          # Plantilla comentada
-├── package.json          # start, dev, reiniciar (Node ≥ 22.13)
+├── package.json          # start, dev, reiniciar (Node ≥ 22.23.4)
 └── server/
     ├── server.js         # HTTP server: .env → BD → API router → estáticos
     ├── api.js            # 9 endpoints REST (ver §5)
